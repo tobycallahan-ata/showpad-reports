@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Showpad Weekly Reports — ataccama</title>
+  <title>Showpad Reports — ataccama</title>
   <style>
     :root {
       --brand:   #1C3FAA;
@@ -41,6 +41,16 @@
     }
     .page-header h1 span { font-weight: 400; color: var(--muted); font-size: 1rem; }
     .meta { font-size: 0.78rem; color: var(--muted); text-align: right; line-height: 1.7; }
+
+    /* ── Section headings ── */
+    .section-heading {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--brand);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin: 32px 0 12px;
+    }
 
     /* ── Latest button ── */
     .btn {
@@ -94,6 +104,7 @@
       font-size: 0.83rem;
     }
     td.action a:hover { text-decoration: underline; }
+    td.desc { color: var(--muted); font-size: 0.83rem; }
 
     /* ── Latest badge ── */
     .badge {
@@ -130,21 +141,22 @@
 <div class="container">
 
   <header class="page-header">
-    <h1>Showpad Weekly Reports &nbsp;<span>ataccama.showpad.biz</span></h1>
+    <h1>Showpad Reports &nbsp;<span>ataccama.showpad.biz</span></h1>
     <div class="meta">
-      1 report available<br/>
-      Updated 2026-05-22 20:21 UTC
+      Updated 2026-05-22<br/>
     </div>
   </header>
 
-  <div style='margin-bottom:24px'><a class="btn" href="showpad_weekly_2026-05-22.html">View latest report →</a></div>
+  <!-- ── Weekly Reports ── -->
+  <div class="section-heading">Weekly Usage Reports</div>
+
+  <div style='margin-bottom:24px'><a class="btn" href="showpad_weekly_2026-05-22.html">View latest weekly report →</a></div>
 
   <div class="count-row">
-    <span class="count-label">All reports — newest first</span>
+    <span class="count-label">All weekly reports — newest first</span>
   </div>
 
   <div class="panel">
-    
     <table>
       <thead>
         <tr>
@@ -155,7 +167,7 @@
         </tr>
       </thead>
       <tbody>
-        <trclass='latest'>
+        <tr class='latest'>
           <td class="num">1</td>
           <td class="date">Fri 22 May 2026 <span class="badge">Latest</span></td>
           <td class="range">16–22 May 2026</td>
@@ -165,7 +177,33 @@
     </table>
   </div>
 
+  <!-- ── Ad-hoc Reports ── -->
+  <div class="section-heading">Ad-hoc Reports</div>
+
+  <div class="panel">
+    <table>
+      <thead>
+        <tr>
+          <th class="num">#</th>
+          <th>Report</th>
+          <th>Date</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='latest'>
+          <td class="num">1</td>
+          <td class="date">Shared Spaces <span class="badge">New</span></td>
+          <td class="range">22 May 2026</td>
+          <td class="desc">Shared spaces inventory — owners, activity, recipient counts</td>
+          <td class="action"><a href="shared_spaces_2026-05-22.html">Open report →</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
-<footer>Reports generated automatically every Monday · ataccama.showpad.biz</footer>
+<footer>Weekly reports generated automatically every Monday · ataccama.showpad.biz</footer>
 </body>
 </html>
