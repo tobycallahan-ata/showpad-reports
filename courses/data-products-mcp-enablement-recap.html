@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Data Products &amp; MCP — Enablement Recap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* === Ataccama brand palette === */
+:root {
+  /* Primary */
+  --pink: #F10090;
+  --purple: #6A2CF5;
+  --navy: #1A0C42;
+  --plum: #33012A;
+
+  /* 70% tints */
+  --pink-70: #F655B5;
+  --purple-70: #9C72F8;
+  --navy-70: #665D81;
+  --plum-70: #775671;
+
+  /* 30% tints (backgrounds) */
+  --pink-30: #FCC6E6;
+  --purple-30: #DED0FD;
+  --navy-30: #CCC9D5;
+  --plum-30: #D2C7D0;
+
+  /* Highlight colors */
+  --hl-red: #FF464C;
+  --hl-blue: #00DDFF;
+  --hl-yellow: #FFAB00;
+  --hl-green: #00E5B6;
+
+  /* Surface tokens */
+  --text: #1A0C42;
+  --text-soft: #665D81;
+  --border: #E8E4F0;
+  --bg: #FAF8FC;
+  --card: #ffffff;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(26, 12, 66, 0.08);
+
+  --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+}
+
+/* Progress bar */
+#progress-bar-track { height: 4px; background: var(--navy-30); width: 100%; flex-shrink: 0; }
+#progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink) 0%, var(--purple) 100%);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* Header */
+header {
+  background: var(--navy);
+  color: #fff;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--pink) 0%, var(--purple) 50%, var(--pink) 100%);
+}
+header .brand-mark {
+  display: flex; align-items: center; gap: 14px;
+}
+header .brand-a {
+  width: 28px; height: 28px;
+  background: var(--pink);
+  color: var(--navy);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  font-family: var(--font-sans);
+}
+header h1 { font-size: 1.05rem; font-weight: 600; letter-spacing: 0.005em; }
+#slide-counter { font-size: 0.85rem; opacity: 0.7; white-space: nowrap; font-weight: 400; }
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 24px;
+  width: 100%;
+}
+
+/* Slide card */
+.slide-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 880px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.slide-title-bar {
+  background: var(--navy);
+  color: #fff;
+  padding: 20px 28px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.slide-title-bar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--pink);
+}
+.slide-title-bar .slide-kind-tag {
+  background: var(--pink);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.slide-body { padding: 34px 32px; font-size: 1rem; line-height: 1.65; font-weight: 400; }
+
+/* Content slide typography */
+.slide-body h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 14px; color: var(--navy); letter-spacing: -0.005em; }
+.slide-body h3 { font-size: 1.05rem; margin: 20px 0 10px; color: var(--purple); font-weight: 600; letter-spacing: -0.005em; }
+.slide-body p { margin-bottom: 13px; }
+.slide-body ul, .slide-body ol { margin: 10px 0 14px 22px; }
+.slide-body li { margin-bottom: 7px; }
+.slide-body strong { color: var(--navy); font-weight: 600; }
+.slide-body em { color: var(--text-soft); font-style: italic; }
+.slide-body a { color: var(--purple); }
+
+.slide-body table {
+  border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.93rem;
+  border-radius: 8px; overflow: hidden;
+}
+.slide-body th {
+  background: var(--navy); color: #fff; padding: 11px 14px; text-align: left;
+  font-weight: 600; font-size: 0.86rem; letter-spacing: 0.02em;
+}
+.slide-body td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
+.slide-body tr:nth-child(even) td { background: #FBF9FE; }
+.slide-body tr:last-child td { border-bottom: none; }
+
+/* Layout patterns */
+.callout {
+  background: linear-gradient(135deg, #FDEDF7 0%, #FCC6E6 100%);
+  border-left: 4px solid var(--pink);
+  padding: 16px 20px;
+  border-radius: 6px;
+  margin: 18px 0;
+  color: var(--navy);
+}
+.callout.warning {
+  background: linear-gradient(135deg, #FFF5E0 0%, #FFE4B0 100%);
+  border-left-color: var(--hl-yellow);
+}
+.callout.success {
+  background: linear-gradient(135deg, #DCFFF7 0%, #B0F5E6 100%);
+  border-left-color: var(--hl-green);
+}
+.callout-title { font-weight: 700; color: var(--navy); margin-bottom: 5px; font-size: 0.9rem;
+                  text-transform: uppercase; letter-spacing: 0.04em; }
+
+.pull-quote {
+  font-size: 1.18rem;
+  line-height: 1.5;
+  color: var(--navy);
+  font-style: italic;
+  font-weight: 300;
+  padding: 22px 28px;
+  border-left: 4px solid var(--purple);
+  margin: 22px 0;
+  background: var(--purple-30);
+  border-radius: 6px;
+}
+
+.objectives {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--plum) 100%);
+  color: #fff;
+  border-radius: 10px;
+  padding: 26px 30px;
+  margin: 8px 0;
+  position: relative;
+  overflow: hidden;
+}
+.objectives::after {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 140px;
+  height: 140px;
+  background: var(--pink);
+  opacity: 0.18;
+  border-radius: 50%;
+}
+.objectives-title {
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pink-70);
+  margin-bottom: 12px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+.objectives ul { margin: 0 0 0 22px; position: relative; z-index: 1; }
+.objectives li { margin-bottom: 8px; }
+.objectives strong { color: #fff; }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.stat {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 18px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+.stat::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--pink), var(--purple));
+}
+.stat-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--navy);
+  display: block;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin-left: 8px;
+}
+.stat-label {
+  font-size: 0.88rem;
+  color: var(--purple);
+  margin-top: 6px;
+  margin-left: 8px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.stat-detail {
+  font-size: 0.83rem;
+  color: var(--text-soft);
+  margin-top: 10px;
+  margin-left: 8px;
+  line-height: 1.45;
+}
+
+/* === Eyebrow label === */
+.eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 10px;
+}
+
+/* === Section opener (eyebrow + h2 + subhead) === */
+.section-opener { margin: 8px 0 24px; }
+.section-opener .eyebrow { margin-bottom: 8px; }
+.section-opener h2 {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+.section-opener .subhead {
+  font-size: 1rem;
+  color: var(--purple);
+  font-weight: 500;
+}
+
+/* === TL;DR / summary panel === */
+.summary-panel {
+  background: linear-gradient(135deg, #FDEDF7 0%, #F3E8FF 100%);
+  border-radius: 12px;
+  padding: 22px 32px;
+  margin: 22px auto;
+  text-align: center;
+  max-width: 90%;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--navy);
+}
+
+/* === Icon card grid (e.g. "the four challenges") === */
+.icon-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin: 22px 0;
+}
+.icon-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--purple);
+  border-radius: 10px;
+  padding: 22px 20px;
+  min-height: 130px;
+}
+.icon-card .icon {
+  width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--purple-30);
+  color: var(--purple);
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.icon-card .title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+  display: block;
+  margin-bottom: 4px;
+}
+.icon-card .desc {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  line-height: 1.45;
+}
+
+/* === Focus-area card row (eyebrow + title + purple subhead) === */
+.focus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.focus-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--pink);
+  border-radius: 10px;
+  padding: 18px 18px;
+}
+.focus-card .eyebrow { margin-bottom: 6px; font-size: 0.7rem; }
+.focus-card .title {
+  font-size: 0.95rem; font-weight: 600; color: var(--navy);
+  display: block; margin-bottom: 6px; line-height: 1.3;
+}
+.focus-card .subhead {
+  font-size: 0.82rem; color: var(--purple); font-weight: 500; line-height: 1.4;
+}
+
+/* === Journey timeline === */
+.journey {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 26px 0 14px;
+  position: relative;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.journey::before {
+  content: "";
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  top: 24px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--pink) 0%, var(--purple) 100%);
+  z-index: 0;
+}
+.journey-step {
+  flex: 1;
+  min-width: 130px;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 4px;
+}
+.journey-node {
+  width: 48px; height: 48px;
+  margin: 0 auto 12px;
+  background: #fff;
+  border: 3px solid var(--purple);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  color: var(--purple);
+  box-shadow: 0 0 0 6px var(--purple-30);
+}
+.journey-step .label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--navy);
+  display: block;
+  margin-bottom: 4px;
+}
+.journey-step .detail {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+  line-height: 1.4;
+}
+
+/* === Scenario checkpoint card (frames a major quiz/scenario block) === */
+.scenario-card {
+  background: linear-gradient(135deg, #FDEDF7 0%, #F3E8FF 100%);
+  border-radius: 14px;
+  padding: 26px 30px;
+  margin: 24px 0;
+  border: 1px solid var(--purple-30);
+}
+.scenario-card .badge {
+  display: inline-block;
+  background: var(--purple);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+.scenario-card h3 {
+  color: var(--navy);
+  font-size: 1.15rem;
+  margin: 0 0 10px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+.scenario-card .desc {
+  font-size: 0.93rem;
+  color: var(--navy);
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+
+/* === Hero title slide (for the opening slide) === */
+.title-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  padding: 24px 8px;
+}
+.title-hero .lesson-tag {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pink);
+  font-weight: 600;
+}
+.title-hero h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 4px 0 6px;
+}
+.title-hero .deck {
+  font-size: 1.05rem;
+  color: var(--text-soft);
+  margin-bottom: 10px;
+}
+.title-hero .key-concepts {
+  background: var(--purple-30);
+  border-radius: 10px;
+  padding: 16px 22px;
+}
+.title-hero .key-concepts .heading {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--purple);
+  margin-bottom: 6px;
+}
+.title-hero .key-concepts ul { margin: 0 0 0 22px; }
+.title-hero .key-concepts li { margin-bottom: 4px; color: var(--navy); font-weight: 500; }
+
+/* Quiz slide */
+.quiz-question {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 20px;
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+}
+.quiz-hint {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  margin-bottom: 18px;
+  font-style: italic;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 10px; }
+.quiz-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 15px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  background: #fff;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  font-size: 0.98rem;
+  line-height: 1.45;
+}
+.quiz-option:hover { border-color: var(--purple); background: #FBF9FE; }
+.quiz-option.selected { border-color: var(--pink); background: #FDEDF7; }
+.quiz-option .marker {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--navy-30);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--text-soft);
+  background: #fff;
+  font-family: var(--font-sans);
+}
+.quiz-option.multi .marker { border-radius: 5px; }
+.quiz-option.selected .marker { background: var(--pink); color: #fff; border-color: var(--pink); }
+.quiz-option.correct { border-color: var(--hl-green); background: #E0FFF7; }
+.quiz-option.correct .marker { background: var(--hl-green); color: var(--navy); border-color: var(--hl-green); }
+.quiz-option.incorrect { border-color: var(--hl-red); background: #FFE6E7; }
+.quiz-option.incorrect .marker { background: var(--hl-red); color: #fff; border-color: var(--hl-red); }
+.quiz-option.disabled { cursor: default; opacity: 0.85; }
+
+.quiz-feedback {
+  margin-top: 22px;
+  padding: 18px 20px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct {
+  background: linear-gradient(135deg, #E0FFF7 0%, #B0F5E6 100%);
+  border-left: 4px solid var(--hl-green); color: var(--navy);
+}
+.quiz-feedback.incorrect {
+  background: linear-gradient(135deg, #FFE6E7 0%, #FFC8CA 100%);
+  border-left: 4px solid var(--hl-red); color: var(--navy);
+}
+.quiz-feedback-title { font-weight: 700; margin-bottom: 6px; font-size: 0.95rem;
+                         letter-spacing: 0.02em; }
+
+.quiz-submit-row { margin-top: 22px; }
+
+/* Navigation */
+.nav-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+  width: 100%;
+  max-width: 880px;
+  gap: 12px;
+}
+.btn {
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.93rem;
+  font-weight: 600;
+  transition: background 0.15s, opacity 0.15s, transform 0.1s;
+  font-family: var(--font-sans);
+  letter-spacing: 0.01em;
+}
+.btn:active:not(:disabled) { transform: translateY(1px); }
+.btn:disabled { opacity: 0.35; cursor: default; }
+.btn-secondary { background: #fff; color: var(--navy); border: 1.5px solid var(--navy-30); }
+.btn-secondary:hover:not(:disabled) { background: var(--navy-30); border-color: var(--navy-70); }
+.btn-primary { background: var(--pink); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--pink-70); }
+.btn-complete {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+  color: #fff;
+}
+.btn-complete:hover:not(:disabled) { filter: brightness(1.08); }
+
+/* Completion screen */
+#completion-screen {
+  display: none;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 880px;
+  padding: 50px 32px;
+  text-align: center;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+#completion-screen::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+}
+#completion-screen.passed::before {
+  background: linear-gradient(90deg, var(--pink), var(--purple), var(--hl-green));
+}
+#completion-screen.failed::before { background: var(--hl-yellow); }
+.badge {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  color: #fff; font-size: 2.2rem;
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+#completion-screen.passed .badge {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+}
+#completion-screen.failed .badge { background: var(--hl-yellow); color: var(--navy); }
+#completion-screen h2 { font-size: 1.7rem; color: var(--navy); margin-bottom: 8px;
+                          font-weight: 600; letter-spacing: -0.01em; }
+#completion-screen .score-line { font-size: 1.05rem; color: var(--text-soft); margin-bottom: 20px; }
+#completion-screen .big-score {
+  font-size: 3.4rem; font-weight: 700; margin: 16px 0;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+#retry-btn { margin-top: 20px; }
+
+/* Inline list under score */
+.score-detail { font-size: 0.9rem; color: var(--text-soft); margin: 4px 0; }
+
+/* Footer wordmark */
+footer.brand-footer {
+  width: 100%;
+  text-align: center;
+  padding: 24px 0 16px;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--text-soft);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+footer.brand-footer .wordmark { color: var(--navy); font-weight: 700; }
+
+/* === Interactive blocks ====================================== */
+
+/* Engagement marker — shown next to interactive title */
+.engagement-pill {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+.engagement-pill.pending { background: var(--purple-30); color: var(--purple); }
+.engagement-pill.done { background: var(--hl-green); color: var(--navy); }
+
+.interactive-block {
+  margin: 26px 0;
+  position: relative;
+}
+.interactive-block-header {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.interactive-block-header .label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--pink);
+}
+.interactive-block-header .title {
+  font-size: 1.1rem; font-weight: 600; color: var(--navy);
+  letter-spacing: -0.005em; flex: 1;
+}
+.interactive-block-header .prompt {
+  width: 100%; font-size: 0.94rem; color: var(--text-soft); margin-top: 4px;
+}
+
+/* ---- Accordion ---- */
+.accordion-list { display: flex; flex-direction: column; gap: 10px; }
+.accordion-item {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--purple);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.accordion-item.opened { border-left-color: var(--pink); }
+.accordion-head {
+  padding: 14px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--navy);
+  font-size: 0.98rem;
+  user-select: none;
+}
+.accordion-head:hover { background: #FBF9FE; }
+.accordion-head .chev {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--purple-30);
+  color: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  transition: transform 0.2s, background 0.15s, color 0.15s;
+  font-size: 1rem;
+}
+.accordion-item.opened .accordion-head .chev { transform: rotate(45deg); background: var(--pink); color: #fff; }
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.2s;
+  padding: 0 18px;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+.accordion-item.opened .accordion-body {
+  max-height: 1200px;
+  padding: 4px 18px 18px;
+}
+
+/* ---- Drag-sort ---- */
+.drag-sort {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 18px;
+}
+.drag-pool {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  min-height: 70px;
+  padding: 12px;
+  background: #FBF9FE;
+  border: 1.5px dashed var(--purple-30);
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+.drag-buckets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.drag-bucket {
+  background: #FAFBFC;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  min-height: 130px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.drag-bucket.drop-target { border-color: var(--pink); background: #FDEDF7; }
+.drag-bucket-label {
+  font-weight: 700; color: var(--navy); margin-bottom: 10px;
+  font-size: 0.92rem; letter-spacing: 0.01em;
+}
+.drag-bucket-items { display: flex; flex-direction: column; gap: 6px; }
+.drag-card {
+  background: #fff;
+  border: 1.5px solid var(--navy-30);
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 0.9rem;
+  cursor: grab;
+  color: var(--navy);
+  font-weight: 500;
+  line-height: 1.4;
+  transition: border-color 0.1s, transform 0.05s;
+}
+.drag-card:active { cursor: grabbing; }
+.drag-card.dragging { opacity: 0.45; }
+.drag-card.locked { cursor: default; opacity: 0.95; }
+.drag-card.correct { border-color: var(--hl-green); background: #E0FFF7; }
+.drag-card.incorrect { border-color: var(--hl-red); background: #FFE6E7; }
+.drag-check-row { display: flex; align-items: center; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+.drag-result {
+  font-size: 0.9rem; font-weight: 600;
+  display: none;
+}
+.drag-result.show { display: inline-block; }
+.drag-result.correct { color: var(--hl-green); }
+.drag-result.partial { color: var(--hl-yellow); }
+
+/* ---- Inline knowledge check ---- */
+.kcheck {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--pink);
+  border-radius: 12px;
+  padding: 20px 22px;
+}
+
+/* ---- Branching scenario ---- */
+.branching {
+  background: linear-gradient(135deg, #FDEDF7 0%, #F3E8FF 100%);
+  border-radius: 14px;
+  padding: 22px 24px;
+  border: 1px solid var(--purple-30);
+}
+.branching-scenario {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+.branching-branches { display: flex; flex-direction: column; gap: 10px; }
+.branch-btn {
+  background: #fff;
+  border: 1.5px solid var(--navy-30);
+  border-radius: 10px;
+  padding: 13px 16px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--navy);
+  font-family: inherit;
+  line-height: 1.4;
+  transition: border-color 0.1s, background 0.15s;
+}
+.branch-btn:hover:not(:disabled) { border-color: var(--purple); background: #FBF9FE; }
+.branch-btn:disabled { opacity: 0.6; cursor: default; }
+.branch-btn.picked { border-width: 2px; }
+.branch-btn.picked.strong { border-color: var(--hl-green); background: #E0FFF7; }
+.branch-btn.picked.weak { border-color: var(--hl-red); background: #FFE6E7; }
+.branch-btn.picked.neutral { border-color: var(--purple); background: #F3E8FF; }
+.branch-outcome {
+  margin-top: 14px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: none;
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+.branch-outcome.show { display: block; }
+.branch-outcome .verdict {
+  font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  font-size: 0.78rem; margin-bottom: 8px; display: inline-block;
+  padding: 3px 10px; border-radius: 100px;
+}
+.branch-outcome .verdict.strong { background: var(--hl-green); color: var(--navy); }
+.branch-outcome .verdict.weak { background: var(--hl-red); color: #fff; }
+.branch-outcome .verdict.neutral { background: var(--purple); color: #fff; }
+
+/* === Content (scroll) phase === */
+#content-phase { width: 100%; max-width: 880px; }
+.content-doc {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 8px 36px 28px;
+  margin-bottom: 24px;
+}
+.content-section {
+  padding: 30px 0 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.content-section:last-child { border-bottom: none; }
+.content-section:first-child { padding-top: 14px; }
+.content-section .auto-title {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--purple);
+  margin-bottom: 14px;
+  display: block;
+}
+.phase-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 16px 8px;
+}
+.phase-cta .label {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  font-weight: 600;
+}
+
+/* === Quiz (carousel) phase === */
+#quiz-phase { display: none; width: 100%; max-width: 880px; }
+.quiz-intro {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--plum) 100%);
+  color: #fff;
+  border-radius: 14px;
+  padding: 36px 36px 32px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.quiz-intro::after {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px; height: 160px;
+  background: var(--pink);
+  opacity: 0.2;
+  border-radius: 50%;
+}
+.quiz-intro .badge {
+  display: inline-block;
+  background: var(--pink);
+  color: #fff;
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  position: relative; z-index: 1;
+}
+.quiz-intro h2 { font-size: 1.6rem; margin-bottom: 8px; position: relative; z-index: 1;
+                   letter-spacing: -0.015em; font-weight: 600; }
+.quiz-intro .stats { font-size: 0.95rem; opacity: 0.9; position: relative; z-index: 1; }
+.quiz-back-row { margin-top: 14px; }
+
+@media (max-width: 720px) {
+  main { padding: 24px 14px; }
+  .slide-body { padding: 24px 20px; }
+  .content-doc { padding: 4px 20px 20px; }
+  header { padding: 14px 18px; }
+  header h1 { font-size: 0.95rem; }
+  .slide-title-bar { padding: 16px 22px; font-size: 1.1rem; }
+  .quiz-intro { padding: 28px 24px; }
+  .quiz-intro h2 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar-track"><div id="progress-bar-fill"></div></div>
+
+<header>
+  <div class="brand-mark">
+    <span class="brand-a">a</span>
+    <h1>Data Products &amp; MCP — Enablement Recap</h1>
+  </div>
+  <span id="slide-counter"></span>
+</header>
+
+<main>
+
+  <!-- ===== Phase 1: Content (scroll) ===== -->
+  <div id="content-phase">
+    <div class="content-doc" id="content-doc"></div>
+    <div class="phase-cta">
+      <span class="label" id="cta-label">Ready when you are</span>
+      <button class="btn btn-complete" id="btn-begin-quiz" onclick="goToQuizPhase()">Continue &#8594;</button>
+    </div>
+  </div>
+
+  <!-- ===== Phase 2: Quiz (carousel) ===== -->
+  <div id="quiz-phase">
+    <div class="quiz-intro" id="quiz-intro">
+      <span class="badge">Assessment</span>
+      <h2 id="quiz-intro-title">Final quiz</h2>
+      <div class="stats" id="quiz-intro-stats"></div>
+    </div>
+
+    <div class="slide-card" id="slide-card">
+      <div class="slide-title-bar">
+        <span id="slide-title">Loading…</span>
+        <span class="slide-kind-tag" id="slide-kind-tag" style="display:none"></span>
+      </div>
+      <div class="slide-body" id="slide-body"></div>
+    </div>
+
+    <div class="nav-row" id="nav-row">
+      <button class="btn btn-secondary" id="btn-prev" onclick="prevQuiz()">&#8592; Previous</button>
+      <button class="btn btn-primary" id="btn-next" onclick="nextQuiz()">Next &#8594;</button>
+      <button class="btn btn-complete" id="btn-complete" style="display:none" onclick="completeCourse()">Finish Course &#10003;</button>
+    </div>
+    <div class="quiz-back-row">
+      <button class="btn btn-secondary" onclick="backToContent()">&#8624; Back to course content</button>
+    </div>
+  </div>
+
+  <!-- ===== Phase 3: Completion ===== -->
+  <div id="completion-screen">
+    <div class="badge" id="completion-badge">&#10003;</div>
+    <h2 id="completion-headline">Course Complete</h2>
+    <div class="big-score" id="completion-score">100%</div>
+    <div class="score-line" id="completion-detail"></div>
+    <div class="score-detail" id="completion-mastery"></div>
+    <button class="btn btn-primary" id="retry-btn" style="display:none" onclick="retryQuiz()">Retry Quiz</button>
+  </div>
+</main>
+
+<footer class="brand-footer"><span class="wordmark">ataccama</span></footer>
+
+<script>
+var SLIDES = [{"type": "content", "title": "Data Products & MCP — Enablement Recap", "html": "<div class=\"title-hero\"><span class=\"lesson-tag\">Enablement Recap · 12 min</span><h2>Data Products &amp; MCP</h2><p class=\"deck\">A quick check that the May 26 session landed — the new question we&rsquo;re answering, the four problems we&rsquo;re solving, what shipped, and how to bring it into a deal.</p><div class=\"key-concepts\"><div class=\"heading\">What you&rsquo;ll cover</div><ul><li>The new question: <em>&ldquo;Can this data be used?&rdquo;</em></li><li>The four problems Data Products solves</li><li>What shipped in Data Products + MCP</li><li>How to bring it into an active deal</li></ul></div></div>", "body": [{"kind": "html", "value": "<div class=\"title-hero\"><span class=\"lesson-tag\">Enablement Recap · 12 min</span><h2>Data Products &amp; MCP</h2><p class=\"deck\">A quick check that the May 26 session landed — the new question we&rsquo;re answering, the four problems we&rsquo;re solving, what shipped, and how to bring it into a deal.</p><div class=\"key-concepts\"><div class=\"heading\">What you&rsquo;ll cover</div><ul><li>The new question: <em>&ldquo;Can this data be used?&rdquo;</em></li><li>The four problems Data Products solves</li><li>What shipped in Data Products + MCP</li><li>How to bring it into an active deal</li></ul></div></div>"}]}, {"type": "content", "title": "What you'll be able to do after this", "html": "<div class=\"objectives\"><div class=\"objectives-title\">By the end of this course you will</div><ul><li><strong>Explain the new question</strong> Data Products answers — and how it differs from the pipeline story we told in Sessions 1 and 2</li><li><strong>Name the four problems</strong> Data Products and MCP solve, and recognise them in a prospect&rsquo;s language</li><li><strong>Describe the three new platform objects</strong> (Business Processes / Data Product Object / Data Domains) and the role of MCP as the consumption layer</li><li><strong>Apply the qualifying question</strong> that decides when to bring Data Products into an active deal</li><li><strong>Differentiate</strong> Ataccama Data Products from Snowflake Horizon and Databricks Unity Catalog without slipping into rip-and-replace framing</li></ul></div><p style=\"margin-top:18px;\">There are interactive moments throughout — an accordion to explore the four problems, a drag-and-sort on the three-layer model, two quick checks along the way, and a five-question graded quiz at the end. You need 80% to pass — you can retry.</p>", "body": [{"kind": "html", "value": "<div class=\"objectives\"><div class=\"objectives-title\">By the end of this course you will</div><ul><li><strong>Explain the new question</strong> Data Products answers — and how it differs from the pipeline story we told in Sessions 1 and 2</li><li><strong>Name the four problems</strong> Data Products and MCP solve, and recognise them in a prospect&rsquo;s language</li><li><strong>Describe the three new platform objects</strong> (Business Processes / Data Product Object / Data Domains) and the role of MCP as the consumption layer</li><li><strong>Apply the qualifying question</strong> that decides when to bring Data Products into an active deal</li><li><strong>Differentiate</strong> Ataccama Data Products from Snowflake Horizon and Databricks Unity Catalog without slipping into rip-and-replace framing</li></ul></div><p style=\"margin-top:18px;\">There are interactive moments throughout — an accordion to explore the four problems, a drag-and-sort on the three-layer model, two quick checks along the way, and a five-question graded quiz at the end. You need 80% to pass — you can retry.</p>"}]}, {"type": "content", "title": "Reconnect to the play — we are Layer 3", "html": "<div class=\"section-opener\"><span class=\"eyebrow\">Lesson Overview</span><h2>We are the trust layer</h2><p class=\"subhead\">Data Products and MCP are the next chapter of the same modernization story — not a pivot.</p></div><p>Enterprises are committing real budget to Snowflake and Databricks for AI, customer experience, new products, compliance, and analytics. These are not infrastructure calls — they are mission-critical bets.</p><p>Ataccama&rsquo;s role is <strong>scale immunity</strong>: governance and quality that keep pace with data volume without headcount growing at the same rate. We sit at Layer 3 of the modern AI stack — the trust layer between the lakehouse below and the AI agents above.</p><div class=\"callout\"><div class=\"callout-title\">The frame for this session</div>Sessions 1 and 2 answered <em>&ldquo;how does data move and get validated?&rdquo;</em> — the pipeline story. Today answers a different question: <strong>&ldquo;Can this data be used?&rdquo;</strong></div>", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">Lesson Overview</span><h2>We are the trust layer</h2><p class=\"subhead\">Data Products and MCP are the next chapter of the same modernization story — not a pivot.</p></div><p>Enterprises are committing real budget to Snowflake and Databricks for AI, customer experience, new products, compliance, and analytics. These are not infrastructure calls — they are mission-critical bets.</p><p>Ataccama&rsquo;s role is <strong>scale immunity</strong>: governance and quality that keep pace with data volume without headcount growing at the same rate. We sit at Layer 3 of the modern AI stack — the trust layer between the lakehouse below and the AI agents above.</p><div class=\"callout\"><div class=\"callout-title\">The frame for this session</div>Sessions 1 and 2 answered <em>&ldquo;how does data move and get validated?&rdquo;</em> — the pipeline story. Today answers a different question: <strong>&ldquo;Can this data be used?&rdquo;</strong></div>"}]}, {"type": "content", "title": "Technically validated ≠ usable", "html": "<div class=\"section-opener\"><span class=\"eyebrow\">Why This Matters</span><h2>The Gold-layer problem</h2><p class=\"subhead\">Lift-and-shift moves data faster and cheaper than ever. It doesn&rsquo;t explain it.</p></div><p>By the time data reaches the Gold layer, it is technically validated. Quality has run, observability has run, gates have caught failing records. The pipeline is clean.</p><p>But the Gold layer is a <strong>collection of tables</strong>. It speaks engineering. A data engineer knows which table holds customer records — a business analyst, a CDO, or an AI pipeline does not.</p><div class=\"pull-quote\">The migration solved the infrastructure problem. It left the business problem completely untouched.</div><p style=\"margin-top:16px;\">This is the gap Data Products closes: extending the trust we built in the pipeline all the way to the moment of business use.</p>", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">Why This Matters</span><h2>The Gold-layer problem</h2><p class=\"subhead\">Lift-and-shift moves data faster and cheaper than ever. It doesn&rsquo;t explain it.</p></div><p>By the time data reaches the Gold layer, it is technically validated. Quality has run, observability has run, gates have caught failing records. The pipeline is clean.</p><p>But the Gold layer is a <strong>collection of tables</strong>. It speaks engineering. A data engineer knows which table holds customer records — a business analyst, a CDO, or an AI pipeline does not.</p><div class=\"pull-quote\">The migration solved the infrastructure problem. It left the business problem completely untouched.</div><p style=\"margin-top:16px;\">This is the gap Data Products closes: extending the trust we built in the pipeline all the way to the moment of business use.</p>"}]}, {"type": "content", "title": "The four problems Data Products solves", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">Key Concepts</span><h2>Four problems, one launch</h2><p class=\"subhead\">Each one shows up in a different prospect&rsquo;s language — click into each to see how it sounds on a call.</p></div>"}, {"kind": "accordion", "title": "Click into each problem to expand it", "items": [{"label": "Problem 1 — The Gold-layer problem", "detail": "<p><strong>Technically validated ≠ usable.</strong> The pipeline is clean but the connection to the people and AI systems that need it is still missing.</p><p><em>Sounds like:</em> &ldquo;Our migration to Snowflake is done and the data quality looks good — but the business still doesn&rsquo;t know what to use.&rdquo;</p>"}, {"label": "Problem 2 — Governance as an end in itself", "detail": "<p>Catalogs grew, glossaries multiplied, owners were assigned — and nobody could still answer <em>&ldquo;can this data be used with confidence right now?&rdquo;</em></p><p><em>Sounds like:</em> &ldquo;We&rsquo;ve invested two years in governance. The business still doesn&rsquo;t trust the data.&rdquo;</p>"}, {"label": "Problem 3 — Concept vs. table gap", "detail": "<p>Business thinks in concepts (&ldquo;Customer&rdquo;). Systems store tables. Data consumers waste time hunting for the right one; governance breaks down at the physical level because there&rsquo;s no shared business layer to enforce consistency.</p><p><em>Sounds like:</em> &ldquo;The data is clean. Our analysts still spend two days finding the right customer table before they can start any work.&rdquo;</p>"}, {"label": "Problem 4 — AI risk amplification", "detail": "<p>A human analyst usually catches the anomaly. An AI pipeline pulls the wrong table without hesitation and scales the mistake across every downstream model, recommendation, and decision.</p><p><em>Sounds like:</em> &ldquo;We&rsquo;re standing up an AI use case but I&rsquo;m worried about what it&rsquo;s actually pulling from.&rdquo;</p>"}]}, {"kind": "knowledge-check", "title": "Quick check — diagnose the problem", "question": "A utility prospect says: <em>&ldquo;We migrated to Snowflake last year. Our data quality is in good shape. But our business analysts still spend two days hunting for the right customer table before they can start any analysis.&rdquo;</em> Which of the four problems is the prospect describing?", "qkind": "single", "options": ["The Gold-layer problem — data isn't validated yet", "Governance as an end in itself — they need more cataloging", "Concept vs. table gap — &ldquo;Customer&rdquo; lives across many tables and nothing tells the analyst which to trust", "AI risk amplification — the analysts should use AI to find the table faster"], "correct": [2], "explanation": "This is the concept-vs-table gap. The data is clean (DQ is fine), but the business concept &ldquo;Customer&rdquo; is fragmented across many physical tables — so the analyst has to hunt. The Gold-layer problem is the broader symptom; this is the specific structural cause. AI risk amplification kicks in only when an AI pipeline is making the choice. &ldquo;More cataloging&rdquo; is exactly the governance-as-an-end-in-itself trap."}], "html": ""}, {"type": "content", "title": "PG&E — the demand is already here", "html": "<div class=\"section-opener\"><span class=\"eyebrow\">In The Field</span><h2>PG&amp;E: active demand for Data Products</h2><p class=\"subhead\">Not hypothetical — this is the story to tell on calls.</p></div><p><strong>The original engagement.</strong> After the Camp Fire, PG&amp;E needed to trust equipment and location data across a wide physical infrastructure. Ataccama eliminated a 7-day manual validation delay and reduced wildfire risk. That&rsquo;s the Sessions 1 and 2 story — clean data in the pipeline.</p><p><strong>The new question.</strong> Once data is technically validated, who in the business knows which data to use, for which decision, and whether to trust it today? For a utility under regulatory scrutiny, the stakes of getting that wrong are enormous.</p><div class=\"callout success\"><div class=\"callout-title\">What to say on a call</div>PG&amp;E&rsquo;s interest in Data Products isn&rsquo;t about features. It&rsquo;s about <em>extending the trust they built in the pipeline all the way to the moment of business use</em> — for engineers acting on asset data and for AI routing maintenance crews.</div>", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">In The Field</span><h2>PG&amp;E: active demand for Data Products</h2><p class=\"subhead\">Not hypothetical — this is the story to tell on calls.</p></div><p><strong>The original engagement.</strong> After the Camp Fire, PG&amp;E needed to trust equipment and location data across a wide physical infrastructure. Ataccama eliminated a 7-day manual validation delay and reduced wildfire risk. That&rsquo;s the Sessions 1 and 2 story — clean data in the pipeline.</p><p><strong>The new question.</strong> Once data is technically validated, who in the business knows which data to use, for which decision, and whether to trust it today? For a utility under regulatory scrutiny, the stakes of getting that wrong are enormous.</p><div class=\"callout success\"><div class=\"callout-title\">What to say on a call</div>PG&amp;E&rsquo;s interest in Data Products isn&rsquo;t about features. It&rsquo;s about <em>extending the trust they built in the pipeline all the way to the moment of business use</em> — for engineers acting on asset data and for AI routing maintenance crews.</div>"}]}, {"type": "content", "title": "What we launched", "html": "<div class=\"section-opener\"><span class=\"eyebrow\">Key Concepts</span><h2>Data Products + MCP</h2><p class=\"subhead\">Two pieces, one story: the business-context layer plus the consumption layer.</p></div><div class=\"focus-grid\"><div class=\"focus-card\"><span class=\"eyebrow\">Piece 1</span><span class=\"title\">Data Products</span><div class=\"subhead\">A bridge between business meaning and physical data. Govern a concept once; the physical layer connects beneath it.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">Piece 2</span><span class=\"title\">Model Context Protocol (MCP)</span><div class=\"subhead\">The consumption layer. Trust signals and recommended assets surface in Snowflake Intelligence, Claude, and other MCP-enabled tools — no context switching.</div></div></div><p style=\"margin-top:18px;\">Together they answer the new question. Data Products gives the business a meaningful concept with a live trust score. MCP puts that answer where people and AI agents already work.</p>", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">Key Concepts</span><h2>Data Products + MCP</h2><p class=\"subhead\">Two pieces, one story: the business-context layer plus the consumption layer.</p></div><div class=\"focus-grid\"><div class=\"focus-card\"><span class=\"eyebrow\">Piece 1</span><span class=\"title\">Data Products</span><div class=\"subhead\">A bridge between business meaning and physical data. Govern a concept once; the physical layer connects beneath it.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">Piece 2</span><span class=\"title\">Model Context Protocol (MCP)</span><div class=\"subhead\">The consumption layer. Trust signals and recommended assets surface in Snowflake Intelligence, Claude, and other MCP-enabled tools — no context switching.</div></div></div><p style=\"margin-top:18px;\">Together they answer the new question. Data Products gives the business a meaningful concept with a live trust score. MCP puts that answer where people and AI agents already work.</p>"}]}, {"type": "content", "title": "Value across four layers", "html": "<div class=\"section-opener\"><span class=\"eyebrow\">Key Concepts</span><h2>How this lands as value</h2><p class=\"subhead\">Four value dimensions — each tied to what one layer delivers.</p></div><div class=\"focus-grid\"><div class=\"focus-card\"><span class=\"eyebrow\">Business Context Layer</span><span class=\"title\">Data Products</span><div class=\"subhead\">Govern business concepts once, not dozens of assets separately. Connect business meaning to physical data, assign ownership, make trusted data easier to find and use.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">Measurable Trust Layer</span><span class=\"title\">Data Trust Index</span><div class=\"subhead\">Move beyond documentation. A live, explainable score tells teams whether a data product is fit for purpose right now, combining quality and governance into one signal.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">Consumption Layer</span><span class=\"title\">MCP + AI</span><div class=\"subhead\">Data, context, and trust signals reach AI agents, analysts, and business tools. Humans and AI work from the same governed, reliable source.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">AI-Ready Architecture</span><span class=\"title\">Trust layer for AI</span><div class=\"subhead\">AI scales whatever it is given. Ataccama ensures it is given governed, trusted, business-defined data — making outputs reliable, auditable, and grounded in context.</div></div></div>", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">Key Concepts</span><h2>How this lands as value</h2><p class=\"subhead\">Four value dimensions — each tied to what one layer delivers.</p></div><div class=\"focus-grid\"><div class=\"focus-card\"><span class=\"eyebrow\">Business Context Layer</span><span class=\"title\">Data Products</span><div class=\"subhead\">Govern business concepts once, not dozens of assets separately. Connect business meaning to physical data, assign ownership, make trusted data easier to find and use.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">Measurable Trust Layer</span><span class=\"title\">Data Trust Index</span><div class=\"subhead\">Move beyond documentation. A live, explainable score tells teams whether a data product is fit for purpose right now, combining quality and governance into one signal.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">Consumption Layer</span><span class=\"title\">MCP + AI</span><div class=\"subhead\">Data, context, and trust signals reach AI agents, analysts, and business tools. Humans and AI work from the same governed, reliable source.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">AI-Ready Architecture</span><span class=\"title\">Trust layer for AI</span><div class=\"subhead\">AI scales whatever it is given. Ataccama ensures it is given governed, trusted, business-defined data — making outputs reliable, auditable, and grounded in context.</div></div></div>"}]}, {"type": "content", "title": "What's new in the platform", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">Key Concepts</span><h2>Three new platform objects</h2><p class=\"subhead\">Ataccama Data Products are the bridge between business context and physical data. This release ships three new objects in the platform that make that bridge real.</p></div><div class=\"focus-grid\"><div class=\"focus-card\"><span class=\"eyebrow\">Object 1</span><span class=\"title\">Business Processes</span><div class=\"subhead\">A real workflow (sales capture, transaction recording). Connects the data product to where it&rsquo;s produced and consumed. Mark a process critical to drive governance prioritisation.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">Object 2</span><span class=\"title\">Data Product Object</span><div class=\"subhead\">The central object. A business concept (&ldquo;Customer master data&rdquo;, &ldquo;Bank transactions&rdquo;) with description, ownership, criticality, linked processes, and mapped physical elements.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">Object 3</span><span class=\"title\">Data Domains</span><div class=\"subhead\">Logical groupings of related products (&ldquo;Finance&rdquo;, &ldquo;Customer&rdquo;). Can be nested — &ldquo;Finance&rdquo; can contain &ldquo;Billing&rdquo; or &ldquo;Accounts&rdquo;. Scopes where a product belongs.</div></div></div>"}, {"kind": "drag-sort", "title": "Sort each item into the right object", "prompt": "Drag each example into the object it belongs to. There are exactly two per object.", "buckets": [{"id": "process", "label": "Business Process"}, {"id": "product", "label": "Data Product Object"}, {"id": "domain", "label": "Data Domain"}], "items": [{"text": "Sales-capture workflow", "correct": "process"}, {"text": "Transaction recording — marked critical", "correct": "process"}, {"text": "“Customer master data” with description + assigned owner", "correct": "product"}, {"text": "“Bank transactions” mapped to physical data elements", "correct": "product"}, {"text": "“Finance” containing the “Billing” sub-domain", "correct": "domain"}, {"text": "“Customer” as a logical grouping for related products", "correct": "domain"}], "explanation": "Business Processes link a data product to a real workflow (sales capture, transaction recording) and can be flagged critical for prioritisation. The Data Product Object is the central business concept — it carries description, ownership, criticality, linked processes, and the mapping to physical data elements. Data Domains are logical groupings that scope where products belong (Finance, Customer) and can nest. Together they replace the abstract three-layer model with three concrete platform objects you can point at."}, {"kind": "html", "value": "<div class=\"callout\"><div class=\"callout-title\">Why this matters on a call</div>Before this release, a governance team had to switch between tools and playbooks to define and certify a dataset. Now it&rsquo;s all in one place — process, product, domain, ownership, criticality, physical mapping. <strong>Govern the concept once; the physical layer connects underneath.</strong></div>"}], "html": ""}, {"type": "content", "title": "Ataccama MCP server", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">Key Concepts</span><h2>The consumption layer for trust signals</h2><p class=\"subhead\">MCP surfaces Ataccama&rsquo;s metadata, DQ scores, and recommended assets inside <strong>Claude, Copilot, Bedrock, Snowflake Intelligence</strong> — no context switching, zero local installation.</p></div><h3>What is MCP, generally?</h3><p>The Model Context Protocol is a <strong>standardised way to give an LLM everything it needs to reason and respond</strong> — tools, APIs, documents, prior context. It sits between the LLM (the MCP client, e.g. Claude or Copilot) and enterprise systems (data warehouses, Jira, Salesforce, Slack). Ataccama&rsquo;s MCP server makes our governance data one of those reachable systems.</p>"}, {"kind": "accordion", "title": "Four facts every rep should know about our MCP server", "items": [{"label": "Fully hosted by Ataccama", "detail": "<p>No Python, Node, or packages to install on the customer side. The MCP server runs as part of Ataccama ONE — customers point their AI client at the endpoint and authenticate.</p>"}, {"label": "SSO for users, M2M for agents", "detail": "<p><strong>OAuth 2.0 SSO</strong> for interactive use (an analyst in Claude or Snowflake Intelligence). <strong>Client ID + Secret (M2M)</strong> for automated AI pipelines. Same auth model your IT team is already comfortable with.</p>"}, {"label": "20+ tools, read-only", "detail": "<p>20+ tools for search, metadata, profiling, and DQ score retrieval. <strong>Cannot modify platform data.</strong> Important talking point — IT and security teams will ask about blast radius; the answer is &ldquo;read-only by design.&rdquo;</p>"}, {"label": "Configurable per AI client", "detail": "<p>Individual tools can be toggled on/off per AI client for fine-grained control. A customer can expose only the search + DQ tools to a Snowflake Intelligence integration, and a fuller set to an internal Claude deployment.</p>"}]}, {"kind": "html", "value": "<div class=\"callout warning\"><div class=\"callout-title\">Scope check — important for prospect calls</div>The <strong>current release</strong> covers data assets and trust signals via MCP. <strong>Full data-product access via MCP arrives H2 2026.</strong> Don&rsquo;t over-promise the H2 capability today.</div>"}, {"kind": "knowledge-check", "title": "Quick check — what the MCP server can and can't do", "question": "An IT security lead at a prospect asks: <em>&ldquo;If we connect Claude to your MCP server, can the agent change anything in our governance setup — edit DQ rules, modify ownership, alter the catalog?&rdquo;</em> What&rsquo;s the right answer?", "qkind": "single", "options": ["Yes — agents have full read/write access through the MCP server.", "Yes for tools you explicitly enable; the MCP server is granular per tool.", "No — the MCP server is read-only by design. It surfaces metadata, DQ scores, and recommended assets, but cannot modify platform data.", "Only with admin auth — read/write is gated behind a separate Client ID."], "correct": [2], "explanation": "The MCP server is <strong>read-only by design</strong> — it cannot modify platform data regardless of which tools are enabled or which auth model is used. Configurability is about which read tools to expose, not about read vs. write. This is a recurring IT/security question — answering it cleanly defuses the blast-radius concern early."}], "html": ""}, {"type": "content", "title": "What shipped + how we differentiate", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">Key Concepts</span><h2>This release, in one slide</h2><p class=\"subhead\">Five capabilities — and the line that defends against the Horizon/Unity Catalog objection.</p></div>"}, {"kind": "accordion", "title": "Click into each capability", "items": [{"label": "Data products as business-meaningful concepts", "detail": "<p>A single data product as defined by the business that maps to multiple physical implementations. Govern the concept once; the physical layer connects underneath.</p>"}, {"label": "Domains & business processes", "detail": "<p>Organisational scoping for governance — which domain owns this, which business processes produce and consume it. Makes governance scalable beyond a single team.</p>"}, {"label": "Recommended physical asset mapping", "detail": "<p>The steward designates which physical dataset is the preferred source for consumers. Eliminates the &ldquo;which of the six tables?&rdquo; problem and drives better data adoption.</p>"}, {"label": "Criticality & CDE support", "detail": "<p>Criticality flags can be assigned and propagated through connected entities. Makes CDEs actionable at the data product level, not just at the column level. Helps DG teams prioritise.</p>"}, {"label": "Data Trust Index at a data product level", "detail": "<p>Live, explainable trust score anchored to the recommended asset — combining DQ and governance findings. The answer to &ldquo;can this data be used right now?&rdquo;</p>"}]}, {"kind": "html", "value": "<h3 style=\"margin-top:18px;\">Competitive lines</h3><div class=\"callout warning\"><div class=\"callout-title\">vs. cloud platforms (Snowflake Horizon, Databricks Unity Catalog)</div>Neither Horizon nor Unity Catalog have business-level concepts that span multiple physical implementations, carry business ownership, surface a <em>live</em> trust score, and can be consumed by AI. <strong>We complement Snowflake and Databricks — we don&rsquo;t replace them.</strong></div><div class=\"callout\"><div class=\"callout-title\">vs. direct vendors (Collibra, Informatica, others)</div>Competitors are converging on roughly the same definition of &ldquo;data products&rdquo; — the space is being commoditised at the definitional level. <strong>Our differentiator is the Data Trust Index.</strong> Others have data products as a concept; we have it as an object <em>and</em> as a live, measurable trust signal. None of their definitions address whether the data should actually be trusted right now.</div>"}], "html": ""}, {"type": "content", "title": "Who benefits — pick the right framing for the room", "html": "<div class=\"section-opener\"><span class=\"eyebrow\">In The Field</span><h2>Same launch, four stories</h2><p class=\"subhead\">Depending on who you&rsquo;re sitting with, this lands differently. Lead with the version that fits the room.</p></div><div class=\"focus-grid\"><div class=\"focus-card\"><span class=\"eyebrow\">Data Governance Teams</span><span class=\"title\">Governance work finally produces something the business can use</span><div class=\"subhead\">Live trust signals and criticality propagation help prioritisation. Governance is unified around a business concept, not scattered across dozens of tables.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">CDOs &amp; Data Leaders</span><span class=\"title\">Real-time, business-level trust visibility</span><div class=\"subhead\">Not a table-level technical metric — a way to show the board what &ldquo;trusted data&rdquo; means at the enterprise level. Accelerated AI readiness.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">Business &amp; Data Analysts</span><span class=\"title\">Recommended asset + live trust, in the tools they already use</span><div class=\"subhead\">Find the right data, understand whether to trust it right now, and get to analysis faster. No more chasing engineers for three days.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">AI &amp; Data Engineers</span><span class=\"title\">Stable, governed reference point for AI pipelines</span><div class=\"subhead\">Business concepts mean the same thing every pipeline run. Build workflows on a foundation that doesn&rsquo;t shift.</div></div></div>", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">In The Field</span><h2>Same launch, four stories</h2><p class=\"subhead\">Depending on who you&rsquo;re sitting with, this lands differently. Lead with the version that fits the room.</p></div><div class=\"focus-grid\"><div class=\"focus-card\"><span class=\"eyebrow\">Data Governance Teams</span><span class=\"title\">Governance work finally produces something the business can use</span><div class=\"subhead\">Live trust signals and criticality propagation help prioritisation. Governance is unified around a business concept, not scattered across dozens of tables.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">CDOs &amp; Data Leaders</span><span class=\"title\">Real-time, business-level trust visibility</span><div class=\"subhead\">Not a table-level technical metric — a way to show the board what &ldquo;trusted data&rdquo; means at the enterprise level. Accelerated AI readiness.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">Business &amp; Data Analysts</span><span class=\"title\">Recommended asset + live trust, in the tools they already use</span><div class=\"subhead\">Find the right data, understand whether to trust it right now, and get to analysis faster. No more chasing engineers for three days.</div></div><div class=\"focus-card\"><span class=\"eyebrow\">AI &amp; Data Engineers</span><span class=\"title\">Stable, governed reference point for AI pipelines</span><div class=\"subhead\">Business concepts mean the same thing every pipeline run. Build workflows on a foundation that doesn&rsquo;t shift.</div></div></div>"}]}, {"type": "content", "title": "How it fits your deals", "html": "<div class=\"section-opener\"><span class=\"eyebrow\">Your Next Move</span><h2>One qualifying question</h2><p class=\"subhead\">Not a separate SKU. No new qualification. Just one decision.</p></div><div class=\"pull-quote\">Is the prospect using (or going to use) Ataccama as their primary catalog?</div><h3 style=\"margin-top:18px;\">If yes</h3><p>Bring Data Products into the conversation naturally. The pitch expands beyond pipeline validation — we&rsquo;re also the trust and context layer that makes Gold-layer data usable by people and AI. Natural next chapter for customers who&rsquo;ve already built pipeline trust.</p><h3>If no</h3><p>Lead with DQ, Observability, and Gates. Don&rsquo;t force Data Products in — it isn&rsquo;t a separate SKU and it doesn&rsquo;t need to drive the deal.</p><div class=\"callout success\"><div class=\"callout-title\">Field tip</div>The June 2 marketing launch will give you external credibility. You can start the <em>internal</em> conversation in active deals today — the demo you saw is the asset.</div>", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">Your Next Move</span><h2>One qualifying question</h2><p class=\"subhead\">Not a separate SKU. No new qualification. Just one decision.</p></div><div class=\"pull-quote\">Is the prospect using (or going to use) Ataccama as their primary catalog?</div><h3 style=\"margin-top:18px;\">If yes</h3><p>Bring Data Products into the conversation naturally. The pitch expands beyond pipeline validation — we&rsquo;re also the trust and context layer that makes Gold-layer data usable by people and AI. Natural next chapter for customers who&rsquo;ve already built pipeline trust.</p><h3>If no</h3><p>Lead with DQ, Observability, and Gates. Don&rsquo;t force Data Products in — it isn&rsquo;t a separate SKU and it doesn&rsquo;t need to drive the deal.</p><div class=\"callout success\"><div class=\"callout-title\">Field tip</div>The June 2 marketing launch will give you external credibility. You can start the <em>internal</em> conversation in active deals today — the demo you saw is the asset.</div>"}]}, {"type": "content", "title": "Ready for the assessment", "html": "<div class=\"section-opener\"><span class=\"eyebrow\">Assessment</span><h2>Five questions — 80% to pass</h2><p class=\"subhead\">Mostly scenario-based. Read the stem carefully — most distractors are plausible.</p></div><p>The questions test the moves you&rsquo;d actually make on a call: naming the three new platform objects, handling the cloud-platform competitive objection, applying the qualifying question, framing the AI-risk story, and connecting Data Products to the governance team&rsquo;s prior work.</p><p>You can retry if you don&rsquo;t pass first time. When you finish, your score is recorded and the course is marked complete.</p><div class=\"callout\"><div class=\"callout-title\">Quick reminder before you start</div>The <strong>one qualifying question</strong> is whether the prospect is using Ataccama as their primary catalog. The <strong>competitive line vs. cloud platforms</strong> is &ldquo;we complement, not replace.&rdquo; The <strong>differentiator vs. direct vendors</strong> is the Data Trust Index.</div>", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">Assessment</span><h2>Five questions — 80% to pass</h2><p class=\"subhead\">Mostly scenario-based. Read the stem carefully — most distractors are plausible.</p></div><p>The questions test the moves you&rsquo;d actually make on a call: naming the three new platform objects, handling the cloud-platform competitive objection, applying the qualifying question, framing the AI-risk story, and connecting Data Products to the governance team&rsquo;s prior work.</p><p>You can retry if you don&rsquo;t pass first time. When you finish, your score is recorded and the course is marked complete.</p><div class=\"callout\"><div class=\"callout-title\">Quick reminder before you start</div>The <strong>one qualifying question</strong> is whether the prospect is using Ataccama as their primary catalog. The <strong>competitive line vs. cloud platforms</strong> is &ldquo;we complement, not replace.&rdquo; The <strong>differentiator vs. direct vendors</strong> is the Data Trust Index.</div>"}]}, {"type": "quiz", "title": "Final Quiz — Q1 of 5", "question": "This release introduces three new objects in the Ataccama platform. Which three? (Select all that apply.)", "kind": "multi", "options": ["Business Processes", "Data Product Object", "Data Domains", "Data Trust Index", "Data Quality Rules"], "correct": [0, 1, 2], "explanation": "The three new platform objects are Business Processes (real workflows the data product supports), the Data Product Object (the central business concept with ownership, criticality, processes, and physical mapping), and Data Domains (logical groupings that scope where products belong). Data Trust Index is a <em>signal</em> that lives on a data product — important capability, not a separate object. Data Quality Rules are an existing Ataccama capability, not new in this release.", "scored": true}, {"type": "quiz", "title": "Final Quiz — Q2 of 5", "question": "A CDAIO says: <em>&ldquo;We&rsquo;re already building data products inside Snowflake Horizon. Why do I need Ataccama&rsquo;s data products?&rdquo;</em> What is the best opening response?", "kind": "single", "options": ["&ldquo;Horizon isn&rsquo;t a real catalog — Ataccama would replace it.&rdquo;", "&ldquo;We&rsquo;re cheaper and faster than Horizon — let me show you a comparison.&rdquo;", "&ldquo;Horizon&rsquo;s data products live inside Snowflake. Ours span physical implementations, carry ownership, surface a live trust score, and can be consumed by AI — and we complement Horizon, not replace it.&rdquo;", "&ldquo;Snowflake Horizon doesn&rsquo;t support AI use cases, so you&rsquo;ll have to swap it out before you can do agentic work.&rdquo;"], "correct": [2], "explanation": "Horizon&rsquo;s data products are bounded by Snowflake; Ataccama&rsquo;s span physical implementations, carry business ownership, and ride on a live, explainable trust score. The critical phrase is &ldquo;we complement, not replace&rdquo; — pitching a swap against an active Snowflake investment kills the deal. The &ldquo;cheaper and faster&rdquo; and &ldquo;Horizon can&rsquo;t do AI&rdquo; framings are both wrong: the differentiation is the layer we operate on, not price or AI-capability claims about Horizon.", "scored": true}, {"type": "quiz", "title": "Final Quiz — Q3 of 5", "question": "You&rsquo;re mid-deal with a prospect on Ataccama DQ + Observability + Gates. They are <strong>not</strong> currently using Ataccama as their primary catalog. Should you bring Data Products into the conversation?", "kind": "single", "options": ["Yes — Data Products is a separate SKU, position it for additional revenue.", "No — lead with DQ, Observability, and Gates. Data Products comes in naturally if and when Ataccama becomes their primary catalog.", "Yes — Data Products replaces the need for the DQ pitch entirely, so refocus the deal.", "No — Data Products is enterprise-only and most mid-market prospects don&rsquo;t qualify."], "correct": [1], "explanation": "The qualifying question is whether the prospect is using Ataccama as their primary catalog. If not, lead with the existing pitch — Data Products is not a separate SKU, doesn&rsquo;t replace DQ, and isn&rsquo;t gated by tier. Forcing it in when the foundations aren&rsquo;t there confuses the story and weakens the deal.", "scored": true}, {"type": "quiz", "title": "Final Quiz — Q4 of 5", "question": "A safety engineer at a utility uses an AI pipeline to route maintenance crews. The pipeline pulls <code>asset_records_v2</code> — mostly correct, but for legacy circuits it should pull <code>asset_records_legacy</code>. Why is this AI risk amplification, not just a regular data error?", "kind": "single", "options": ["AI pipelines run faster than humans, so they produce more errors per hour.", "AI is biased toward newer tables by default and will always pick the wrong one.", "AI lacks human intuition — it processes whatever it&rsquo;s given without catching the anomaly, and scales the wrong choice across every downstream model, recommendation, and decision.", "AI pipelines cannot read documentation, so any ambiguous table choice will fail entirely."], "correct": [2], "explanation": "A human analyst tends to catch a &ldquo;this looks wrong&rdquo; anomaly. An AI pipeline applies no intuition — it processes whatever it&rsquo;s given, every run, and scales the mistake across every downstream output. The infrastructure ambiguity becomes an AI compounding problem. The other options misframe the mechanism: speed alone isn&rsquo;t the issue, there&rsquo;s no &ldquo;newer-table bias&rdquo;, and AI doesn&rsquo;t fail loudly — it fails silently at scale.", "scored": true}, {"type": "quiz", "title": "Final Quiz — Q5 of 5", "question": "A governance team lead at a prospect says: <em>&ldquo;We&rsquo;ve spent two years building catalogs and glossaries. None of that work has changed how confident the business is in our data. How does this launch change that?&rdquo;</em> What&rsquo;s the best answer?", "kind": "single", "options": ["&ldquo;Data Products replaces your catalog with a more accurate one — you can retire the work you&rsquo;ve done.&rdquo;", "&ldquo;Data Products adds a live, explainable Data Trust Index on top of the governance work you&rsquo;ve already done — so &lsquo;can this data be used right now?&rsquo; finally has a real, current answer.&rdquo;", "&ldquo;Data Products doesn&rsquo;t help governance teams — it&rsquo;s primarily for analysts and AI engineers.&rdquo;", "&ldquo;You&rsquo;ll need to throw away the business glossary and start over with our model.&rdquo;"], "correct": [1], "explanation": "The Data Trust Index is the live, measurable signal that finally connects governance work to actual usability. The two-year investment isn&rsquo;t replaced — it&rsquo;s surfaced. This is the exact answer to &ldquo;governance as an end in itself&rdquo;: documentation existed, but no one could answer &ldquo;is this fit for purpose right now?&rdquo; Now they can. The &ldquo;replace&rdquo; and &ldquo;throw away&rdquo; framings are wrong and self-destructive on a governance-lead call.", "scored": true}, {"type": "content", "title": "Next steps", "html": "<div class=\"section-opener\"><span class=\"eyebrow\">Launch &amp; Roadmap</span><h2>Launch: June 2, 2026</h2><p class=\"subhead\">Day 2 of Snowflake Summit. Press release covers Data Products, MCP for Cortex Code, and Ataccama joining the Open Semantic Interchange (OSI) initiative.</p></div><h3>Available assets</h3><ul><li>Launch blog, &ldquo;What are data products&rdquo;, &ldquo;What makes Ataccama data products different&rdquo;</li><li>Technical solution brief</li><li>Interactive product walkthrough</li><li>Launch video</li><li>Socials and nurture streams</li></ul><h3>Coming next</h3><ul><li><strong>H2 2026:</strong> MCP-based access to data products. Lightweight data marketplace — beta Q3, GA December 2026.</li><li><strong>2027:</strong> Full policy management and custom workflows, full semantic layer, comprehensive data contracts.</li></ul>", "body": [{"kind": "html", "value": "<div class=\"section-opener\"><span class=\"eyebrow\">Launch &amp; Roadmap</span><h2>Launch: June 2, 2026</h2><p class=\"subhead\">Day 2 of Snowflake Summit. Press release covers Data Products, MCP for Cortex Code, and Ataccama joining the Open Semantic Interchange (OSI) initiative.</p></div><h3>Available assets</h3><ul><li>Launch blog, &ldquo;What are data products&rdquo;, &ldquo;What makes Ataccama data products different&rdquo;</li><li>Technical solution brief</li><li>Interactive product walkthrough</li><li>Launch video</li><li>Socials and nurture streams</li></ul><h3>Coming next</h3><ul><li><strong>H2 2026:</strong> MCP-based access to data products. Lightweight data marketplace — beta Q3, GA December 2026.</li><li><strong>2027:</strong> Full policy management and custom workflows, full semantic layer, comprehensive data contracts.</li></ul>"}]}];
+var MASTERY_SCORE = 80;
+
+// Separate content and quiz slides
+var CONTENT_SLIDES = SLIDES.filter(function (s) { return s.type !== "quiz"; });
+var QUIZ_SLIDES = SLIDES.filter(function (s) { return s.type === "quiz"; });
+var SCORED_QUIZ_COUNT = QUIZ_SLIDES.filter(function (s) { return s.scored !== false; }).length;
+
+// State
+var phase = "content";  // "content" | "quiz" | "done"
+var currentQuizIdx = 0;  // index within QUIZ_SLIDES
+var answers = {};       // quizIdx (within QUIZ_SLIDES) -> {selected, submitted, correct}
+
+// SCORM 1.2 API
+var API = null;
+function findAPI(win) {
+  var tries = 0;
+  while (win.API == null && win.parent != null && win.parent != win && tries < 10) {
+    tries++; win = win.parent;
+  }
+  return win.API || null;
+}
+function scormInit() {
+  API = findAPI(window);
+  if (!API) { console.log("[SCORM] No LMS API found — standalone mode"); return; }
+  var r = API.LMSInitialize("");
+  console.log("[SCORM] LMSInitialize:", r);
+}
+function scormGet(k) { return API ? API.LMSGetValue(k) : ""; }
+function scormSet(k, v) { if (API) API.LMSSetValue(k, String(v)); }
+function scormCommit() { if (API) API.LMSCommit(""); }
+function scormFinish() { if (API) API.LMSFinish(""); }
+
+function escapeHTML(s) {
+  if (s == null) return "";
+  return String(s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function computeScore() {
+  if (SCORED_QUIZ_COUNT === 0) return null;
+  var correct = 0;
+  QUIZ_SLIDES.forEach(function (s, qi) {
+    if (s.scored === false) return;
+    var a = answers[qi];
+    if (a && a.submitted && a.correct) correct++;
+  });
+  return Math.round(correct / SCORED_QUIZ_COUNT * 100);
+}
+
+// ----- Engagement tracking -----
+// REQUIRED_INTERACTIVES: array of unique IDs ("s0b3" etc.) that the learner must engage with
+// ENGAGED: set of IDs they've engaged with so far
+var REQUIRED_INTERACTIVES = [];
+var ENGAGED = {};
+
+function interactiveId(slideIdx, blockIdx) { return "s" + slideIdx + "b" + blockIdx; }
+
+function markEngaged(id) {
+  if (ENGAGED[id]) return;
+  ENGAGED[id] = true;
+  updateBeginAssessmentButton();
+}
+
+function updateBeginAssessmentButton() {
+  var btn = document.getElementById("btn-begin-quiz");
+  var label = document.getElementById("cta-label");
+  var pending = REQUIRED_INTERACTIVES.filter(function (id) { return !ENGAGED[id]; });
+
+  if (pending.length > 0) {
+    btn.disabled = true;
+    btn.title = "Engage with all activities above before continuing.";
+    var n = REQUIRED_INTERACTIVES.length, done = n - pending.length;
+    if (QUIZ_SLIDES.length > 0) {
+      label.innerHTML = "<strong>" + done + " of " + n + "</strong> activities completed — finish the rest to unlock the assessment.";
+    } else {
+      label.innerHTML = "<strong>" + done + " of " + n + "</strong> activities completed.";
+    }
+  } else {
+    btn.disabled = false;
+    btn.title = "";
+    if (QUIZ_SLIDES.length > 0) {
+      label.textContent = "When you're ready, take the assessment.";
+    } else {
+      label.textContent = "When you're ready, mark this course complete.";
+    }
+  }
+}
+
+// ----- Render content phase -----
+function renderContent() {
+  var doc = document.getElementById("content-doc");
+  REQUIRED_INTERACTIVES = [];
+
+  var sectionsHtml = CONTENT_SLIDES.map(function (s, si) {
+    var blocks = s.body || [{kind: "html", value: s.html || ""}];
+    var blocksHtml = blocks.map(function (b, bi) {
+      var id = interactiveId(si, bi);
+      return renderBlock(b, id, si, bi);
+    }).join("");
+
+    // Decide whether to auto-inject a section title
+    var firstHtmlBlock = blocks.find(function (b) { return b.kind === "html"; });
+    var firstHtml = firstHtmlBlock ? (firstHtmlBlock.value || "") : "";
+    var hasOwnHeader = /class\s*=\s*["'][^"']*(title-hero|section-opener)/.test(firstHtml) ||
+                       /<h[12][\s>]/i.test(firstHtml);
+    var auto = "";
+    if (!hasOwnHeader && s.title) {
+      auto = '<span class="auto-title">' + escapeHTML(s.title) + '</span>';
+    }
+    return '<section class="content-section">' + auto + blocksHtml + '</section>';
+  });
+  doc.innerHTML = sectionsHtml.join("");
+
+  // Attach drag-and-drop after DOM render
+  wireDragSortBlocks();
+
+  // CTA label/button
+  var btn = document.getElementById("btn-begin-quiz");
+  var label = document.getElementById("cta-label");
+  if (QUIZ_SLIDES.length > 0) {
+    btn.innerHTML = "Begin assessment &#8594;";
+  } else {
+    btn.innerHTML = "Finish course &#10003;";
+  }
+  updateBeginAssessmentButton();
+}
+
+// ----- Block dispatch -----
+function renderBlock(block, id, si, bi) {
+  switch (block.kind) {
+    case "html":             return block.value || "";
+    case "accordion":        REQUIRED_INTERACTIVES.push(id); return renderAccordion(block, id);
+    case "drag-sort":        REQUIRED_INTERACTIVES.push(id); return renderDragSort(block, id);
+    case "knowledge-check":  REQUIRED_INTERACTIVES.push(id); return renderKnowledgeCheck(block, id);
+    case "branching":        REQUIRED_INTERACTIVES.push(id); return renderBranching(block, id);
+    default:                 return "";
+  }
+}
+
+function pillHtml(id) {
+  var done = !!ENGAGED[id];
+  return '<span class="engagement-pill ' + (done ? 'done' : 'pending') + '" id="pill-' + id + '">' +
+         (done ? '&#10003; Completed' : 'Required') + '</span>';
+}
+
+function setPillDone(id) {
+  var p = document.getElementById("pill-" + id);
+  if (p) { p.className = "engagement-pill done"; p.innerHTML = "&#10003; Completed"; }
+}
+
+// ----- Accordion -----
+function renderAccordion(block, id) {
+  var itemsHtml = block.items.map(function (it, idx) {
+    return '<div class="accordion-item" data-acc="' + id + '" data-itemidx="' + idx + '">' +
+           '<div class="accordion-head" onclick="toggleAccordion(this, \'' + id + '\', ' + idx + ')">' +
+             '<span>' + escapeHTML(it.label || "") + '</span>' +
+             '<span class="chev">+</span>' +
+           '</div>' +
+           '<div class="accordion-body">' + (it.detail || "") + '</div>' +
+           '</div>';
+  }).join("");
+
+  return '<div class="interactive-block" id="' + id + '">' +
+         '<div class="interactive-block-header">' +
+           '<span class="label">Explore</span>' +
+           '<span class="title">' + escapeHTML(block.title || "Click each to learn more") + '</span>' +
+           pillHtml(id) +
+         '</div>' +
+         '<div class="accordion-list">' + itemsHtml + '</div>' +
+         '</div>';
+}
+
+function toggleAccordion(headEl, id, itemIdx) {
+  var item = headEl.closest(".accordion-item");
+  var wasOpen = item.classList.contains("opened");
+  item.classList.toggle("opened");
+
+  if (!wasOpen) {
+    // Track which items opened; engaged once ALL items have been opened at least once
+    if (!ENGAGED["__acc_" + id]) ENGAGED["__acc_" + id] = {};
+    ENGAGED["__acc_" + id][itemIdx] = true;
+    var total = document.querySelectorAll('[data-acc="' + id + '"]').length;
+    var opened = Object.keys(ENGAGED["__acc_" + id]).length;
+    if (opened >= total) {
+      markEngaged(id);
+      setPillDone(id);
+    }
+  }
+}
+
+// ----- Drag-sort -----
+function renderDragSort(block, id) {
+  var poolItems = block.items.map(function (it, idx) {
+    return '<div class="drag-card" draggable="true" data-ds="' + id + '" data-idx="' + idx + '" data-correct="' + escapeHTML(it.correct) + '">' +
+           escapeHTML(it.text) + '</div>';
+  }).join("");
+
+  var bucketsHtml = block.buckets.map(function (b) {
+    return '<div class="drag-bucket" data-ds="' + id + '" data-bucket="' + escapeHTML(b.id) + '">' +
+           '<div class="drag-bucket-label">' + escapeHTML(b.label) + '</div>' +
+           '<div class="drag-bucket-items"></div>' +
+           '</div>';
+  }).join("");
+
+  return '<div class="interactive-block" id="' + id + '">' +
+         '<div class="interactive-block-header">' +
+           '<span class="label">Drag &amp; sort</span>' +
+           '<span class="title">' + escapeHTML(block.title || "Sort each item") + '</span>' +
+           pillHtml(id) +
+           '<div class="prompt">' + escapeHTML(block.prompt) + '</div>' +
+         '</div>' +
+         '<div class="drag-sort" data-ds-root="' + id + '">' +
+           '<div class="drag-pool" data-ds="' + id + '" data-bucket="__pool__">' + poolItems + '</div>' +
+           '<div class="drag-buckets">' + bucketsHtml + '</div>' +
+           '<div class="drag-check-row">' +
+             '<button class="btn btn-primary" id="ds-check-' + id + '" onclick="checkDragSort(\'' + id + '\')">Check answers</button>' +
+             '<span class="drag-result" id="ds-result-' + id + '"></span>' +
+           '</div>' +
+           '<div class="quiz-feedback" id="ds-expl-' + id + '"></div>' +
+         '</div>' +
+         '</div>';
+}
+
+function wireDragSortBlocks() {
+  document.querySelectorAll('[data-ds-root]').forEach(function (root) {
+    var id = root.getAttribute("data-ds-root");
+    root.querySelectorAll('.drag-card').forEach(function (card) {
+      card.addEventListener("dragstart", function (e) {
+        if (card.classList.contains("locked")) { e.preventDefault(); return; }
+        card.classList.add("dragging");
+        e.dataTransfer.setData("text/plain", id + "|" + card.getAttribute("data-idx"));
+        e.dataTransfer.effectAllowed = "move";
+      });
+      card.addEventListener("dragend", function () { card.classList.remove("dragging"); });
+    });
+    var dropTargets = root.querySelectorAll('.drag-bucket, .drag-pool');
+    dropTargets.forEach(function (zone) {
+      zone.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        zone.classList.add("drop-target");
+      });
+      zone.addEventListener("dragleave", function () { zone.classList.remove("drop-target"); });
+      zone.addEventListener("drop", function (e) {
+        e.preventDefault();
+        zone.classList.remove("drop-target");
+        var data = e.dataTransfer.getData("text/plain");
+        if (!data || data.indexOf(id + "|") !== 0) return;
+        var idx = data.split("|")[1];
+        var card = root.querySelector('.drag-card[data-idx="' + idx + '"]');
+        if (!card || card.classList.contains("locked")) return;
+        var itemsContainer = zone.classList.contains("drag-pool") ? zone : zone.querySelector(".drag-bucket-items");
+        itemsContainer.appendChild(card);
+      });
+    });
+  });
+}
+
+function checkDragSort(id) {
+  var root = document.querySelector('[data-ds-root="' + id + '"]');
+  if (!root) return;
+  var cards = root.querySelectorAll('.drag-card');
+  var pool = root.querySelector('.drag-pool');
+  var unplacedInPool = pool.querySelectorAll('.drag-card').length;
+  if (unplacedInPool > 0) {
+    var res = document.getElementById("ds-result-" + id);
+    res.className = "drag-result show partial";
+    res.textContent = "Place all " + unplacedInPool + " remaining item" +
+                      (unplacedInPool === 1 ? "" : "s") + " before checking.";
+    return;
+  }
+
+  var correctCount = 0;
+  cards.forEach(function (card) {
+    var bucket = card.closest(".drag-bucket");
+    var inBucket = bucket ? bucket.getAttribute("data-bucket") : null;
+    var expected = card.getAttribute("data-correct");
+    card.classList.add("locked");
+    if (inBucket === expected) {
+      card.classList.add("correct");
+      correctCount++;
+    } else {
+      card.classList.add("incorrect");
+    }
+  });
+
+  // Lock the block
+  root.querySelector('#ds-check-' + id).disabled = true;
+  var res = document.getElementById("ds-result-" + id);
+  if (correctCount === cards.length) {
+    res.className = "drag-result show correct";
+    res.innerHTML = "&#10003; All " + cards.length + " correct";
+  } else {
+    res.className = "drag-result show partial";
+    res.innerHTML = correctCount + " of " + cards.length + " correct — review the highlights.";
+  }
+
+  // Show explanation
+  var block = findBlockById(id);
+  if (block && block.explanation) {
+    var ex = document.getElementById("ds-expl-" + id);
+    ex.className = "quiz-feedback show correct";
+    ex.innerHTML = '<div class="quiz-feedback-title">Why</div>' + (block.explanation || "");
+  }
+
+  markEngaged(id);
+  setPillDone(id);
+}
+
+function findBlockById(id) {
+  // id format "sNbM"
+  var m = id.match(/^s(\d+)b(\d+)$/);
+  if (!m) return null;
+  var slide = CONTENT_SLIDES[parseInt(m[1], 10)];
+  if (!slide) return null;
+  var body = slide.body || [];
+  return body[parseInt(m[2], 10)] || null;
+}
+
+// ----- Inline knowledge check -----
+function renderKnowledgeCheck(block, id) {
+  var letters = "ABCDEFGHIJ";
+  var multi = block.qkind === "multi";
+  var optsHtml = block.options.map(function (opt, oi) {
+    var classes = ["quiz-option"];
+    if (multi) classes.push("multi");
+    var markerText = multi ? "" : letters[oi];
+    return '<div class="' + classes.join(" ") + '" data-kc="' + id + '" data-opt="' + oi + '" ' +
+           'onclick="toggleKCheck(\'' + id + '\',' + oi + ',' + multi + ')">' +
+           '<span class="marker">' + markerText + '</span>' +
+           '<span>' + opt + '</span>' +
+           '</div>';
+  }).join("");
+
+  var hint = multi ? '<div class="quiz-hint">Select all that apply.</div>' : '';
+
+  return '<div class="interactive-block" id="' + id + '">' +
+         '<div class="interactive-block-header">' +
+           '<span class="label">Knowledge check</span>' +
+           '<span class="title">' + escapeHTML(block.title || "Quick check") + '</span>' +
+           pillHtml(id) +
+         '</div>' +
+         '<div class="kcheck" data-kc-root="' + id + '">' +
+           '<div class="quiz-question">' + block.question + '</div>' +
+           hint +
+           '<div class="quiz-options">' + optsHtml + '</div>' +
+           '<div class="quiz-submit-row"><button class="btn btn-primary" id="kc-submit-' + id + '" ' +
+             'onclick="submitKCheck(\'' + id + '\')" disabled>Submit Answer</button></div>' +
+           '<div class="quiz-feedback" id="kc-fb-' + id + '"></div>' +
+         '</div>' +
+         '</div>';
+}
+
+var KC_SELECTED = {};  // id -> array of selected indices
+
+function toggleKCheck(id, optIdx, multi) {
+  if (ENGAGED[id]) return;  // already submitted
+  if (!KC_SELECTED[id]) KC_SELECTED[id] = [];
+  var sel = KC_SELECTED[id];
+  if (multi) {
+    var pos = sel.indexOf(optIdx);
+    if (pos === -1) sel.push(optIdx); else sel.splice(pos, 1);
+  } else {
+    KC_SELECTED[id] = [optIdx];
+  }
+  // Refresh option visuals
+  var root = document.querySelector('[data-kc-root="' + id + '"]');
+  root.querySelectorAll('.quiz-option').forEach(function (el) {
+    var oi = parseInt(el.getAttribute("data-opt"), 10);
+    el.classList.toggle("selected", KC_SELECTED[id].indexOf(oi) !== -1);
+    var marker = el.querySelector(".marker");
+    if (multi) marker.innerHTML = KC_SELECTED[id].indexOf(oi) !== -1 ? "&#10003;" : "";
+  });
+  document.getElementById("kc-submit-" + id).disabled = KC_SELECTED[id].length === 0;
+}
+
+function submitKCheck(id) {
+  if (ENGAGED[id]) return;
+  var sel = (KC_SELECTED[id] || []).slice().sort();
+  if (sel.length === 0) return;
+  var block = findBlockById(id);
+  if (!block) return;
+  var correct = block.correct.slice().sort();
+  var isCorrect = (sel.length === correct.length) &&
+                  sel.every(function (v, i) { return v === correct[i]; });
+
+  // Lock the inputs + show feedback
+  var root = document.querySelector('[data-kc-root="' + id + '"]');
+  root.querySelectorAll('.quiz-option').forEach(function (el) {
+    el.classList.add("disabled");
+    var oi = parseInt(el.getAttribute("data-opt"), 10);
+    var isOptCorrect = block.correct.indexOf(oi) !== -1;
+    if (isOptCorrect) el.classList.add("correct");
+    else if (sel.indexOf(oi) !== -1) el.classList.add("incorrect");
+    el.onclick = null;
+  });
+  document.getElementById("kc-submit-" + id).disabled = true;
+  document.getElementById("kc-submit-" + id).style.display = "none";
+
+  var fb = document.getElementById("kc-fb-" + id);
+  fb.className = "quiz-feedback show " + (isCorrect ? "correct" : "incorrect");
+  fb.innerHTML = '<div class="quiz-feedback-title">' + (isCorrect ? "Correct" : "Not quite") +
+                 '</div>' + (block.explanation || "");
+
+  markEngaged(id);
+  setPillDone(id);
+}
+
+// ----- Branching scenario -----
+function renderBranching(block, id) {
+  var branchesHtml = block.branches.map(function (br, idx) {
+    return '<button class="branch-btn" data-br="' + id + '" data-idx="' + idx + '" ' +
+           'onclick="pickBranch(\'' + id + '\',' + idx + ')">' +
+           escapeHTML(br.label) +
+           '</button>';
+  }).join("");
+
+  return '<div class="interactive-block" id="' + id + '">' +
+         '<div class="interactive-block-header">' +
+           '<span class="label">Scenario</span>' +
+           '<span class="title">' + escapeHTML(block.title || "What would you do?") + '</span>' +
+           pillHtml(id) +
+         '</div>' +
+         '<div class="branching" data-br-root="' + id + '">' +
+           (block.scenario ? '<div class="branching-scenario">' + block.scenario + '</div>' : "") +
+           '<div class="branching-branches">' + branchesHtml + '</div>' +
+           '<div class="branch-outcome" id="br-outcome-' + id + '"></div>' +
+         '</div>' +
+         '</div>';
+}
+
+function pickBranch(id, branchIdx) {
+  if (ENGAGED[id]) return;
+  var block = findBlockById(id);
+  if (!block) return;
+  var branch = block.branches[branchIdx];
+  if (!branch) return;
+
+  var root = document.querySelector('[data-br-root="' + id + '"]');
+  root.querySelectorAll('.branch-btn').forEach(function (b) {
+    b.disabled = true;
+    var idx = parseInt(b.getAttribute("data-idx"), 10);
+    if (idx === branchIdx) {
+      b.classList.add("picked");
+      b.classList.add(branch.verdict);
+    }
+  });
+
+  var verdictLabel = {strong: "Strong move", weak: "Risky move", neutral: "Worth a thought"}[branch.verdict] || "Outcome";
+  var out = document.getElementById("br-outcome-" + id);
+  out.className = "branch-outcome show";
+  out.innerHTML = '<span class="verdict ' + branch.verdict + '">' + verdictLabel + '</span>' +
+                  '<div>' + (branch.consequence || "") + '</div>';
+
+  markEngaged(id);
+  setPillDone(id);
+}
+
+function updateProgressBar() {
+  // In content phase, track scroll. In quiz phase, track questions answered.
+  if (phase === "content") {
+    var sh = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = sh > 0 ? Math.min(100, (window.scrollY / sh) * 100) : 0;
+    // Cap content at 60% so the quiz can fill the rest
+    var contentPct = QUIZ_SLIDES.length > 0 ? pct * 0.6 : pct;
+    document.getElementById("progress-bar-fill").style.width = contentPct + "%";
+  } else if (phase === "quiz") {
+    var answered = 0;
+    QUIZ_SLIDES.forEach(function (s, qi) {
+      if (answers[qi] && answers[qi].submitted) answered++;
+    });
+    var pct = 60 + (answered / Math.max(1, QUIZ_SLIDES.length)) * 40;
+    document.getElementById("progress-bar-fill").style.width = pct + "%";
+  } else {
+    document.getElementById("progress-bar-fill").style.width = "100%";
+  }
+}
+
+// ----- Phase transitions -----
+function goToQuizPhase() {
+  if (QUIZ_SLIDES.length === 0) {
+    // No quiz — finish immediately
+    completeCourse();
+    return;
+  }
+  phase = "quiz";
+  document.getElementById("content-phase").style.display = "none";
+  document.getElementById("quiz-phase").style.display = "block";
+
+  // Quiz intro stats
+  var stats = QUIZ_SLIDES.length + " question" + (QUIZ_SLIDES.length === 1 ? "" : "s") + ".";
+  if (SCORED_QUIZ_COUNT > 0) {
+    stats += " Passing score: " + MASTERY_SCORE + "%.";
+  }
+  document.getElementById("quiz-intro-stats").textContent = stats;
+
+  currentQuizIdx = 0;
+  renderQuizSlide();
+  window.scrollTo(0, 0);
+  scormSet("cmi.core.lesson_location", "quiz:0");
+  scormCommit();
+}
+
+function backToContent() {
+  phase = "content";
+  document.getElementById("content-phase").style.display = "block";
+  document.getElementById("quiz-phase").style.display = "none";
+  window.scrollTo(0, 0);
+  updateProgressBar();
+  scormSet("cmi.core.lesson_location", "content");
+  scormCommit();
+}
+
+// ----- Render quiz slide -----
+function renderQuizSlide() {
+  var slide = QUIZ_SLIDES[currentQuizIdx];
+  var total = QUIZ_SLIDES.length;
+
+  document.getElementById("slide-title").textContent = slide.title || ("Question " + (currentQuizIdx + 1));
+  document.getElementById("slide-counter").textContent = "Question " + (currentQuizIdx + 1) + " of " + total;
+
+  var kindTag = document.getElementById("slide-kind-tag");
+  kindTag.style.display = "inline-block";
+  kindTag.textContent = slide.scored === false ? "Knowledge Check" : "Quiz";
+
+  document.getElementById("slide-body").innerHTML = renderQuizBody(slide, currentQuizIdx);
+
+  // Nav button states
+  document.getElementById("btn-prev").disabled = (currentQuizIdx === 0);
+  var isLast = (currentQuizIdx === total - 1);
+  document.getElementById("btn-next").style.display = isLast ? "none" : "inline-block";
+  document.getElementById("btn-complete").style.display = isLast ? "inline-block" : "none";
+
+  refreshNavGating();
+  updateProgressBar();
+  scormSet("cmi.core.lesson_location", "quiz:" + currentQuizIdx);
+  scormCommit();
+}
+
+function renderQuizBody(slide, qi) {
+  var existing = answers[qi];
+  var multi = (slide.kind === "multi");
+  var letters = "ABCDEFGHIJ";
+
+  var optsHtml = slide.options.map(function (opt, oi) {
+    var classes = ["quiz-option"];
+    if (multi) classes.push("multi");
+
+    var isSelected = existing && existing.selected.indexOf(oi) !== -1;
+    if (isSelected) classes.push("selected");
+
+    if (existing && existing.submitted) {
+      classes.push("disabled");
+      var isCorrect = slide.correct.indexOf(oi) !== -1;
+      if (isCorrect) classes.push("correct");
+      else if (isSelected) classes.push("incorrect");
+    }
+
+    var markerText = multi ? (isSelected ? "&#10003;" : "") : letters[oi];
+    var onclick = existing && existing.submitted ? "" :
+      'onclick="toggleOption(' + qi + ',' + oi + ',' + multi + ')"';
+
+    return '<div class="' + classes.join(" ") + '" ' + onclick + '>' +
+           '<span class="marker">' + markerText + '</span>' +
+           '<span>' + opt + '</span>' +
+           '</div>';
+  }).join("");
+
+  var hint = multi ? '<div class="quiz-hint">Select all that apply.</div>' : '';
+
+  var feedback = "";
+  if (existing && existing.submitted) {
+    var fbClass = existing.correct ? "correct" : "incorrect";
+    var fbTitle = existing.correct ? "Correct" : "Not quite";
+    var expl = slide.explanation || "";
+    feedback = '<div class="quiz-feedback show ' + fbClass + '">' +
+               '<div class="quiz-feedback-title">' + fbTitle + '</div>' +
+               '<div>' + expl + '</div></div>';
+  }
+
+  var submitBtn = "";
+  if (!existing || !existing.submitted) {
+    submitBtn = '<div class="quiz-submit-row"><button class="btn btn-primary" id="submit-quiz-btn" ' +
+                'onclick="submitQuiz(' + qi + ')" disabled>Submit Answer</button></div>';
+  }
+
+  return '<div class="quiz-question">' + slide.question + '</div>' +
+         hint +
+         '<div class="quiz-options">' + optsHtml + '</div>' +
+         feedback + submitBtn;
+}
+
+// ----- Quiz interaction -----
+function toggleOption(qi, optIdx, multi) {
+  var existing = answers[qi];
+  if (existing && existing.submitted) return;
+
+  if (!existing) answers[qi] = {selected: [], submitted: false, correct: false};
+  var sel = answers[qi].selected;
+
+  if (multi) {
+    var pos = sel.indexOf(optIdx);
+    if (pos === -1) sel.push(optIdx); else sel.splice(pos, 1);
+  } else {
+    answers[qi].selected = [optIdx];
+  }
+
+  renderQuizSlide();
+  var sBtn = document.getElementById("submit-quiz-btn");
+  if (sBtn) sBtn.disabled = answers[qi].selected.length === 0;
+}
+
+function submitQuiz(qi) {
+  var slide = QUIZ_SLIDES[qi];
+  var a = answers[qi];
+  if (!a || a.selected.length === 0) return;
+
+  var sel = a.selected.slice().sort();
+  var correct = slide.correct.slice().sort();
+  var isCorrect = (sel.length === correct.length) &&
+                   sel.every(function (v, i) { return v === correct[i]; });
+  a.submitted = true;
+  a.correct = isCorrect;
+
+  renderQuizSlide();
+}
+
+function refreshNavGating() {
+  var slide = QUIZ_SLIDES[currentQuizIdx];
+  var btnNext = document.getElementById("btn-next");
+  var btnComplete = document.getElementById("btn-complete");
+
+  var isScoredQuiz = (slide.scored !== false);
+  var submitted = answers[currentQuizIdx] && answers[currentQuizIdx].submitted;
+  var blocked = isScoredQuiz && !submitted;
+
+  if (blocked) {
+    btnNext.disabled = true;
+    btnComplete.disabled = true;
+    btnNext.title = "Submit your answer before continuing.";
+  } else {
+    btnNext.disabled = false;
+    btnComplete.disabled = false;
+    btnNext.title = "";
+  }
+}
+
+function prevQuiz() { if (currentQuizIdx > 0) { currentQuizIdx--; renderQuizSlide(); window.scrollTo(0, 0); } }
+function nextQuiz() { if (currentQuizIdx < QUIZ_SLIDES.length - 1) { currentQuizIdx++; renderQuizSlide(); window.scrollTo(0, 0); } }
+
+// ----- Completion -----
+function completeCourse() {
+  // Block completion if any scored quiz is unanswered
+  var unanswered = [];
+  QUIZ_SLIDES.forEach(function (s, qi) {
+    if (s.scored !== false && !(answers[qi] && answers[qi].submitted)) unanswered.push(qi);
+  });
+  if (unanswered.length > 0) {
+    alert("Please answer all " + SCORED_QUIZ_COUNT + " quiz question" +
+          (SCORED_QUIZ_COUNT === 1 ? "" : "s") + " before finishing. " +
+          "You have " + unanswered.length + " left.");
+    if (phase !== "quiz") goToQuizPhase();
+    currentQuizIdx = unanswered[0];
+    renderQuizSlide();
+    return;
+  }
+
+  var score = computeScore();  // null if no scored quizzes
+  var status, scoreToReport;
+
+  if (score === null) {
+    status = "completed";
+    scoreToReport = 100;
+  } else {
+    status = (score >= MASTERY_SCORE) ? "passed" : "failed";
+    scoreToReport = score;
+  }
+
+  scormSet("cmi.core.lesson_status", status);
+  scormSet("cmi.core.score.raw", scoreToReport);
+  scormSet("cmi.core.score.min", 0);
+  scormSet("cmi.core.score.max", 100);
+  scormCommit();
+  scormFinish();
+
+  showCompletionScreen(status, score);
+}
+
+function showCompletionScreen(status, score) {
+  phase = "done";
+  document.getElementById("content-phase").style.display = "none";
+  document.getElementById("quiz-phase").style.display = "none";
+  document.getElementById("progress-bar-fill").style.width = "100%";
+
+  var screen = document.getElementById("completion-screen");
+  screen.style.display = "block";
+  screen.classList.remove("passed", "failed");
+
+  var correctCount = 0;
+  QUIZ_SLIDES.forEach(function (s, qi) {
+    if (s.scored !== false && answers[qi] && answers[qi].correct) correctCount++;
+  });
+
+  if (status === "failed") {
+    screen.classList.add("failed");
+    document.getElementById("completion-badge").innerHTML = "!";
+    document.getElementById("completion-headline").textContent = "Not quite — please review and retry";
+    document.getElementById("completion-score").textContent = score + "%";
+    document.getElementById("completion-detail").textContent =
+      "You answered " + correctCount + " of " + SCORED_QUIZ_COUNT + " questions correctly.";
+    document.getElementById("completion-mastery").textContent =
+      "Passing score: " + MASTERY_SCORE + "%. Review the course and try the quiz again.";
+    document.getElementById("retry-btn").style.display = "inline-block";
+  } else {
+    screen.classList.add("passed");
+    document.getElementById("completion-badge").innerHTML = "&#10003;";
+    if (status === "passed") {
+      document.getElementById("completion-headline").textContent = "Course passed";
+      document.getElementById("completion-score").textContent = score + "%";
+      document.getElementById("completion-detail").textContent =
+        "You answered " + correctCount + " of " + SCORED_QUIZ_COUNT + " questions correctly.";
+      document.getElementById("completion-mastery").textContent = "Passing score: " + MASTERY_SCORE + "%.";
+    } else {
+      document.getElementById("completion-headline").textContent = "Course complete";
+      document.getElementById("completion-score").style.display = "none";
+      document.getElementById("completion-detail").textContent = "Your progress has been recorded.";
+      document.getElementById("completion-mastery").textContent = "";
+    }
+    document.getElementById("retry-btn").style.display = "none";
+  }
+  window.scrollTo(0, 0);
+}
+
+function retryQuiz() {
+  answers = {};
+  document.getElementById("completion-screen").style.display = "none";
+  document.getElementById("completion-score").style.display = "block";
+  goToQuizPhase();
+}
+
+// ----- Scroll tracking for progress bar -----
+window.addEventListener("scroll", function () {
+  if (phase === "content") updateProgressBar();
+}, {passive: true});
+
+// ----- Init -----
+window.onload = function () {
+  try {
+    scormInit();
+    renderContent();
+    var saved = scormGet("cmi.core.lesson_location");
+    if (saved && saved.indexOf("quiz:") === 0 && QUIZ_SLIDES.length > 0) {
+      var idx = parseInt(saved.split(":")[1], 10);
+      if (idx >= 0 && idx < QUIZ_SLIDES.length) {
+        goToQuizPhase();
+        currentQuizIdx = idx;
+        renderQuizSlide();
+      }
+    }
+    updateProgressBar();
+  } catch (err) {
+    console.error("[course] Init error:", err);
+    var doc = document.getElementById("content-doc");
+    if (doc) {
+      doc.innerHTML = '<section class="content-section" style="padding:40px 20px"><h2 style="color:#C62828">Course failed to load</h2>' +
+                      '<p>Open the browser console for details. Error:</p>' +
+                      '<pre style="background:#FFE6E7;padding:12px;border-radius:8px;overflow:auto">' +
+                      escapeHTML(String(err && err.stack || err)) + '</pre></section>';
+    }
+  }
+};
+</script>
+</body>
+</html>

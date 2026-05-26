@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Showpad Reports — ataccama</title>
+  <title>Showpad Weekly Reports — ataccama</title>
   <style>
     :root {
       --brand:   #1C3FAA;
@@ -41,16 +41,6 @@
     }
     .page-header h1 span { font-weight: 400; color: var(--muted); font-size: 1rem; }
     .meta { font-size: 0.78rem; color: var(--muted); text-align: right; line-height: 1.7; }
-
-    /* ── Section headings ── */
-    .section-heading {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--brand);
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      margin: 32px 0 12px;
-    }
 
     /* ── Latest button ── */
     .btn {
@@ -104,7 +94,6 @@
       font-size: 0.83rem;
     }
     td.action a:hover { text-decoration: underline; }
-    td.desc { color: var(--muted); font-size: 0.83rem; }
 
     /* ── Latest badge ── */
     .badge {
@@ -119,6 +108,39 @@
       border-radius: 99px;
       margin-left: 8px;
       vertical-align: middle;
+    }
+
+    /* ── Special reports ── */
+    .section-label {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--muted); margin-bottom: 10px;
+    }
+    .special-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .special-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px;
+      text-decoration: none; color: var(--text);
+      transition: box-shadow .15s, border-color .15s;
+      display: block;
+    }
+    .special-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 12px rgba(79,142,247,.12);
+    }
+    .special-card .card-icon { font-size: 1.4rem; margin-bottom: 8px; }
+    .special-card .card-title {
+      font-size: 0.95rem; font-weight: 700; color: var(--brand); margin-bottom: 4px;
+    }
+    .special-card .card-desc {
+      font-size: 0.8rem; color: var(--muted); line-height: 1.5;
+    }
+    .special-card .card-date {
+      font-size: 0.73rem; color: var(--muted); margin-top: 10px;
     }
 
     /* ── Empty state ── */
@@ -141,22 +163,43 @@
 <div class="container">
 
   <header class="page-header">
-    <h1>Showpad Reports &nbsp;<span>ataccama.showpad.biz</span></h1>
+    <h1>Showpad Weekly Reports &nbsp;<span>ataccama.showpad.biz</span></h1>
     <div class="meta">
-      Updated 2026-05-22<br/>
+      1 report available<br/>
+      Updated 2026-05-26 14:23 UTC
     </div>
   </header>
 
-  <!-- ── Weekly Reports ── -->
-  <div class="section-heading">Weekly Usage Reports</div>
+  <div style='margin-bottom:24px'><a class="btn" href="showpad_weekly_2026-05-22.html">View latest report →</a></div>
 
-  <div style='margin-bottom:24px'><a class="btn" href="showpad_weekly_2026-05-22.html">View latest weekly report →</a></div>
+  
+  <div class="section-label">Course Previews</div>
+  <div class="special-grid">
+    <a class="special-card course-card" href="courses/data-products-mcp-enablement-recap.html">
+      <div class="card-icon">🎓</div>
+      <div class="card-title">Data Products &amp; MCP — Enablement Recap</div>
+      <div class="card-desc">Interactive SCORM course preview — click to review before publishing to Showpad.</div>
+      <div class="card-date">Published: 2026-05-26</div>
+    </a>
+  </div>
+
+  
+  <div class="section-label">Tools &amp; Special Reports</div>
+  <div class="special-grid">
+    <a class="special-card" href="shared_spaces_2026-05-22.html">
+      <div class="card-icon">🔗</div>
+      <div class="card-title">Shared Spaces Report</div>
+      <div class="card-desc">Shared space activity, engagement metrics, and content access detail.</div>
+      <div class="card-date">Last generated: 2026-05-22</div>
+    </a>
+  </div>
 
   <div class="count-row">
-    <span class="count-label">All weekly reports — newest first</span>
+    <span class="count-label">All reports — newest first</span>
   </div>
 
   <div class="panel">
+    
     <table>
       <thead>
         <tr>
@@ -167,7 +210,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class='latest'>
+        <trclass='latest'>
           <td class="num">1</td>
           <td class="date">Fri 22 May 2026 <span class="badge">Latest</span></td>
           <td class="range">16–22 May 2026</td>
@@ -177,33 +220,7 @@
     </table>
   </div>
 
-  <!-- ── Ad-hoc Reports ── -->
-  <div class="section-heading">Ad-hoc Reports</div>
-
-  <div class="panel">
-    <table>
-      <thead>
-        <tr>
-          <th class="num">#</th>
-          <th>Report</th>
-          <th>Date</th>
-          <th>Description</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class='latest'>
-          <td class="num">1</td>
-          <td class="date">Shared Spaces <span class="badge">New</span></td>
-          <td class="range">22 May 2026</td>
-          <td class="desc">Shared spaces inventory — owners, activity, recipient counts</td>
-          <td class="action"><a href="shared_spaces_2026-05-22.html">Open report →</a></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
 </div>
-<footer>Weekly reports generated automatically every Monday · ataccama.showpad.biz</footer>
+<footer>Reports generated automatically every Monday · ataccama.showpad.biz</footer>
 </body>
 </html>
