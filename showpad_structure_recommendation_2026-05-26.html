@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Showpad Structural Recommendation — May 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --primary: #1a2b4a;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --success: #16a34a;
+    --success-light: #dcfce7;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --surface: #f8fafc;
+    --white: #ffffff;
+    --text: #0f172a;
+    --text-light: #475569;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--white);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ---- PRINT ---- */
+  @media print {
+    .no-print { display: none !important; }
+    body { font-size: 12px; }
+    .page-break { page-break-before: always; }
+    .card { break-inside: avoid; }
+    a { color: inherit; text-decoration: none; }
+  }
+
+  /* ---- LAYOUT ---- */
+  .document {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  /* ---- COVER ---- */
+  .cover {
+    background: linear-gradient(135deg, #1a2b4a 0%, #1e3a6e 60%, #2563eb 100%);
+    color: white;
+    padding: 80px 60px 60px;
+    margin: 0 -40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -60px;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
+  }
+  .cover-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-subtitle {
+    font-size: 18px;
+    opacity: 0.8;
+    margin-bottom: 48px;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    font-size: 12px;
+    opacity: 0.7;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-meta strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 1;
+    color: white;
+    margin-bottom: 2px;
+  }
+
+  /* ---- SECTION HEADERS ---- */
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+  h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+  .section-intro {
+    color: var(--text-light);
+    font-size: 15px;
+    margin-bottom: 32px;
+    max-width: 720px;
+    line-height: 1.7;
+  }
+  .section {
+    margin-bottom: 56px;
+  }
+  .section-divider {
+    border: none;
+    border-top: 2px solid var(--border);
+    margin: 56px 0;
+  }
+
+  /* ---- STAT CARDS ---- */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .stat-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-value.red { color: var(--danger); }
+  .stat-value.amber { color: var(--warning); }
+  .stat-value.green { color: var(--success); }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .stat-sub {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 4px;
+  }
+
+  /* ---- CARDS ---- */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card.accent {
+    border-left: 4px solid var(--accent);
+    background: var(--accent-light);
+  }
+  .card.warning {
+    border-left: 4px solid var(--warning);
+    background: var(--warning-light);
+  }
+  .card.danger {
+    border-left: 4px solid var(--danger);
+    background: var(--danger-light);
+  }
+  .card.success {
+    border-left: 4px solid var(--success);
+    background: var(--success-light);
+  }
+  .card p { margin-bottom: 8px; color: var(--text-light); line-height: 1.65; }
+  .card p:last-child { margin-bottom: 0; }
+
+  /* ---- PROBLEM LIST ---- */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .problem-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+  }
+  .problem-number {
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    background: var(--danger);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .problem-item h4 { margin-top: 4px; }
+  .problem-item p { font-size: 13px; color: var(--text-light); margin-top: 6px; }
+
+  /* ---- EVIDENCE BAR ---- */
+  .evidence-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 6px 0;
+    font-size: 12px;
+  }
+  .evidence-bar-label {
+    width: 160px;
+    flex-shrink: 0;
+    color: var(--text-light);
+    font-size: 11px;
+  }
+  .evidence-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .evidence-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+  .evidence-bar-fill.red { background: var(--danger); }
+  .evidence-bar-fill.amber { background: var(--warning); }
+  .evidence-bar-fill.green { background: var(--success); }
+  .evidence-bar-fill.blue { background: var(--accent); }
+  .evidence-bar-value {
+    width: 40px;
+    text-align: right;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--text);
+  }
+
+  /* ---- CHANNEL TABLE ---- */
+  .channel-grid {
+    display: grid;
+    gap: 12px;
+  }
+  .channel-row {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    align-items: start;
+    gap: 14px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.15s;
+  }
+  .channel-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .channel-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--primary);
+    margin-bottom: 3px;
+  }
+  .channel-desc {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  .channel-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-seller { background: #dbeafe; color: #1d4ed8; }
+  .badge-internal { background: #f1f5f9; color: #475569; }
+  .badge-pinned { background: #dcfce7; color: #15803d; }
+
+  /* ---- COMPARISON TABLE ---- */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .compare-table th {
+    background: var(--primary);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .compare-table th:first-child { border-radius: 8px 0 0 0; }
+  .compare-table th:last-child { border-radius: 0 8px 0 0; }
+  .compare-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:nth-child(even) td { background: var(--surface); }
+  .strike { text-decoration: line-through; color: var(--muted); }
+  .better { color: var(--success); font-weight: 600; }
+
+  /* ---- PRINCIPLE CARDS ---- */
+  .principle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .principle-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .principle-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .principle-card h4 { margin-bottom: 8px; font-size: 13px; }
+  .principle-card p { font-size: 12px; color: var(--text-light); }
+
+  /* ---- ROADMAP ---- */
+  .roadmap {
+    position: relative;
+    padding-left: 32px;
+  }
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 10px; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .roadmap-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .roadmap-dot {
+    position: absolute;
+    left: -27px;
+    top: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+  }
+  .roadmap-dot.phase1 { background: var(--accent); }
+  .roadmap-dot.phase2 { background: var(--warning); }
+  .roadmap-dot.phase3 { background: var(--success); }
+  .roadmap-item h4 {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .roadmap-phase {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .roadmap-phase.phase1 { color: var(--accent); }
+  .roadmap-phase.phase2 { color: var(--warning); }
+  .roadmap-phase.phase3 { color: var(--success); }
+  .roadmap-item ul {
+    margin-top: 6px;
+    padding-left: 16px;
+    color: var(--text-light);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  /* ---- OUTCOME GRID ---- */
+  .outcome-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .outcome-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .outcome-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .outcome-card h4 { font-size: 13px; margin-bottom: 4px; }
+  .outcome-card p { font-size: 12px; color: var(--text-light); }
+
+  /* ---- INSIGHT BOX ---- */
+  .insight-box {
+    background: var(--primary);
+    color: white;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 32px 0;
+  }
+  .insight-box h3 { color: white; margin-bottom: 12px; font-size: 18px; }
+  .insight-box p { color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 8px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+
+  /* ---- TOP ASSETS ---- */
+  .asset-list {
+    font-size: 12px;
+  }
+  .asset-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .asset-row:last-child { border-bottom: none; }
+  .asset-rank {
+    width: 20px;
+    height: 20px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .asset-name {
+    flex: 1;
+    color: var(--text);
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .asset-type {
+    font-size: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .asset-views {
+    width: 60px;
+    text-align: right;
+    font-weight: 600;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ---- FOOTNOTE ---- */
+  .footnote {
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    margin-top: 40px;
+  }
+
+  /* ---- PRINT BUTTON ---- */
+  .print-btn {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 100;
+  }
+  .print-btn:hover { background: #2563eb; }
+  @media print { .print-btn { display: none; } }
+
+  /* ---- TOC ---- */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+  .toc h3 { font-size: 14px; margin-bottom: 14px; color: var(--muted); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+  .toc ol { padding-left: 18px; }
+  .toc li { margin-bottom: 6px; font-size: 13px; }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* ---- HIGHLIGHT ---- */
+  .highlight {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 13px;
+    color: #78350f;
+  }
+  .highlight strong { color: #92400e; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">⬇ Save as PDF</button>
+
+<div class="document">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-badge">Strategic Recommendation</div>
+    <h1>Rebuilding Showpad<br>for the Seller</h1>
+    <div class="cover-subtitle">A structural redesign to increase content discoverability,<br>reduce friction, and drive adoption across the GTM team</div>
+    <div class="cover-meta">
+      <div><strong>Prepared for</strong>Ataccama GTM Leadership</div>
+      <div><strong>Date</strong>May 26, 2026</div>
+      <div><strong>Prepared by</strong>Sales Enablement / RevOps</div>
+      <div><strong>Status</strong>Draft — Recommendation Only</div>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#executive-summary">Executive Summary</a></li>
+      <li><a href="#current-state">Current State: The Data</a></li>
+      <li><a href="#problems">Six Structural Problems</a></li>
+      <li><a href="#principles">Design Principles for the Rebuild</a></li>
+      <li><a href="#new-structure">Recommended New Structure (7 Channels + Homepage Pinboard)</a></li>
+      <li><a href="#tagging">Tag Taxonomy: Build on What Exists, Fix the Gaps</a></li>
+      <li><a href="#superseded">Superseded Assets: What to Archive Now</a></li>
+      <li><a href="#freshness">Content Freshness Strategy</a></li>
+      <li><a href="#roadmap">Implementation Roadmap</a></li>
+      <li><a href="#outcomes">What Success Looks Like</a></li>
+    </ol>
+    <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border); font-size:12px; color:var(--muted)">
+      <strong>Supporting reports:</strong>
+      <a href="showpad_ytd_2026.html" style="color:var(--accent); margin: 0 8px">📊 YTD Engagement Report (Jan–May 2026)</a> ·
+      <a href="asset_hygiene.html" style="color:var(--accent); margin: 0 8px">🏷️ Asset Hygiene Report</a> ·
+      <a href="showpad_structure_mindmap_2026-05-26.html" style="color:var(--accent); margin: 0 8px">🗺️ Interactive Mindmap</a>
+    </div>
+  </div>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <div class="section" id="executive-summary">
+    <div class="section-label">01 — Executive Summary</div>
+    <h2>The case for restructuring</h2>
+    <p class="section-intro">Showpad holds 939 active assets across 21 channels. YTD engagement (Jan–May 2026) totalled 4,161 events from 111 unique users — but is declining sharply (–69% from February to May) and heavily concentrated in a single user. The top 25 assets absorb the vast majority of interactions, while 23% of active assets have never been viewed at all. The taxonomy has a real foundation (81.6% tagged) but critical gaps: 37% of assets have no audience label and 88% have no buying-stage tag. Sellers navigate a structure built around content <em>ownership</em> (who made it) rather than <em>intent</em> (what a seller needs right now). This document proposes collapsing 21 channels into 7, consolidating the tag taxonomy, and designing around the seller's buying-stage workflow — not the org chart.</p>
+
+    <div class="insight-box">
+      <h3>The core finding</h3>
+      <p>Showpad is currently organized the way the <strong>content creators</strong> think about their work — by department, by product line, by team. But sellers don't think that way. They think: <em>"I have a call with a financial services prospect tomorrow who is in late-stage evaluation. What do I need?"</em></p>
+      <p>The current structure forces them to browse 21 channels and guess which one holds the right asset. The usage data tells the story: only 111 unique users engaged with Showpad in the first five months of 2026, and engagement has been declining sharply since February's RKO peak. When Showpad is hard to navigate, sellers route around it: ad-hoc Slack requests, local file saves, and Google Drive links replace governed, tracked content sharing. A structural rebuild around seller intent will reverse this.</p>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- CURRENT STATE -->
+  <div class="section" id="current-state">
+    <div class="section-label">02 — Current State</div>
+    <h2>The data tells a clear story</h2>
+    <p class="section-intro">Analysis drawn from the May 26, 2026 asset snapshot (3,667 total assets), YTD activity report (Jan 2 – May 26, 2026), and asset hygiene report with full tag resolution. Numbers represent the current live state of the Ataccama Showpad org.</p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-value">939</div>
+        <div class="stat-label">Active Assets</div>
+        <div class="stat-sub">Out of 3,667 total (25.6% active)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value red">23%</div>
+        <div class="stat-label">Active — Never Viewed</div>
+        <div class="stat-sub">218 of 939 active assets; 69% of the full library (inc. archived)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value amber">81.6%</div>
+        <div class="stat-label">Active Assets Tagged</div>
+        <div class="stat-sub">766 of 939 — but taxonomy has 235 tags and real gaps</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">21</div>
+        <div class="stat-label">Channels</div>
+        <div class="stat-sub">With 132 sections and growing</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>YTD engagement (Jan 2 – May 26, 2026): 4,161 events · 111 unique users</h4>
+      <p style="margin-bottom:16px">The YTD view shows a much more concentrated picture than any single week: the top 25 assets absorbed the vast majority of engagement. Pricing, vertical pitch decks, and Agentic positioning dominate. One user (Frank Waldenburger) accounts for 22% of all interactions — a meaningful concentration risk for any usage metric.</p>
+      <div class="asset-list">
+        <div class="asset-row"><div class="asset-rank">1</div><div class="asset-name">Pricing &amp; Licensing</div><div class="asset-type">page</div><div class="asset-views">338 events</div></div>
+        <div class="asset-row"><div class="asset-rank">2</div><div class="asset-name">International 2025 Tier Based Pricing.gslide</div><div class="asset-type">slide</div><div class="asset-views">296 events · avg 1.2h</div></div>
+        <div class="asset-row"><div class="asset-rank">3</div><div class="asset-name">[MASTER] 2025 Licensing.gslide</div><div class="asset-type">slide</div><div class="asset-views">230 events</div></div>
+        <div class="asset-row"><div class="asset-rank">4</div><div class="asset-name">[PITCH DECK] 2025 Ataccama pitch for FinServ.gslide</div><div class="asset-type">slide</div><div class="asset-views">219 events · #1 download</div></div>
+        <div class="asset-row"><div class="asset-rank">5</div><div class="asset-name">[PITCH DECK] 2025 Ataccama pitch for Insurance.gslide</div><div class="asset-type">slide</div><div class="asset-views">216 events</div></div>
+        <div class="asset-row"><div class="asset-rank">6</div><div class="asset-name">Ataccama ONE Agentic signpost</div><div class="asset-type">page</div><div class="asset-views">200 events</div></div>
+        <div class="asset-row"><div class="asset-rank">7</div><div class="asset-name">[PITCH DECK] 2025 Ataccama pitch for other verticals.gslide</div><div class="asset-type">slide</div><div class="asset-views">197 events</div></div>
+        <div class="asset-row"><div class="asset-rank">8</div><div class="asset-name">Snowflake Summit 2026 – Sales Resource Page</div><div class="asset-type">page</div><div class="asset-views">194 events</div></div>
+        <div class="asset-row"><div class="asset-rank">9</div><div class="asset-name">2026 Gartner® Magic Quadrant™ for Augmented Data Quality</div><div class="asset-type">doc</div><div class="asset-views">191 events</div></div>
+        <div class="asset-row"><div class="asset-rank">10</div><div class="asset-name">Ataccama Data Observability playbook</div><div class="asset-type">page</div><div class="asset-views">183 events</div></div>
+        <div class="asset-row"><div class="asset-rank">11</div><div class="asset-name">Ataccama Product Roadmap.gslide</div><div class="asset-type">slide</div><div class="asset-views">171 events · avg 22 min</div></div>
+        <div class="asset-row"><div class="asset-rank">12</div><div class="asset-name">[MASTER][CORE] Ataccama ONE platform.gslide</div><div class="asset-type">slide</div><div class="asset-views">157 events</div></div>
+        <div class="asset-row"><div class="asset-rank">13</div><div class="asset-name">02.09.2026 – Agentic Licensing [enablers].gslide</div><div class="asset-type">slide</div><div class="asset-views">146 events</div></div>
+        <div class="asset-row"><div class="asset-rank">14</div><div class="asset-name">Agentic data trust platform enablement – Master.gslide</div><div class="asset-type">slide</div><div class="asset-views">141 events</div></div>
+        <div class="asset-row"><div class="asset-rank">15</div><div class="asset-name">RKO 2026</div><div class="asset-type">page</div><div class="asset-views">135 events</div></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h4>Monthly engagement trend — declining since February</h4>
+      <p style="margin-bottom:14px">Engagement peaked sharply in February (RKO period) then declined 69% by May. This pattern is normal around Sales Kick-Off but the May level (455 events) is concerning if it represents the new baseline — it suggests sellers have reverted to not using Showpad for regular deal prep.</p>
+      <div style="display:flex; align-items:flex-end; gap:8px; height:80px; margin-bottom:8px;">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:4px; flex:1">
+          <div style="background:var(--accent); border-radius:4px 4px 0 0; width:100%; height:${784/1477*80}px;" style="background:var(--accent); border-radius:4px 4px 0 0; width:100%; height:43px;"></div>
+          <div style="font-size:10px; color:var(--muted)">Jan</div>
+          <div style="font-size:11px; font-weight:600">784</div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:4px; flex:1">
+          <div style="background:var(--accent); border-radius:4px 4px 0 0; width:100%; height:80px;"></div>
+          <div style="font-size:10px; color:var(--muted)">Feb</div>
+          <div style="font-size:11px; font-weight:600; color:var(--accent)">1,477 ↑</div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:4px; flex:1">
+          <div style="background:var(--accent); border-radius:4px 4px 0 0; width:100%; height:47px;"></div>
+          <div style="font-size:10px; color:var(--muted)">Mar</div>
+          <div style="font-size:11px; font-weight:600">862</div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:4px; flex:1">
+          <div style="background:var(--warning); border-radius:4px 4px 0 0; width:100%; height:32px;"></div>
+          <div style="font-size:10px; color:var(--muted)">Apr</div>
+          <div style="font-size:11px; font-weight:600">583</div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:4px; flex:1">
+          <div style="background:var(--danger); border-radius:4px 4px 0 0; width:100%; height:25px;"></div>
+          <div style="font-size:10px; color:var(--muted)">May*</div>
+          <div style="font-size:11px; font-weight:600; color:var(--danger)">455 ↓</div>
+        </div>
+      </div>
+      <div style="font-size:11px; color:var(--muted)">*May through May 26 only. Feb peak aligns with RKO 2026. –69% decline from Feb to May reinforces the case for a simpler, more findable structure.</div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h4>Active asset type distribution — documents and video dominate</h4>
+      <p style="margin-bottom:14px">Among the 939 active assets sellers actually see, documents and videos make up 82% of the library. Photos (1,967 total in Showpad) are already 99.9% archived — only 2 remain active, so photo bloat is not a live seller experience problem.</p>
+      <div class="evidence-bar">
+        <span class="evidence-bar-label">Document</span>
+        <div class="evidence-bar-track"><div class="evidence-bar-fill blue" style="width:57.1%"></div></div>
+        <span class="evidence-bar-value">57%</span>
+      </div>
+      <div class="evidence-bar">
+        <span class="evidence-bar-label">Video</span>
+        <div class="evidence-bar-track"><div class="evidence-bar-fill amber" style="width:25.1%"></div></div>
+        <span class="evidence-bar-value">25%</span>
+      </div>
+      <div class="evidence-bar">
+        <span class="evidence-bar-label">URL</span>
+        <div class="evidence-bar-track"><div class="evidence-bar-fill blue" style="width:11.4%"></div></div>
+        <span class="evidence-bar-value">11%</span>
+      </div>
+      <div class="evidence-bar">
+        <span class="evidence-bar-label">Page</span>
+        <div class="evidence-bar-track"><div class="evidence-bar-fill green" style="width:5.2%"></div></div>
+        <span class="evidence-bar-value">5%</span>
+      </div>
+      <div class="evidence-bar">
+        <span class="evidence-bar-label">SCORM / Audio / Photo</span>
+        <div class="evidence-bar-track"><div class="evidence-bar-fill green" style="width:1.1%"></div></div>
+        <span class="evidence-bar-value">1%</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- PROBLEMS -->
+  <div class="section" id="problems">
+    <div class="section-label">03 — Root Cause Analysis</div>
+    <h2>Six structural problems</h2>
+    <p class="section-intro">The usage data, <a href="asset_hygiene.html" style="color:var(--accent)">hygiene audit</a>, and channel map all point to the same root causes. These are structural — not content quality — problems.</p>
+
+    <div class="problem-grid">
+      <div class="problem-item">
+        <div class="problem-number">1</div>
+        <h4>Organised for creators, not consumers</h4>
+        <p>The 21-channel structure maps to the Ataccama org chart (Sales Eng, Customer Success, RevOps, Legal, etc.), not to seller workflow. A seller preparing for a discovery call must already know which internal team owns the content they need.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-number">2</div>
+        <h4>Tag taxonomy exists but is fragmented</h4>
+        <p>81.6% of active assets are tagged — a real foundation. But 235 unique tags is too many: the taxonomy includes typos (<em>Anomalo)</em>, <em>CDAta</em>), event-specific tags (<em>RKO, SKO, FWRD 2025, Q1 2024</em>), and currency codes (<em>GBP, USD, CAD</em>) that add noise without value. More critically: <strong>37% of active assets have no audience label</strong> (External/Internal), and <strong>88% have no buying-stage tag</strong> — the two dimensions sellers need most.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-number">3</div>
+        <h4>Too many channels, too many sections</h4>
+        <p>21 channels and 132 sections create decision paralysis. Navigation studies consistently show that users abandon browsing beyond 7±2 top-level options. With 21, sellers default to the two or three channels they already know.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-number">4</div>
+        <h4>No clear "freshness" signal</h4>
+        <p>Outdated content (Feb 2024 pitch decks, 2024 battlecards, old playbooks) sits alongside current material with no visual differentiation. Sellers can't tell if what they're downloading is the approved current version.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-number">5</div>
+        <h4>23% of active assets have never been viewed</h4>
+        <p>218 of 939 active assets have zero lifetime views. <strong>Not all are candidates for immediate archival</strong> — some are new uploads awaiting promotion, others are niche reference docs. But a significant portion are old enablement material, newsletters, and product intros from 2023–2024 that were never surfaced and are now stale. A triage process (see §7) is needed rather than a blanket archive.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-number">6</div>
+        <h4>Engagement is declining and concentrated in one user</h4>
+        <p>YTD engagement peaked in February (RKO period) at 1,477 events, then fell 69% to 455 events by May. One user (Frank Waldenburger) accounts for 22% of all YTD interactions — meaning the apparent "usage" significantly flatters the true adoption picture. Without structural change, May's numbers may become the baseline.</p>
+      </div>
+    </div>
+
+    <div class="card warning">
+      <h4>⚠️ The adoption risk</h4>
+      <p>When sellers can't find content in Showpad within 90 seconds, they route around it. The engagement data supports this inference: only 111 unique users in the first 5 months of 2026, engagement declining sharply after RKO, and the top 25 assets absorbing the vast majority of interactions. A platform that isn't being used for regular deal prep is not delivering its intended value — and untracked sharing (Slack links, local copies, Drive exports) means content governance breaks down at the point of customer contact.</p>
+      <p>The current structure trains sellers to not rely on Showpad. A rebuild around seller intent reverses that.</p>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- PRINCIPLES -->
+  <div class="section" id="principles">
+    <div class="section-label">04 — Design Principles</div>
+    <h2>What the rebuild is optimised for</h2>
+    <p class="section-intro">Before defining the new structure, these are the non-negotiable principles that guided the recommendation. Any future changes to the structure should be evaluated against them.</p>
+
+    <div class="principle-grid">
+      <div class="principle-card">
+        <div class="principle-icon">🎯</div>
+        <h4>Intent over ownership</h4>
+        <p>Structure content around what a seller is trying to accomplish — not which team created it.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">⚡</div>
+        <h4>Findable in &lt; 90 sec</h4>
+        <p>A seller who knows roughly what they need should never spend more than 90 seconds finding it.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🏆</div>
+        <h4>Fewer, better choices</h4>
+        <p>5–7 channels. Curated sections. One clearly-approved version of each key asset. No sprawl.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">📅</div>
+        <h4>Freshness is visible</h4>
+        <p>Sellers should be able to see at a glance whether an asset is current. Governance enforces this.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🏷️</div>
+        <h4>Tags unlock everything</h4>
+        <p>Tags (not channel position) are the long-term organising system. Channels are just curated views into tagged content.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🔒</div>
+        <h4>Separate internal from external</h4>
+        <p>Content sellers use themselves vs. content they share with prospects should never be confused.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- NEW STRUCTURE -->
+  <div class="section" id="new-structure">
+    <div class="section-label">05 — Recommended Structure</div>
+    <h2>7 channels + a smarter homepage</h2>
+    <p class="section-intro">The proposed structure collapses 21 channels into 7 — four seller-facing channels, three internal — plus a curated homepage pinboard that replaces the need for a "Start Here" channel entirely. The 67% channel reduction eliminates decision paralysis without hiding important content. <a href="showpad_structure_mindmap_2026-05-26.html" style="color:var(--accent)">See the interactive mindmap →</a></p>
+
+    <div class="highlight">
+      <strong>Key structural decision — Start Here as homepage, not a channel:</strong> The assets sellers need most (pricing, pitch decks, roadmap, Agentic positioning) should be the <em>first thing they see</em> when they open Showpad, not buried one click inside a dedicated channel. The Showpad homepage pinboard serves this purpose better and removes one nav level entirely.
+    </div>
+
+    <div class="card accent" style="margin-bottom: 24px">
+      <h4>📌 Homepage Pinboard (not a channel)</h4>
+      <p>Four curated groups, reviewed monthly by the Sales Enablement Lead. Grounded directly in <a href="showpad_ytd_2026.html" style="color:var(--accent)">YTD engagement data</a> — these are the assets sellers already vote for with their views:</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px">
+        <div style="background:white; border:1px solid var(--border); border-radius:8px; padding:12px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--accent); margin-bottom:6px">💰 Pricing &amp; Licensing</div>
+          <div style="font-size:12px; color:var(--text-light); line-height:1.6">Pricing &amp; Licensing page (338 events), International Tier Based Pricing (296), [MASTER] 2025 Licensing (230). <em>Multi-stage assets — available here AND in Buying Stage channel.</em></div>
+        </div>
+        <div style="background:white; border:1px solid var(--border); border-radius:8px; padding:12px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--accent); margin-bottom:6px">🎯 Pitch Decks by Vertical</div>
+          <div style="font-size:12px; color:var(--text-light); line-height:1.6">FinServ (219), Insurance (216), Other Verticals (197). Current year only; older versions archived. Steward: Product Marketing.</div>
+        </div>
+        <div style="background:white; border:1px solid var(--border); border-radius:8px; padding:12px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--accent); margin-bottom:6px">🗺️ Roadmap &amp; Vision</div>
+          <div style="font-size:12px; color:var(--text-light); line-height:1.6">Product Roadmap (171 events, avg 22 min — highest dwell time of any asset). [MASTER][CORE] Ataccama ONE platform (157). Steward: Product.</div>
+        </div>
+        <div style="background:white; border:1px solid var(--border); border-radius:8px; padding:12px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--accent); margin-bottom:6px">🤖 Agentic Positioning</div>
+          <div style="font-size:12px; color:var(--text-light); line-height:1.6">Ataccama ONE Agentic signpost (200), Agentic data trust enablement (141), Agentic Licensing enabler (146). These are the Agentic "front door" — product depth lives in Solutions &amp; Products.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="channel-grid">
+
+      <div class="channel-row">
+        <div class="channel-icon" style="background:#dcfce7">🗺️</div>
+        <div>
+          <div class="channel-name">01 · By Buying Stage</div>
+          <div class="channel-desc">
+            Content organised around Ataccama's SFDC sales process, not the org chart. Five sections: <strong>Qualify</strong> → <strong>Build Value</strong> → <strong>Develop Solution</strong> → <strong>Propose &amp; Negotiate</strong> → <strong>Retain &amp; Expand</strong> (see full SFDC mapping below). <strong>Note on pricing:</strong> Pricing &amp; Licensing assets are pinned on the homepage <em>and</em> tagged across multiple stages — they appear at Qualify (for RFX responses), Develop Solution (commercial input to POC scoping), and Propose &amp; Negotiate (final terms).<br><br>
+            <strong>Replaces:</strong> Sales Process &amp; SOPs, Sales Engineering/PoCs/RFXs, Customer Success &amp; Services.<br>
+            <strong>Steward:</strong> Sales Enablement + SE Lead + CS Lead (one section each)<br>
+            <strong>Sections:</strong> 5 (Qualify, Build Value, Develop Solution, Propose &amp; Negotiate, Retain &amp; Expand)
+          </div>
+        </div>
+        <div><span class="channel-badge badge-seller">Seller-Facing</span></div>
+      </div>
+
+      <div class="channel-row">
+        <div class="channel-icon" style="background:#fef3c7">💡</div>
+        <div>
+          <div class="channel-name">02 · Solutions &amp; Products</div>
+          <div class="channel-desc">
+            <strong>Two platforms, side by side.</strong> Ataccama Core and Ataccama Agentic are separate platforms with distinct asset sets — they sit at the same level, not in a hierarchy. AI readiness is a <em>sales play</em>, not a content layer; it belongs in messaging and plays assets, not as a structural header here.<br><br>
+            Structure: <strong>Ataccama Core</strong> (Data Quality &amp; Catalog → Data Lineage → Data Observability → MDM → RDM → ONE AI) → <strong>Ataccama Agentic</strong> → Verticals (FinServ, Insurance, Manufacturing, etc.).<br><br>
+            Each product section has at most one pinned customer-ready deck. Deep-dives tagged <em>Internal only</em>. Not every product has Agentic assets — and that's fine: those sections stay focused on core capability.<br><br>
+            <strong>Replaces:</strong> Solutions channel.<br>
+            <strong>Steward:</strong> Product Marketing (one owner per product line)<br>
+            <strong>Sections:</strong> 8–10
+          </div>
+        </div>
+        <div><span class="channel-badge badge-seller">Seller-Facing</span></div>
+      </div>
+
+      <div class="channel-row">
+        <div class="channel-icon" style="background:#fce7f3">⚔️</div>
+        <div>
+          <div class="channel-name">03 · Compete &amp; Justify</div>
+          <div class="channel-desc">
+            Everything a seller needs to win competitive deals and justify ROI. Sections: <strong>Battlecards</strong> (Collibra, Informatica, Alation, Talend, etc.), <strong>Analyst &amp; Industry Reports</strong> (Gartner MQ 191 events, Forrester, TEI studies), <strong>ROI &amp; Business Case</strong> (ROI calculators, economic value decks, TCO comparisons), <strong>Customer Proof</strong> (anonymised win stories by vertical — 34 CVS assets well-tagged). <br><br>
+            <strong>Replaces:</strong> Competitive Intel, Industry &amp; Analyst Reports, Customer Value Stories Library.<br>
+            <strong>Steward:</strong> Product Marketing (Competitive) + Sales Enablement<br>
+            <strong>Sections:</strong> 4
+          </div>
+        </div>
+        <div><span class="channel-badge badge-seller">Seller-Facing</span></div>
+      </div>
+
+      <div class="channel-row">
+        <div class="channel-icon" style="background:#ede9fe">🤝</div>
+        <div>
+          <div class="channel-name">04 · Partners</div>
+          <div class="channel-desc">
+            Consolidated partner hub. Sections: <strong>Hyperscalers</strong> (Snowflake Summit resource page has 194 events YTD — this is active territory; also Azure, AWS), <strong>Solution Partners</strong> (Cognizant, SI partners), <strong>Tech Partners</strong> (Manta, Loqate, CData integration collateral). Each section pins a single current partner deck and links to external partner portals for depth. <br><br>
+            <strong>Replaces:</strong> Partners channel (18 sections → 3 sections).<br>
+            <strong>Steward:</strong> Partner Enablement<br>
+            <strong>Sections:</strong> 3
+          </div>
+        </div>
+        <div><span class="channel-badge badge-seller">Seller-Facing</span></div>
+      </div>
+
+      <div class="channel-row" style="background: var(--surface)">
+        <div class="channel-icon" style="background:#e0f2fe">🎓</div>
+        <div>
+          <div class="channel-name">05 · Enablement Hub (Internal)</div>
+          <div class="channel-desc">
+            <strong>The dedicated home for learning, sessions, and coaching</strong> — separate from operational process docs. This channel answers: <em>"Where do I watch last week's enablement session?" "When is the next sales skills training?" "Which courses do I need to complete?"</em><br><br>
+            Sections: <strong>SE Recordings</strong> (the ~173 SE recording assets, many highly-viewed: SE-E Lineage intro 248v, Processing Pushdowns 184v, MS Fabric 173v), <strong>Weekly Enabler Sessions</strong> (past recordings + slide decks), <strong>SCORM Courses &amp; Certifications</strong> (Coach-delivered training), <strong>Upcoming Calendar</strong> (links to Notion/Calendar for scheduled sessions), <strong>Onboarding</strong> (new hire tracks). <br><br>
+            <strong>Replaces:</strong> The learning/training portion of GTM Enablement.<br>
+            <strong>Steward:</strong> Sales Enablement Lead<br>
+            <strong>Sections:</strong> 5
+          </div>
+        </div>
+        <div><span class="channel-badge badge-internal">Internal</span></div>
+      </div>
+
+      <div class="channel-row" style="background: var(--surface)">
+        <div class="channel-icon" style="background:#f1f5f9">⚙️</div>
+        <div>
+          <div class="channel-name">06 · GTM Ops (Internal)</div>
+          <div class="channel-desc">
+            Operational reference material — not learning content, not customer-facing. Sections: <strong>Sales Plays &amp; Motions</strong>, <strong>RevOps &amp; Tech Stack</strong> (Salesforce processes, tool guides, SalesOps SOPs), <strong>Deal &amp; Pricing Process</strong> (deal registration, approval workflows, discount policy), <strong>Templates &amp; Tools</strong> (email templates, call scripts, outreach sequences). <br><br>
+            <strong>Replaces:</strong> The operational portion of GTM Enablement + RevOps channel.<br>
+            <strong>Steward:</strong> RevOps / Sales Enablement<br>
+            <strong>Sections:</strong> 4
+          </div>
+        </div>
+        <div><span class="channel-badge badge-internal">Internal</span></div>
+      </div>
+
+      <div class="channel-row" style="background: var(--surface)">
+        <div class="channel-icon" style="background:#f1f5f9">⚖️</div>
+        <div>
+          <div class="channel-name">07 · Legal &amp; Contracts (Internal)</div>
+          <div class="channel-desc">
+            Unchanged in scope — master agreements, change orders, beta test agreements, EULAs, contracting guides. Pinned: single current PAAS &amp; Self-Managed master agreement. Access-controlled; not visible in the main seller nav.<br><br>
+            <strong>Replaces:</strong> Legal Contracts &amp; Attachments (direct lift).<br>
+            <strong>Steward:</strong> Legal<br>
+            <strong>Sections:</strong> 4 (unchanged)
+          </div>
+        </div>
+        <div><span class="channel-badge badge-internal">Internal</span></div>
+      </div>
+
+    </div>
+
+    <!-- SFDC STAGE MAPPING -->
+    <div style="margin-top: 28px">
+      <h3 style="margin-bottom: 12px">Buying Stage → SFDC Stage Mapping</h3>
+      <p style="font-size:13px; color:var(--text-light); margin-bottom:16px">Mapped to Ataccama's actual SFDC process: <strong>Qualify → Build Value → Develop Solution → Proposal Sent → Negotiate → Submit for Booking → Closed Won</strong>. The five channel sections consolidate these into content groupings (Proposal Sent and Negotiate share a section; Submit for Booking and Closed Won fold into adjacent sections). Existing Showpad stage tags align well to the real process — notably <em>Build Value</em> correctly precedes <em>Develop Solution</em>, matching how Ataccama sells. "Validate" is retired as a standalone tag and folded into Develop Solution, where POC sign-off naturally occurs.</p>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Channel Section</th>
+            <th>SFDC Stage(s)</th>
+            <th>Existing Showpad Tags → Keep/Merge</th>
+            <th>Key Assets</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1 · Qualify</strong></td>
+            <td>Qualify</td>
+            <td>Qualify (28 assets) ✓ keep</td>
+            <td>ICP guides, discovery question banks, qualification frameworks (MEDDPICC), persona decks, <em>pricing (multi-stage — also pinned on homepage)</em></td>
+          </tr>
+          <tr>
+            <td><strong>2 · Build Value</strong></td>
+            <td>Build Value</td>
+            <td>Build Value (29 assets) ✓ keep</td>
+            <td>ROI calculators, business case templates, analyst reports (Gartner MQ — 191 events, highest dwell for this type), customer value stories by vertical, competitive battlecards. <em>This stage establishes why change is needed — before the solution is defined.</em></td>
+          </tr>
+          <tr>
+            <td><strong>3 · Develop Solution</strong></td>
+            <td>Develop Solution</td>
+            <td>Develop Solution (46 assets) ✓ keep · Validate → <strong>fold into Develop Solution</strong> (POC validation closes this stage) · RFP/PoC/Demo (70 assets) ✓ keep</td>
+            <td>Product decks, demo scripts, POC templates, RFX response library, SE recordings, technical deep-dives, security reviews</td>
+          </tr>
+          <tr>
+            <td><strong>4 · Propose &amp; Negotiate</strong></td>
+            <td>Proposal Sent · Negotiate · Submit for Booking</td>
+            <td>Negotiate (10 assets) ✓ keep · <em>new tag:</em> "Proposal Sent"</td>
+            <td>Pricing &amp; Licensing (homepage AND here), proposal templates, MAPs, champion letters, mutual close plans, commercial terms guides, submission approval materials</td>
+          </tr>
+          <tr>
+            <td><strong>5 · Retain &amp; Expand</strong></td>
+            <td>Closed Won → Post-sale</td>
+            <td><em>New tag needed:</em> "Retain &amp; Expand"</td>
+            <td>CS onboarding kits, renewal templates, QBR decks, expansion play guides, upsell one-pagers</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="card" style="margin-top:12px; border-left: 4px solid var(--accent)">
+        <h4>On pricing at early stages — a considered push-back</h4>
+        <p>The YTD data confirms pricing decks are viewed heavily at every stage, including Qualify when responding to RFX. The recommendation does <em>not</em> lock pricing to Propose &amp; Negotiate. Instead: pricing lives on the <strong>homepage pinboard</strong> for immediate access, AND is tagged across <em>Qualify, Develop Solution, Propose &amp; Negotiate</em> so it surfaces in smart filters at all relevant stages. Multi-stage assets work exactly as designed — tag them wherever they're used.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 24px">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Current State</th>
+            <th>Proposed State</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Seller-facing channels</td>
+            <td class="strike">~19 visible channels</td>
+            <td class="better">4 channels + homepage pinboard</td>
+          </tr>
+          <tr>
+            <td>Total sections</td>
+            <td class="strike">132 sections</td>
+            <td class="better">~26 sections</td>
+          </tr>
+          <tr>
+            <td>Navigation model</td>
+            <td class="strike">By department / team ownership</td>
+            <td class="better">By seller intent / buying stage</td>
+          </tr>
+          <tr>
+            <td>Tagging coverage</td>
+            <td>81.6% tagged — but 235 tags, 37% missing audience label, 88% missing stage tag</td>
+            <td class="better">Consolidated to ~180 tags; 100% audience-labelled; stage tags expanded and SFDC-aligned</td>
+          </tr>
+          <tr>
+            <td>Version clarity</td>
+            <td class="strike">Multiple copies, no freshness signal</td>
+            <td class="better">One pinned current version per asset type; freshness strategy (§8)</td>
+          </tr>
+          <tr>
+            <td>Enablement sessions</td>
+            <td class="strike">Buried in GTM Enablement, hard to find</td>
+            <td class="better">Dedicated Enablement Hub with SE recordings, calendar, courses</td>
+          </tr>
+          <tr>
+            <td>Internal vs. external content</td>
+            <td class="strike">Mixed throughout all channels</td>
+            <td class="better">Separated by channel and audience tag</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 16px; text-align: center">
+      <a href="showpad_structure_mindmap_2026-05-26.html" style="display:inline-block; background: var(--accent); color: white; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: 13px; margin-top: 8px">🗺️ View Interactive Structure Mindmap →</a>
+    </div>
+
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- TAGGING -->
+  <div class="section" id="tagging">
+    <div class="section-label">06 — Tag Taxonomy</div>
+    <h2>Build on what exists — fix the gaps</h2>
+    <p class="section-intro">Contrary to the initial draft of this report, Showpad <em>does</em> have a tagging foundation: 766 of 939 active assets (81.6%) carry at least one tag. The problem is not absence — it is fragmentation. 235 unique tags is too many, critical dimensions are undercovered, and 173 active assets (all primarily SE recordings) have no tags at all. The work is consolidation and gap-filling, not a rebuild from scratch.</p>
+
+    <div class="card warning">
+      <h4>⚠️ What the data actually shows</h4>
+      <p><strong>Audience visibility gap (37%):</strong> 347 of 939 active assets have no External/Internal label. Sellers genuinely cannot tell what is safe to share with a prospect. This is the most urgent tagging fix.</p>
+      <p><strong>Stage coverage gap (88%):</strong> The stage dimension already exists — tags like <em>Qualify, Build Value, Develop Solution, Negotiate</em> are in use and map directly to Ataccama's SFDC stages — but only 112 of 939 active assets (11.9%) carry any stage tag. The structure is right; the coverage is not.</p>
+      <p><strong>Taxonomy noise:</strong> 235 unique tags includes typos (<em>Anomalo)</em>, <em>CDAta</em>), event-specific tags that expire (<em>Q1 2024, RKO, SKO, FWRD 2025</em>), currency codes (<em>GBP, USD, CAD</em>), and onboarding week markers (<em>Week 1–4</em>). These add search noise and erode trust in the system.</p>
+      <p><strong>173 untagged SE recordings:</strong> The highest-value gap. Several of these have 100–250 views yet carry zero tags — including assets like <em>SE-E Lineage intro w Feri.mp4</em> (248v), <em>SE-E Processing Pushdowns.mp4</em> (184v), and <em>SE-E MS Fabric.mp4</em> (173v).</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:18px;">
+        <h4 style="margin-bottom:10px">Current audience label coverage</h4>
+        <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:100px; flex-shrink:0; color:var(--text-light)">Internal only</div>
+            <div style="flex:1; height:10px; background:var(--border); border-radius:5px; overflow:hidden">
+              <div style="width:40.3%; height:100%; background:#475569; border-radius:5px;"></div>
+            </div>
+            <div style="width:50px; text-align:right; font-weight:600">378 (40%)</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:100px; flex-shrink:0; color:var(--text-light)">Ext – NDA</div>
+            <div style="flex:1; height:10px; background:var(--border); border-radius:5px; overflow:hidden">
+              <div style="width:12%; height:100%; background:#2563eb; border-radius:5px;"></div>
+            </div>
+            <div style="width:50px; text-align:right; font-weight:600">113 (12%)</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:100px; flex-shrink:0; color:var(--text-light)">Ext – public</div>
+            <div style="flex:1; height:10px; background:var(--border); border-radius:5px; overflow:hidden">
+              <div style="width:9.6%; height:100%; background:#16a34a; border-radius:5px;"></div>
+            </div>
+            <div style="width:50px; text-align:right; font-weight:600">90 (10%)</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:100px; flex-shrink:0; color:var(--danger); font-weight:600">No label ⚠️</div>
+            <div style="flex:1; height:10px; background:var(--border); border-radius:5px; overflow:hidden">
+              <div style="width:37%; height:100%; background:#dc2626; border-radius:5px;"></div>
+            </div>
+            <div style="width:50px; text-align:right; font-weight:600; color:var(--danger)">347 (37%)</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:18px;">
+        <h4 style="margin-bottom:10px">Buying-stage tag coverage</h4>
+        <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:130px; flex-shrink:0; color:var(--text-light)">Develop Solution</div>
+            <div style="flex:1; height:10px; background:var(--border); border-radius:5px; overflow:hidden">
+              <div style="width:4.9%; height:100%; background:#2563eb; border-radius:5px;"></div>
+            </div>
+            <div style="width:45px; text-align:right; font-weight:600">46</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:130px; flex-shrink:0; color:var(--text-light)">Qualify</div>
+            <div style="flex:1; height:10px; background:var(--border); border-radius:5px; overflow:hidden">
+              <div style="width:3%; height:100%; background:#2563eb; border-radius:5px;"></div>
+            </div>
+            <div style="width:45px; text-align:right; font-weight:600">28</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:130px; flex-shrink:0; color:var(--text-light)">RFP / PoC / Demo</div>
+            <div style="flex:1; height:10px; background:var(--border); border-radius:5px; overflow:hidden">
+              <div style="width:7.4%; height:100%; background:#2563eb; border-radius:5px;"></div>
+            </div>
+            <div style="width:45px; text-align:right; font-weight:600">70</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:130px; flex-shrink:0; color:var(--text-light)">Build Value</div>
+            <div style="flex:1; height:10px; background:var(--border); border-radius:5px; overflow:hidden">
+              <div style="width:3.1%; height:100%; background:#2563eb; border-radius:5px;"></div>
+            </div>
+            <div style="width:45px; text-align:right; font-weight:600">29</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:130px; flex-shrink:0; color:var(--text-light)">Negotiate / Close</div>
+            <div style="flex:1; height:10px; background:var(--border); border-radius:5px; overflow:hidden">
+              <div style="width:1.1%; height:100%; background:#2563eb; border-radius:5px;"></div>
+            </div>
+            <div style="width:45px; text-align:right; font-weight:600">10</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:130px; flex-shrink:0; color:var(--danger); font-weight:600">No stage tag ⚠️</div>
+            <div style="flex:1; height:10px; background:var(--border); border-radius:5px; overflow:hidden">
+              <div style="width:88.1%; height:100%; background:#dc2626; border-radius:5px;"></div>
+            </div>
+            <div style="width:45px; text-align:right; font-weight:600; color:var(--danger)">827</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card accent">
+      <h4>Recommended tag clean-up: three actions, not a rebuild</h4>
+      <p><strong>1. Deprecate 32 noisy tags (full list below).</strong> Remove or merge event-specific tags (Q1 2024, RKO, SKO, FWRD 2025), fix typos, and retire currency codes and week markers. Target: ≤180 tags total.</p>
+      <p><strong>2. Close the audience gap.</strong> Add <em>External – public</em>, <em>External – NDA confidential</em>, or <em>Internal only</em> to the 347 unlabelled active assets. This is the highest-risk gap — a seller sharing an <em>Internal only</em> doc because it had no label is a real compliance exposure.</p>
+      <p><strong>3. Expand stage coverage, SFDC-aligned.</strong> Retire "Validate" as a standalone tag; fold its assets into "Develop Solution" (where POC validation sits in Ataccama's process). Apply the five-stage taxonomy (Qualify → Build Value → Develop Solution → Propose &amp; Negotiate → Retain &amp; Expand) to the 827 stage-untagged assets during Phase 2 migration — content stewards tag their sections as they migrate. Multi-stage assets (e.g. pricing) get tagged for all stages where they're used.</p>
+    </div>
+
+    <!-- NOISY TAGS TABLE -->
+    <div style="margin-top:28px">
+      <h3 style="margin-bottom:8px">The 32 noisy tags — and why they should be removed</h3>
+      <p style="font-size:13px; color:var(--text-light); margin-bottom:16px">These tags were identified from the <a href="asset_hygiene.html" style="color:var(--accent)">full tag resolution snapshot</a> (939 active assets, 235 unique tags). "Noisy" means: the tag does not help a seller find content, does not support a Smart Filter use case, or actively clutters search results. Each has a removal action: <strong>Retire</strong> (remove entirely), <strong>Merge</strong> (fold into a better tag), or <strong>Fix</strong> (correct the typo/formatting).</p>
+      <table class="compare-table">
+        <thead>
+          <tr><th>Tag</th><th>Count</th><th>Category</th><th>Action &amp; Reason</th></tr>
+        </thead>
+        <tbody>
+          <tr style="background:#fef9f0"><td colspan="4" style="font-weight:700; color:var(--warning); font-size:11px; text-transform:uppercase; letter-spacing:0.5px">⏰ Expired / event-specific (11 tags)</td></tr>
+          <tr><td>Revenue Kick Off (RKO)</td><td>37 assets</td><td>Event</td><td><strong>Retire.</strong> Event-specific; the RKO has passed. Assets are not findable by "RKO" in normal deal prep. Retain assets; remove this tag.</td></tr>
+          <tr><td>Q1 2025</td><td>35 assets</td><td>Temporal</td><td><strong>Retire.</strong> Quarter-specific temporal tags expire and create false recency signals. Year tags (if needed) are cleaner.</td></tr>
+          <tr><td>Sales Kick Off (SKO)</td><td>20 assets</td><td>Event</td><td><strong>Retire.</strong> Same rationale as RKO — event has passed; tag adds noise to search.</td></tr>
+          <tr><td>Week 1</td><td>20 assets</td><td>Onboarding week</td><td><strong>Retire.</strong> Onboarding week markers are only meaningful during onboarding. New hire tracks should be in the Enablement Hub channel with their own section structure.</td></tr>
+          <tr><td>Marketing Events</td><td>14 assets</td><td>Event</td><td><strong>Retire.</strong> Too broad to be useful as a filter. Event-specific assets should link to an event page (e.g. Snowflake Summit resource page), not carry a generic "Marketing Events" tag.</td></tr>
+          <tr><td>Q2 2025</td><td>12 assets</td><td>Temporal</td><td><strong>Retire.</strong> See Q1 2025.</td></tr>
+          <tr><td>Week 2</td><td>8 assets</td><td>Onboarding week</td><td><strong>Retire.</strong> See Week 1.</td></tr>
+          <tr><td>Week 3</td><td>7 assets</td><td>Onboarding week</td><td><strong>Retire.</strong> See Week 1.</td></tr>
+          <tr><td>v14</td><td>7 assets</td><td>Version marker</td><td><strong>Retire.</strong> Version should be in the asset name (e.g. "v14" in the filename), not as a searchable tag. The v14 DQG Starter Packs are superseded by v15 (see §7).</td></tr>
+          <tr><td>Gartner</td><td>6 assets</td><td>Event/Org</td><td><strong>Merge → "Analyst &amp; Industry Reports".</strong> Gartner is a source, not a topic. Assets referencing Gartner (e.g. MQ report, Peer Insights) should be tagged by their content type.</td></tr>
+          <tr><td>FWRD 2025</td><td>3 assets</td><td>Event</td><td><strong>Retire.</strong> Conference-specific tag; event has passed.</td></tr>
+          <tr><td>Q1 2024</td><td>2 assets</td><td>Temporal</td><td><strong>Retire.</strong> Two-year-old quarter tag; the assets themselves likely need a freshness review.</td></tr>
+          <tr><td>Q2 2024</td><td>2 assets</td><td>Temporal</td><td><strong>Retire.</strong> See Q1 2024.</td></tr>
+          <tr><td>Q3 2024</td><td>1 asset</td><td>Temporal</td><td><strong>Retire.</strong> See Q1 2024.</td></tr>
+          <tr><td>Week 4</td><td>3 assets</td><td>Onboarding week</td><td><strong>Retire.</strong> See Week 1.</td></tr>
+          <tr style="background:#f0fdf4"><td colspan="4" style="font-weight:700; color:var(--success); font-size:11px; text-transform:uppercase; letter-spacing:0.5px">🔧 Tool references (9 tags) — describe where assets were used, not what they help with</td></tr>
+          <tr><td>Notion</td><td>9 assets</td><td>Tool ref</td><td><strong>Retire.</strong> "This was a Notion doc" is not a useful filter for sellers. The content topic (e.g. "Deal process", "Onboarding") is what matters.</td></tr>
+          <tr><td>Chorus</td><td>3 assets</td><td>Tool ref</td><td><strong>Retire.</strong> References to Chorus recordings don't help sellers find sales content. If assets are Chorus-integration guides, tag as "GTM Ops" or "Tech Stack".</td></tr>
+          <tr><td>Outreach</td><td>2 assets</td><td>Tool ref</td><td><strong>Retire or merge → "GTM Ops".</strong> Outreach sequences/guides belong in the GTM Ops channel — tag by content type, not tool name.</td></tr>
+          <tr><td>Zoominfo</td><td>2 assets</td><td>Tool ref</td><td><strong>Retire or merge → "GTM Ops".</strong> See Outreach.</td></tr>
+          <tr><td>Linksquares CLM</td><td>2 assets</td><td>Tool ref</td><td><strong>Retire.</strong> Contract tool reference; legal assets don't need a tool tag.</td></tr>
+          <tr><td>Showpad</td><td>2 assets</td><td>Tool ref</td><td><strong>Retire.</strong> Everything is in Showpad. This tag is meaningless.</td></tr>
+          <tr><td>DealHub</td><td>1 asset</td><td>Tool ref</td><td><strong>Retire.</strong> See Outreach.</td></tr>
+          <tr><td>Concord</td><td>1 asset</td><td>Tool ref</td><td><strong>Retire.</strong> Contract tool; tag by content type instead.</td></tr>
+          <tr><td>Slack</td><td>1 asset</td><td>Tool ref</td><td><strong>Retire.</strong> A Slack guide belongs in GTM Ops — tag as "Tech Stack", not "Slack".</td></tr>
+          <tr><td>Calendar</td><td>1 asset</td><td>Tool ref</td><td><strong>Retire.</strong> See Slack.</td></tr>
+          <tr style="background:#fef2f2"><td colspan="4" style="font-weight:700; color:var(--danger); font-size:11px; text-transform:uppercase; letter-spacing:0.5px">✏️ Typos (2 tags)</td></tr>
+          <tr><td>Anomalo)</td><td>2 assets</td><td>Typo</td><td><strong>Fix → "Anomalo".</strong> Trailing parenthesis; correct the tag name and re-apply.</td></tr>
+          <tr><td>CDAta</td><td>2 assets</td><td>Typo</td><td><strong>Fix → "CData".</strong> Capitalisation error; correct the tag name and re-apply.</td></tr>
+          <tr style="background:#fff7ed"><td colspan="4" style="font-weight:700; color:var(--warning); font-size:11px; text-transform:uppercase; letter-spacing:0.5px">💱 Currency codes (4 tags)</td></tr>
+          <tr><td>USD</td><td>3 assets</td><td>Currency</td><td><strong>Retire.</strong> Pricing currency belongs in the asset description or title, not as a searchable tag. Currency filtering is not a seller use case.</td></tr>
+          <tr><td>GBP</td><td>3 assets</td><td>Currency</td><td><strong>Retire.</strong> See USD.</td></tr>
+          <tr><td>CAD</td><td>3 assets</td><td>Currency</td><td><strong>Retire.</strong> See USD.</td></tr>
+          <tr><td>EURO</td><td>3 assets</td><td>Currency</td><td><strong>Retire.</strong> See USD.</td></tr>
+          <tr style="background:#f0f9ff"><td colspan="4" style="font-weight:700; color:var(--accent); font-size:11px; text-transform:uppercase; letter-spacing:0.5px">🚩 Data quality flags (1 tag)</td></tr>
+          <tr><td>No 2025 seller activity</td><td>7 assets</td><td>Data flag</td><td><strong>Retire.</strong> An internal data quality flag that leaked into the live tag taxonomy. These assets should be in the never-viewed / hygiene review queue instead. Remove the tag; action the assets.</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px; color:var(--muted); margin-top:8px">Total: 32 noisy tags identified out of 235 active tags. Retiring/fixing these reduces the taxonomy to ~200 tags, then further consolidation of near-duplicate product/topic tags brings the target to ≤180.</p>
+    </div>
+
+    <div class="card success" style="margin-top: 16px">
+      <h4>✅ What the existing tagging already enables</h4>
+      <p><strong>Product smart filters work today</strong> — <em>Data quality</em> (71 assets), <em>MDM</em> (39), <em>ONE AI</em> (26), <em>Data lineage</em> (25) are already tagged consistently enough to power channel smart filters for the Solutions channel.</p>
+      <p><strong>Battlecard quick-filter works today</strong> — 20 assets tagged <em>Battlecard</em>, including Collibra (104v), Informatica (96v), Semarchy, Reltio, Atlan, CluedIn. Compete &amp; Justify channel can use this immediately.</p>
+      <p><strong>Customer value stories</strong> — 34 assets tagged <em>Customer value story (CVS)</em> across Financial Services (29 assets tagged), Insurance (20), Manufacturing (17). The vertical story library is well-tagged and ready to surface.</p>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- SUPERSEDED ASSETS -->
+  <div class="section" id="superseded">
+    <div class="section-label">07 — Content Lifecycle</div>
+    <h2>Superseded assets: what to action now</h2>
+    <p class="section-intro">The 218 never-viewed active assets are not a single homogeneous problem. Before bulk archiving, they need triage. Below is the current evidence-based breakdown, including the confirmed superseded pairs identified from the <a href="asset_hygiene.html" style="color:var(--accent)">hygiene report</a>.</p>
+
+    <div class="card warning" style="margin-bottom:20px">
+      <h4>⚠️ Don't archive all 218 never-viewed assets at once</h4>
+      <p>Some never-viewed assets are new uploads not yet promoted. Some are niche reference materials with a narrow audience who knows where to find them. A blanket archive run would destroy legitimate value. The right approach is a three-tier triage:</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:12px">
+        <div style="background:var(--danger-light); border:1px solid #fca5a5; border-radius:8px; padding:12px">
+          <div style="font-weight:700; font-size:12px; color:var(--danger); margin-bottom:6px">🔴 Archive immediately</div>
+          <div style="font-size:12px; color:var(--text-light)">Never viewed AND created before 2025 AND not a reference doc. Estimated: ~80–100 assets. Includes old newsletter PDFs, superseded enablement materials, expired event assets.</div>
+        </div>
+        <div style="background:var(--warning-light); border:1px solid #fcd34d; border-radius:8px; padding:12px">
+          <div style="font-weight:700; font-size:12px; color:var(--warning); margin-bottom:6px">🟡 Triage with steward</div>
+          <div style="font-size:12px; color:var(--text-light)">Never viewed but created 2025–2026, or reference-type content. Steward confirms: still relevant → promote; no longer relevant → archive. Estimated: ~80 assets.</div>
+        </div>
+        <div style="background:var(--success-light); border:1px solid #86efac; border-radius:8px; padding:12px">
+          <div style="font-weight:700; font-size:12px; color:var(--success); margin-bottom:6px">🟢 Promote actively</div>
+          <div style="font-size:12px; color:var(--text-light)">Never viewed but high-quality (e.g. recent vertical pitch decks for less-covered industries, new case studies). These need a Slack announcement or homepage pin, not archival. Estimated: ~40 assets.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:12px">Confirmed superseded asset pairs</h3>
+    <p style="font-size:13px; color:var(--text-light); margin-bottom:16px">Three specific superseded pairs were identified by cross-referencing view counts and creation dates. These have clear successors and are safe to action.</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Superseded Asset</th>
+          <th>Views</th>
+          <th>Superseded By</th>
+          <th>Newer Views</th>
+          <th>Recommendation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>DQG Starter Pack 2024 (US) v14.pdf</td>
+          <td>53</td>
+          <td>DQG Starter Pack 2024 (US) v15.pdf</td>
+          <td>149 ✓</td>
+          <td class="better">Archive v14 — v15 is clearly preferred</td>
+        </tr>
+        <tr>
+          <td>DQG Starter Pack 2024 (CA) v14.pdf</td>
+          <td>16</td>
+          <td>DQG Starter Pack 2024 (CA) v15.pdf</td>
+          <td>34 ✓</td>
+          <td class="better">Archive v14 — v15 is clearly preferred</td>
+        </tr>
+        <tr style="background:#fef9f0">
+          <td>[MASTER] 2024 Licensing.gslide</td>
+          <td style="color:var(--warning); font-weight:700">1,375 ⚠️</td>
+          <td>[MASTER] 2025 Licensing.gslide</td>
+          <td>915</td>
+          <td style="color:var(--warning); font-weight:600">⚠️ Do NOT archive yet — older version has 50% more views. Investigate whether sellers prefer the 2024 structure or have not discovered the 2025 version. Consider pinning 2025 prominently first, monitor for 30 days, then archive 2024.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card" style="margin-top:16px; border-left: 4px solid var(--muted)">
+      <h4>Finding more superseded pairs</h4>
+      <p>The three pairs above were found manually. A more systematic approach: filter the <a href="asset_hygiene.html" style="color:var(--accent)">hygiene report</a> for assets with "v14", "2024", or "2023" in the name alongside assets with "v15", "2025", or "2026" — this surfaces likely versioning pairs for steward review. This process should be built into the quarterly channel review in Phase 3.</p>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- FRESHNESS STRATEGY -->
+  <div class="section" id="freshness">
+    <div class="section-label">08 — Content Governance</div>
+    <h2>How to keep the structure clean: freshness strategy</h2>
+    <p class="section-intro">The biggest risk to any Showpad restructure is not the initial migration — it is the gradual accumulation of new stale content that recreates the current problem within 18 months. Freshness needs to be a system, not an annual panic.</p>
+
+    <div class="principle-grid">
+      <div class="principle-card">
+        <div class="principle-icon">📅</div>
+        <h4>Naming convention signals age</h4>
+        <p>Year in asset names is already common practice ([MASTER] 2025 Licensing, 2026 Gartner MQ). Enforce it: every customer-facing deck must include the year. Old-year decks are immediately visible without needing to look at metadata.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🏷️</div>
+        <h4>Freshness tags, not dates</h4>
+        <p>Add three system tags: <strong>Current (2026)</strong>, <strong>Needs Review</strong>, and <strong>Archive Candidate</strong>. Stewards apply these during quarterly reviews. Smart filters can then show sellers only "Current" assets if they want a freshness-filtered view.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">⏰</div>
+        <h4>Automated hygiene alerts</h4>
+        <p>The existing asset hygiene report script flags assets not updated in 90+ days with &lt;5 lifetime views. Schedule this report monthly and route it to content stewards — they own their channel's freshness, not just its initial population.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>Content lifecycle policy (proposed)</h4>
+      <div style="overflow-x:auto">
+        <table class="compare-table" style="margin-bottom:0">
+          <thead>
+            <tr><th>State</th><th>Criteria</th><th>Tag</th><th>Trigger</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="better">Active — Current</td>
+              <td>Updated within 12 months OR &gt;5 views/month</td>
+              <td><code>Current (2026)</code></td>
+              <td>Steward confirms at quarterly review</td>
+            </tr>
+            <tr>
+              <td style="color:var(--warning); font-weight:600">Active — Needs Review</td>
+              <td>Not updated in 90 days AND &lt;5 views in last 30 days</td>
+              <td><code>Needs Review</code></td>
+              <td>Monthly hygiene report flags; email to steward</td>
+            </tr>
+            <tr>
+              <td style="color:var(--danger); font-weight:600">Archive Candidate</td>
+              <td>Not updated in 180 days AND &lt;5 views lifetime OR confirmed superseded</td>
+              <td><code>Archive Candidate</code></td>
+              <td>Steward reviews and approves within 30 days or asset is archived</td>
+            </tr>
+            <tr>
+              <td class="strike">Archived</td>
+              <td>Steward or admin action; soft-delete in Showpad</td>
+              <td>—</td>
+              <td>Can be restored within 90 days if needed</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card success" style="margin-top:16px">
+      <h4>✅ What already exists to support this</h4>
+      <p>The <code>scripts/asset_hygiene_report.py</code> script already surfaces "Stale" assets (not updated in 180+ days, &lt;10 lifetime views) and "Never Viewed" assets with a hygiene chip per row. Running it monthly and routing the output to stewards is the primary enforcement mechanism. A scheduled run can be added via the automation toolkit with no additional development.</p>
+      <p>The "Needs Review" and "Archive Candidate" tag states can be applied directly in Showpad or in bulk via the asset API — making the lifecycle process scriptable, not dependent on manual Showpad UI clicks.</p>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ROADMAP -->
+  <div class="section" id="roadmap">
+    <div class="section-label">09 — Implementation</div>
+    <h2>A 90-day roadmap</h2>
+    <p class="section-intro">The rebuild should happen in three phases. Phase 1 focuses on what sellers see immediately; Phase 2 on the structural cleanup; Phase 3 on governance that keeps it clean. None of these phases require Showpad downtime — all are additive until the cutover in Phase 2.</p>
+
+    <div class="roadmap">
+
+      <div class="roadmap-item">
+        <div class="roadmap-dot phase1">1</div>
+        <div class="roadmap-phase phase1">Phase 1 — Weeks 1–3: Quick wins &amp; tag clean-up</div>
+        <h4>Configure homepage pinboard, fix audience labels, deprecate noisy tags</h4>
+        <ul>
+          <li>Configure the Showpad <strong>homepage pinboard</strong> with four groups: Pricing &amp; Licensing, Pitch Decks by Vertical, Roadmap &amp; Vision, Agentic Positioning — grounded in YTD engagement data</li>
+          <li>Retire the 32 noisy tags (see §6): event-specific (RKO, SKO, Q-series), tool references (Notion, Showpad, Chorus), typos (Anomalo), currency codes (USD, GBP, CAD, EURO), Week 1–4 markers</li>
+          <li>Add audience labels (<em>External – public / External – NDA confidential / Internal only</em>) to the 347 active assets currently missing them — prioritise by view count</li>
+          <li>Tag the 173 untagged SE recordings: at minimum add <em>Internal only</em>, <em>Sales Engineering (SE)</em>, and a product tag; these move to the Enablement Hub in Phase 2</li>
+          <li><strong>Triage never-viewed assets (218):</strong> Archive the confirmed stale pre-2025 documents and videos; triage ambiguous assets with stewards; identify and promote the high-quality never-surfaced ones (see §7)</li>
+          <li>Archive DQG Starter Pack v14 (US and CA) — confirmed superseded by v15; monitor 2024 vs 2025 Licensing before taking action</li>
+          <li>Announce homepage changes in #sales Slack with a short walkthrough; measure unique user logins week-over-week</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-dot phase2">2</div>
+        <div class="roadmap-phase phase2">Phase 2 — Weeks 4–8: Channel restructure</div>
+        <h4>Build 7 channels in parallel; migrate content; align stage tags to SFDC; cut over</h4>
+        <ul>
+          <li>Create all 7 new channels with correct sections (draft, not yet visible to sellers)</li>
+          <li>Assign content stewards for each channel; brief them on the tag taxonomy and SFDC stage alignment</li>
+          <li>Create Enablement Hub channel; migrate SE recordings and weekly enabler sessions; link Notion/Calendar for upcoming sessions</li>
+          <li>Content audit: map every current asset to its new channel home; resolve "Validate" tag → fold into "Develop Solution"</li>
+          <li>Solutions &amp; Products: structure as Ataccama Core (DQ&amp;C, Lineage, Observability, MDM, RDM, ONE AI) → Ataccama Agentic → Verticals; Core and Agentic are parallel platforms at the same level; AI readiness messaging belongs in Sales Plays, not here; verify each product section has at most one pinned customer-ready deck</li>
+          <li>Identify and archive confirmed duplicate/superseded assets (target: –30–40% active asset count)</li>
+          <li>Configure Showpad smart filters for each channel using the consolidated tag dimensions</li>
+          <li>Cutover: hide old channels, make new 7 visible — communicate to GTM team with a Loom walkthrough + Slack post</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-dot phase3">3</div>
+        <div class="roadmap-phase phase3">Phase 3 — Weeks 9–12: Governance &amp; measurement</div>
+        <h4>Establish the rules that keep the structure clean; build the tracking reports</h4>
+        <ul>
+          <li>Activate the content lifecycle policy (§8): Current → Needs Review → Archive Candidate lifecycle, with automated hygiene report routing to stewards monthly</li>
+          <li>Establish a "content brief" template: every new asset upload requires Audience, Stage, Product, and Type tags before publishing — no tag, no visibility in channel smart filters</li>
+          <li>Build the three new tracking reports: Tag Coverage Dashboard, Channel Adoption Report, Asset Engagement by Stage (see §10)</li>
+          <li>Implement quarterly channel reviews: stewards confirm their pinned assets are current and apply freshness tags (<em>Current 2026 / Needs Review</em>)</li>
+          <li>30-day post-cutover seller pulse check: two-question survey (found what you needed? / which source?)</li>
+          <li>Create Showpad SCORM onboarding module: "How to use Showpad as a seller" — covers homepage pinboard, the 7 channels, and how to use stage-based smart filters</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- OUTCOMES -->
+  <div class="section" id="outcomes">
+    <div class="section-label">10 — Expected Outcomes</div>
+    <h2>What success looks like — and how to measure it</h2>
+    <p class="section-intro">Success is not a one-time state — it is a set of signals that confirm the rebuild is working and a governance system that keeps it working. Below are the target outcomes, the metrics that track them, and the reports needed to surface those metrics.</p>
+
+    <div class="outcome-grid">
+      <div class="outcome-card">
+        <div class="outcome-icon">📈</div>
+        <div>
+          <h4>Reverse the engagement decline</h4>
+          <p><strong>Current:</strong> 455 events in May 2026 — down 69% from February. <strong>Target:</strong> ≥700 events/month by end of Q3 2026 and ≥900 by Q4. Grow the 111 unique YTD users and improve regularity of use — more users returning weekly, not just at RKO. <strong>Report:</strong> Monthly YTD engagement report (existing script); add a unique-user-per-month trend line.</p>
+        </div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-icon">⏱️</div>
+        <div>
+          <h4>Sub-90-second content retrieval</h4>
+          <p>Homepage pinboard + 4 clear seller channels + consolidated tags means a seller knows exactly where to look. <strong>Proxy measure:</strong> session duration in Showpad analytics. Short sessions on specific assets = found it fast. Long, multi-channel sessions = still searching. Track the ratio.</p>
+        </div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-icon">🗑️</div>
+        <div>
+          <h4>Active library reduced by ~30–40%</h4>
+          <p>Triaging 218 never-viewed assets (archive ~40%, promote ~20%, triage ~40%) plus superseded pairs reduces the active pool toward ~560–660. <strong>Report:</strong> Asset hygiene report run monthly; track active asset count trend over time. Smaller, curated library → more trust.</p>
+        </div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-icon">🏷️</div>
+        <div>
+          <h4>Close the tagging gaps — not start from zero</h4>
+          <p><strong>Baseline today:</strong> 81.6% tagged, but 37% missing audience label and 88% missing stage tag. <strong>Targets:</strong> 100% audience-labelled (all active assets carry External/Internal tag), 50%+ stage-tagged by end of Phase 2, 70%+ by Phase 3. <strong>Report:</strong> Add a "tag coverage by dimension" summary card to the hygiene report — audience label %, stage tag %, product tag %.</p>
+        </div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-icon">🔄</div>
+        <div>
+          <h4>Reduced ad-hoc "where's the deck?" requests</h4>
+          <p>A leading qualitative signal that navigation is working: fewer Slack asks in #sales and #presales for specific assets. Establish a pulse check: survey the AE/BDR team 30 days post-cutover with two questions: "Did you find what you needed?" and "Did you use Showpad or another source?"</p>
+        </div>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-icon">📊</div>
+        <div>
+          <h4>Measurable content ROI by buying stage</h4>
+          <p>Once stage tags are applied, SFDC + Showpad share data can answer: which assets are used in won vs. lost deals? Which stage content correlates with faster close? <strong>New report needed:</strong> "Asset engagement by stage tag" — a pivot of the YTD event data against the stage tag dimension. This does not currently exist; build it in Phase 3.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECOMMENDED NEW REPORTS -->
+    <div style="margin-top:32px">
+      <h3 style="margin-bottom:12px">New reports to build for tracking success</h3>
+      <p style="font-size:13px; color:var(--text-light); margin-bottom:16px">The existing asset hygiene report and YTD engagement report cover library health and total engagement. Three additional reports are needed to track the specific outcomes of this restructure:</p>
+      <table class="compare-table">
+        <thead>
+          <tr><th>Report</th><th>What it tracks</th><th>Cadence</th><th>Build effort</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Tag Coverage Dashboard</strong></td>
+            <td>% assets with audience label, % with stage tag, % with product tag — by channel. Surfaces gaps as they open up rather than waiting for a full hygiene review.</td>
+            <td>Monthly</td>
+            <td>Low — extends existing hygiene report with 3 new summary rows</td>
+          </tr>
+          <tr>
+            <td><strong>Channel Adoption Report</strong></td>
+            <td>Unique users per channel per month; top 5 assets per channel. Identifies which channels are being used and which are invisible.</td>
+            <td>Monthly</td>
+            <td>Medium — requires joining event data with channel/asset mapping</td>
+          </tr>
+          <tr>
+            <td><strong>Asset Engagement by Stage</strong></td>
+            <td>Views and unique users per buying-stage tag. Answers: "Is our Develop Solution content being used? Do we have a gap at Build Value?" Enables content investment decisions by SFDC stage.</td>
+            <td>Quarterly</td>
+            <td>Medium — requires stage tags to be populated (Phase 2 prerequisite)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight-box" style="margin-top: 32px">
+      <h3>The bottom line</h3>
+      <p>The tagging foundation already exists at 81.6% — this is not a rebuild from scratch, it is gap-filling and consolidation. The channels need collapsing from 21 to 7. The homepage needs to surface what sellers actually reach for. And the governance system needs to exist so that the structure stays clean in 18 months without another full restructure.</p>
+      <p>The content is largely good. The engagement data shows sellers know which 15–20 assets they want. The rebuild's job is to surface those assets instantly, build a durable structure around seller intent rather than org ownership, and instrument the system so content ROI is measurable — not just assumed.</p>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <strong>Data sources:</strong> Showpad asset snapshot (May 26, 2026, n=3,667 assets, tags resolved via /assets/{id}/tags for all 939 active assets); YTD activity report (Jan 2 – May 26, 2026, 4,161 events, 111 unique users); asset hygiene report (May 2026, 30-day event window); channel mindmap (May 26, 2026, 21 channels, 132 sections). &nbsp;|&nbsp; <strong>Prepared by:</strong> Claude Code / Showpad Management automation toolkit. &nbsp;|&nbsp; <strong>Note:</strong> Recommendations are structural only; no changes have been made to the live Showpad org.
+  </div>
+
+</div>
+
+</body>
+</html>
