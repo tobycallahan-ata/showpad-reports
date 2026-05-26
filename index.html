@@ -23,7 +23,7 @@
       color: var(--text);
       padding: 40px 16px 64px;
     }
-    .container { max-width: 800px; margin: 0 auto; }
+    .container { max-width: 860px; margin: 0 auto; }
 
     /* ── Header ── */
     .page-header {
@@ -32,7 +32,7 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 16px;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
     .page-header h1 {
       font-size: 1.6rem;
@@ -41,6 +41,17 @@
     }
     .page-header h1 span { font-weight: 400; color: var(--muted); font-size: 1rem; }
     .meta { font-size: 0.78rem; color: var(--muted); text-align: right; line-height: 1.7; }
+
+    /* ── Section headings ── */
+    .section-heading {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--brand);
+      margin: 36px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+    .section-heading:first-of-type { margin-top: 8px; }
 
     /* ── Latest button ── */
     .btn {
@@ -56,12 +67,12 @@
     }
     .btn:hover { background: var(--accent); }
 
-    /* ── Count chip ── */
+    /* ── Count row ── */
     .count-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
+      margin: 16px 0 10px;
     }
     .count-label { font-size: 0.8rem; color: var(--muted); font-weight: 500; }
 
@@ -71,6 +82,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
+      margin-bottom: 8px;
     }
     table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
     thead th {
@@ -110,16 +122,12 @@
       vertical-align: middle;
     }
 
-    /* ── Special reports ── */
-    .section-label {
-      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .07em; color: var(--muted); margin-bottom: 10px;
-    }
+    /* ── Report cards ── */
     .special-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 12px;
-      margin-bottom: 28px;
+      margin-bottom: 16px;
     }
     .special-card {
       background: var(--card-bg); border: 1px solid var(--border);
@@ -152,7 +160,7 @@
     }
 
     footer {
-      margin-top: 32px;
+      margin-top: 40px;
       font-size: 0.75rem;
       color: var(--muted);
       text-align: center;
@@ -165,49 +173,20 @@
   <header class="page-header">
     <h1>Revenue Enablement Report Hub &nbsp;<span>ataccama.showpad.biz</span></h1>
     <div class="meta">
-      2 reports available<br/>
-      Updated 2026-05-26 19:22 UTC
+      2 weekly reports<br/>
+      Updated 2026-05-26 19:27 UTC
     </div>
   </header>
 
-  <div style='margin-bottom:24px'><a class="btn" href="showpad_weekly_2026-05-26.html">View latest report →</a></div>
+  <div style='margin-bottom:8px'><a class="btn" href="showpad_weekly_2026-05-26.html">View latest weekly report →</a></div>
 
   
-  <div class="section-label">Course Previews</div>
-  <div class="special-grid">
-    <a class="special-card course-card" href="courses/data-products-mcp-enablement-recap.html">
-      <div class="card-icon">🎓</div>
-      <div class="card-title">Data Products &amp; MCP — Enablement Recap</div>
-      <div class="card-desc">Interactive SCORM course preview — click to review before publishing to Showpad.</div>
-      <div class="card-date">Published: 2026-05-26</div>
-    </a>
-  </div>
-
-  
-  <div class="section-label">Tools &amp; Special Reports</div>
-  <div class="special-grid">
+  <h2 class="section-heading">Asset Reports</h2>
+    <div class="special-grid">
     <a class="special-card" href="asset_hygiene.html">
       <div class="card-icon">🧹</div>
       <div class="card-title">Asset Hygiene Report</div>
       <div class="card-desc">All assets with hygiene signals — filterable by views, last viewed, file type, tags, sensitivity, and rolling activity window.</div>
-      <div class="card-date">Last generated: 2026-05-26</div>
-    </a>
-    <a class="special-card" href="course_report.html">
-      <div class="card-icon">🎓</div>
-      <div class="card-title">Course Completion Report</div>
-      <div class="card-desc">Matrix view of all Coach courses × users — completion status, test scores, and progress. Filterable by course date, user group, and incomplete assignments.</div>
-      <div class="card-date">Last generated: 2026-05-26</div>
-    </a>
-    <a class="special-card" href="shared_spaces_2026-05-26.html">
-      <div class="card-icon">🔗</div>
-      <div class="card-title">Shared Spaces Report</div>
-      <div class="card-desc">Shared space activity, engagement metrics, and content access detail.</div>
-      <div class="card-date">Last generated: 2026-05-26</div>
-    </a>
-    <a class="special-card" href="showpad_structure_recommendation_2026-05-26.html">
-      <div class="card-icon">🗂️</div>
-      <div class="card-title">Structure Recommendation</div>
-      <div class="card-desc">Structural analysis and reorganisation recommendations for the Showpad content library.</div>
       <div class="card-date">Last generated: 2026-05-26</div>
     </a>
     <a class="special-card" href="showpad_90day_review_2026-05-26.html">
@@ -222,30 +201,10 @@
       <div class="card-desc">Year-to-date asset activity, cumulative views, and usage breakdown.</div>
       <div class="card-date">Last generated: 2026</div>
     </a>
-    <a class="special-card" href="showpad_mindmap_2026-05-26.html">
-      <div class="card-icon">🗺️</div>
-      <div class="card-title">Channel Mindmap</div>
-      <div class="card-desc">Visual map of the current Showpad channel structure and content hierarchy.</div>
-      <div class="card-date">Last generated: 2026-05-26</div>
-    </a>
-    <a class="special-card" href="showpad_structure_mindmap_2026-05-26.html">
-      <div class="card-icon">🗺️</div>
-      <div class="card-title">Structure Mindmap</div>
-      <div class="card-desc">Recommended architecture mindmap for the reorganised Showpad channel structure.</div>
-      <div class="card-date">Last generated: 2026-05-26</div>
-    </a>
-    <a class="special-card" href="channel_mapping_2026-05-26.html">
-      <div class="card-icon">🔀</div>
-      <div class="card-title">Channel Mapping</div>
-      <div class="card-desc">Full mapping of assets to channels with division and tag detail.</div>
-      <div class="card-date">Last generated: 2026-05-26</div>
-    </a>
   </div>
-
   <div class="count-row">
-    <span class="count-label">Asset Reports — newest first</span>
+    <span class="count-label">Weekly reports — newest first</span>
   </div>
-
   <div class="panel">
     
     <table>
@@ -272,6 +231,60 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  
+  <h2 class="section-heading">Course Reports</h2>
+    <div class="special-grid">
+    <a class="special-card" href="course_report.html">
+      <div class="card-icon">🎓</div>
+      <div class="card-title">Course Completion Report</div>
+      <div class="card-desc">Matrix view of all Coach courses × users — completion status, test scores, and progress. Filterable by course date, user group, and incomplete assignments.</div>
+      <div class="card-date">Last generated: 2026-05-26</div>
+    </a>
+  </div>
+    <div class="special-grid">
+    <a class="special-card course-card" href="courses/data-products-mcp-enablement-recap.html">
+      <div class="card-icon">🎓</div>
+      <div class="card-title">Data Products &amp; MCP — Enablement Recap</div>
+      <div class="card-desc">Interactive SCORM course preview — click to review before publishing to Showpad.</div>
+      <div class="card-date">Published: 2026-05-26</div>
+    </a>
+  </div>
+
+  
+  <h2 class="section-heading">Governance Reports</h2>
+    <div class="special-grid">
+    <a class="special-card" href="shared_spaces_2026-05-26.html">
+      <div class="card-icon">🔗</div>
+      <div class="card-title">Shared Spaces Report</div>
+      <div class="card-desc">Shared space activity, engagement metrics, and content access detail.</div>
+      <div class="card-date">Last generated: 2026-05-26</div>
+    </a>
+    <a class="special-card" href="showpad_structure_recommendation_2026-05-26.html">
+      <div class="card-icon">🗂️</div>
+      <div class="card-title">Structure Recommendation</div>
+      <div class="card-desc">Structural analysis and reorganisation recommendations for the Showpad content library.</div>
+      <div class="card-date">Last generated: 2026-05-26</div>
+    </a>
+    <a class="special-card" href="showpad_mindmap_2026-05-26.html">
+      <div class="card-icon">🗺️</div>
+      <div class="card-title">Channel Mindmap</div>
+      <div class="card-desc">Visual map of the current Showpad channel structure and content hierarchy.</div>
+      <div class="card-date">Last generated: 2026-05-26</div>
+    </a>
+    <a class="special-card" href="showpad_structure_mindmap_2026-05-26.html">
+      <div class="card-icon">🗺️</div>
+      <div class="card-title">Structure Mindmap</div>
+      <div class="card-desc">Recommended architecture mindmap for the reorganised Showpad channel structure.</div>
+      <div class="card-date">Last generated: 2026-05-26</div>
+    </a>
+    <a class="special-card" href="channel_mapping_2026-05-26.html">
+      <div class="card-icon">🔀</div>
+      <div class="card-title">Channel Mapping</div>
+      <div class="card-desc">Full mapping of assets to channels with division and tag detail.</div>
+      <div class="card-date">Last generated: 2026-05-26</div>
+    </a>
   </div>
 
 </div>
