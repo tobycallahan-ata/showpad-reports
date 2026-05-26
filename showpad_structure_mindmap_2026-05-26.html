@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Showpad Structure Mindmap — Recommended Architecture</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface2: #263348;
+    --border: #334155;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+
+    --c1: #3b82f6;  /* Start Here — blue */
+    --c2: #10b981;  /* Buying Stage — green */
+    --c3: #f59e0b;  /* Solutions — amber */
+    --c4: #ef4444;  /* Compete — red */
+    --c5: #8b5cf6;  /* Partners — purple */
+    --c6: #64748b;  /* Enablement — slate */
+    --c7: #475569;  /* Legal — dark slate */
+    --c-old: #334155; /* old/deprecated */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  header {
+    padding: 32px 40px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  header p {
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .header-actions {
+    display: flex;
+    gap: 10px;
+  }
+  .btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:hover { background: var(--border); }
+  .btn.primary {
+    background: var(--c1);
+    border-color: var(--c1);
+    color: white;
+  }
+  .btn.primary:hover { opacity: 0.9; }
+
+  /* ---- TABS ---- */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    padding: 20px 40px 0;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .tab {
+    padding: 9px 20px;
+    border-radius: 8px 8px 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    color: var(--muted);
+    background: transparent;
+    font-family: inherit;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ---- MAIN VIEW ---- */
+  .main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px 60px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 12px 12px 12px;
+  }
+
+  /* ---- ARCHITECTURE VIEW ---- */
+  .arch-view {
+    padding: 40px 0;
+  }
+  .arch-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  /* Center hub */
+  .hub {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+  }
+  .hub-node {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    border-radius: 16px;
+    padding: 20px 36px;
+    text-align: center;
+    position: relative;
+  }
+  .hub-node .hub-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 4px;
+  }
+  .hub-node .hub-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 2px;
+  }
+  .hub-node .hub-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* ---- CHANNEL MAP ---- */
+  .channel-map {
+    margin-top: 40px;
+  }
+  .channel-map-inner {
+    display: flex;
+    gap: 0;
+  }
+  .channel-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .channel-node {
+    border-radius: 12px;
+    padding: 16px;
+    width: 100%;
+    max-width: 180px;
+    text-align: center;
+    position: relative;
+    margin-bottom: 0;
+  }
+  .channel-node-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  .channel-node-num {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 2px;
+  }
+  .channel-node-name {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .channel-node-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* Section tree under each channel */
+  .section-tree {
+    margin-top: 12px;
+    width: 100%;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .section-node {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: left;
+    line-height: 1.4;
+    position: relative;
+    padding-left: 18px;
+  }
+  .section-node::before {
+    content: '›';
+    position: absolute;
+    left: 6px;
+    font-size: 12px;
+    top: 4px;
+    opacity: 0.4;
+  }
+
+  /* connector line from hub to channel */
+  .connector-line {
+    width: 2px;
+    background: var(--border);
+    margin: 0 auto 0;
+    flex-shrink: 0;
+  }
+
+  /* ---- BEFORE / AFTER COMPARE ---- */
+  .compare-view {
+    padding: 40px 0;
+  }
+  .compare-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .compare-col-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  .compare-col-label.before { color: #ef4444; border-color: #ef4444; }
+  .compare-col-label.after { color: #10b981; border-color: #10b981; }
+
+  .channel-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .channel-pill.old {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .channel-pill.old.deprecated {
+    opacity: 0.5;
+    text-decoration: line-through;
+  }
+  .channel-pill.new {
+    border: 1px solid transparent;
+    color: white;
+    font-weight: 600;
+  }
+  .channel-pill-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .channel-pill-sections {
+    margin-left: auto;
+    font-size: 10px;
+    opacity: 0.6;
+  }
+
+  .arrow-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0 8px 20px;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* ---- TAGGING VIEW ---- */
+  .tagging-view {
+    padding: 40px 0;
+  }
+  .tag-matrix {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .tag-dimension {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .tag-dimension-name {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tag-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    margin: 3px 2px;
+    border: 1px solid var(--border);
+  }
+
+  /* ---- STATS STRIP ---- */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 24px 0 40px;
+  }
+  .stat-item {
+    background: var(--surface2);
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-lbl {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+  }
+  .stat-item .arrow {
+    font-size: 11px;
+    opacity: 0.5;
+    margin: 2px 0;
+  }
+  .stat-old { color: #ef4444; }
+  .stat-new { color: #10b981; }
+
+  @media print {
+    body { background: white; color: #0f172a; }
+    .btn { display: none; }
+    header { border-color: #e2e8f0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>Showpad Structure — Recommended Architecture</h1>
+      <p>Proposed redesign · May 2026 · From 21 channels → 7 · Built for seller intent</p>
+    </div>
+    <div class="header-actions">
+      <a href="showpad_structure_recommendation_2026-05-26.html" class="btn">📄 Full Recommendation →</a>
+      <button class="btn primary" onclick="window.print()">⬇ Print / PDF</button>
+    </div>
+  </div>
+</header>
+
+<div style="max-width:1400px; margin:0 auto; padding:0 40px">
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('architecture')">Architecture View</button>
+    <button class="tab" onclick="showTab('compare')">Before vs. After</button>
+    <button class="tab" onclick="showTab('tagging')">Tagging Framework</button>
+  </div>
+</div>
+
+<div style="max-width:1400px; margin:0 auto; padding:0 40px; margin-top:-1px">
+<div class="main">
+
+  <!-- ============ ARCHITECTURE ============ -->
+  <div id="tab-architecture" class="tab-content active">
+  <div class="arch-view">
+
+    <div class="arch-label">Seller experience · 5 seller-facing + 2 internal channels</div>
+
+    <!-- Stats strip -->
+    <div class="stats-strip">
+      <div class="stat-item">
+        <div class="stat-num stat-old">21</div>
+        <div class="arrow">↓</div>
+        <div class="stat-num stat-new">7</div>
+        <div class="stat-lbl">Channels</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num stat-old">132</div>
+        <div class="arrow">↓</div>
+        <div class="stat-num stat-new">~27</div>
+        <div class="stat-lbl">Sections</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" style="color:#d97706; font-size:20px">81.6%</div>
+        <div class="arrow">→ fix gaps</div>
+        <div class="stat-num stat-new">~180 tags</div>
+        <div class="stat-lbl">Tagged (consolidate)</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num stat-old">934</div>
+        <div class="arrow">↓</div>
+        <div class="stat-num stat-new">~560</div>
+        <div class="stat-lbl">Active Assets</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num stat-old">8%</div>
+        <div class="arrow">↑</div>
+        <div class="stat-num stat-new">~50%</div>
+        <div class="stat-lbl">Engaged Assets</div>
+      </div>
+    </div>
+
+    <!-- Hub -->
+    <div class="hub">
+      <div class="hub-node">
+        <div class="hub-label">Showpad</div>
+        <div class="hub-name">Ataccama Content Hub</div>
+        <div class="hub-sub">ataccama.showpad.biz</div>
+      </div>
+    </div>
+
+    <!-- Divider with label -->
+    <div style="display:flex; align-items:center; gap:12px; margin:32px 0 16px; color: var(--muted); font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase;">
+      <div style="flex:1; height:1px; background:var(--border)"></div>
+      <span>Seller-Facing Channels</span>
+      <div style="flex:1; height:1px; background:var(--border)"></div>
+    </div>
+
+    <!-- SELLER-FACING CHANNELS -->
+    <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:12px;">
+
+      <!-- CH1: Start Here -->
+      <div>
+        <div class="channel-node" style="background: linear-gradient(135deg, #1d4ed8, #3b82f6); color:white">
+          <div class="channel-node-icon">🚀</div>
+          <div class="channel-node-num">01</div>
+          <div class="channel-node-name">Start Here</div>
+          <div class="channel-node-badge">Pinboard</div>
+        </div>
+        <div class="section-tree">
+          <div class="section-node" style="border-color:#3b82f6; color:#93c5fd; background: rgba(59,130,246,0.08)">📌 15 pinned "always-need" assets</div>
+          <div class="section-node">Current pitch deck</div>
+          <div class="section-node">Pricing (current)</div>
+          <div class="section-node">Top 3 battlecards</div>
+          <div class="section-node">Pre-call template</div>
+          <div class="section-node">Deal review template</div>
+          <div class="section-node">Product roadmap</div>
+          <div class="section-node" style="font-style:italic; opacity:0.6">≤ 20 assets total. Monthly review.</div>
+        </div>
+      </div>
+
+      <!-- CH2: Buying Stage -->
+      <div>
+        <div class="channel-node" style="background: linear-gradient(135deg, #065f46, #10b981); color:white">
+          <div class="channel-node-icon">🗺️</div>
+          <div class="channel-node-num">02</div>
+          <div class="channel-node-name">By Buying Stage</div>
+          <div class="channel-node-badge">5 sections</div>
+        </div>
+        <div class="section-tree">
+          <div class="section-node" style="border-color:#10b981; color:#6ee7b7; background:rgba(16,185,129,0.08)">🔍 Prospect &amp; Qualify</div>
+          <div class="section-node" style="border-color:#10b981; color:#6ee7b7; background:rgba(16,185,129,0.08)">🎯 Discover &amp; Demo</div>
+          <div class="section-node" style="border-color:#10b981; color:#6ee7b7; background:rgba(16,185,129,0.08)">🧪 Prove &amp; Evaluate</div>
+          <div class="section-node" style="border-color:#10b981; color:#6ee7b7; background:rgba(16,185,129,0.08)">🤝 Negotiate &amp; Close</div>
+          <div class="section-node" style="border-color:#10b981; color:#6ee7b7; background:rgba(16,185,129,0.08)">📈 Retain &amp; Expand</div>
+          <div class="section-node" style="font-style:italic; opacity:0.6; margin-top:4px">Replaces: Sales Process, SE/PoCs, Legal (partially), CS</div>
+        </div>
+      </div>
+
+      <!-- CH3: Solutions -->
+      <div>
+        <div class="channel-node" style="background: linear-gradient(135deg, #92400e, #f59e0b); color:white">
+          <div class="channel-node-icon">💡</div>
+          <div class="channel-node-num">03</div>
+          <div class="channel-node-name">Solutions &amp; Products</div>
+          <div class="channel-node-badge">7–9 sections</div>
+        </div>
+        <div class="section-tree">
+          <div class="section-node" style="border-color:#f59e0b; color:#fcd34d; background:rgba(245,158,11,0.08)">Platform Overview</div>
+          <div class="section-node" style="border-color:#f59e0b; color:#fcd34d; background:rgba(245,158,11,0.08)">Data Quality &amp; Catalog</div>
+          <div class="section-node" style="border-color:#f59e0b; color:#fcd34d; background:rgba(245,158,11,0.08)">Data Lineage</div>
+          <div class="section-node" style="border-color:#f59e0b; color:#fcd34d; background:rgba(245,158,11,0.08)">Data Observability</div>
+          <div class="section-node" style="border-color:#f59e0b; color:#fcd34d; background:rgba(245,158,11,0.08)">MDM · RDM</div>
+          <div class="section-node" style="border-color:#f59e0b; color:#fcd34d; background:rgba(245,158,11,0.08)">ONE AI &amp; Agentic</div>
+          <div class="section-node" style="border-color:#f59e0b; color:#fcd34d; background:rgba(245,158,11,0.08)">Verticals (FinServ, Mfg…)</div>
+          <div class="section-node" style="font-style:italic; opacity:0.6; margin-top:4px">1 pinned deck per product. Clean hierarchy.</div>
+        </div>
+      </div>
+
+      <!-- CH4: Compete -->
+      <div>
+        <div class="channel-node" style="background: linear-gradient(135deg, #991b1b, #ef4444); color:white">
+          <div class="channel-node-icon">⚔️</div>
+          <div class="channel-node-num">04</div>
+          <div class="channel-node-name">Compete &amp; Justify</div>
+          <div class="channel-node-badge">4 sections</div>
+        </div>
+        <div class="section-tree">
+          <div class="section-node" style="border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.08)">Battlecards (Klue-linked)</div>
+          <div class="section-node" style="border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.08)">Analyst &amp; Industry Reports</div>
+          <div class="section-node" style="border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.08)">ROI &amp; Business Case</div>
+          <div class="section-node" style="border-color:#ef4444; color:#fca5a5; background:rgba(239,68,68,0.08)">Customer Proof (win stories)</div>
+          <div class="section-node" style="font-style:italic; opacity:0.6; margin-top:4px">Replaces: Competitive Intel, Analyst Reports, Customer Stories</div>
+        </div>
+      </div>
+
+      <!-- CH5: Partners -->
+      <div>
+        <div class="channel-node" style="background: linear-gradient(135deg, #4c1d95, #8b5cf6); color:white">
+          <div class="channel-node-icon">🤝</div>
+          <div class="channel-node-num">05</div>
+          <div class="channel-node-name">Partners</div>
+          <div class="channel-node-badge">3 sections</div>
+        </div>
+        <div class="section-tree">
+          <div class="section-node" style="border-color:#8b5cf6; color:#c4b5fd; background:rgba(139,92,246,0.08)">Hyperscalers (Snow / Azure / AWS)</div>
+          <div class="section-node" style="border-color:#8b5cf6; color:#c4b5fd; background:rgba(139,92,246,0.08)">Solution Partners (SIs, Cognizant)</div>
+          <div class="section-node" style="border-color:#8b5cf6; color:#c4b5fd; background:rgba(139,92,246,0.08)">Tech Partners (Manta, Loqate…)</div>
+          <div class="section-node" style="font-style:italic; opacity:0.6; margin-top:4px">18 old sections → 3. External portal links for depth.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- INTERNAL CHANNELS -->
+    <div style="display:flex; align-items:center; gap:12px; margin:36px 0 16px; color: var(--muted); font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase;">
+      <div style="flex:1; height:1px; background:var(--border)"></div>
+      <span>Internal-Only Channels (access-controlled, not in main seller nav)</span>
+      <div style="flex:1; height:1px; background:var(--border)"></div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:700px; margin:0 auto;">
+
+      <!-- CH6: Enablement -->
+      <div style="background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:20px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+          <div style="font-size:22px">📚</div>
+          <div>
+            <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted)">Channel 06 · Internal</div>
+            <div style="font-size:14px; font-weight:700">GTM Enablement</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div class="section-node">🎓 New Hire Onboarding</div>
+          <div class="section-node">📢 Weekly Enablers</div>
+          <div class="section-node">🎭 Sales Plays</div>
+          <div class="section-node">🎯 Courses &amp; Training (SCORM)</div>
+          <div class="section-node">⚙️ Ops &amp; Tooling (RevOps, SalesOps)</div>
+        </div>
+        <div style="font-size:10px; color:var(--muted); margin-top:10px; font-style:italic">Replaces: All GTM Enablement, New Hire Onboarding, RevOps channel</div>
+      </div>
+
+      <!-- CH7: Legal -->
+      <div style="background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:20px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+          <div style="font-size:22px">⚖️</div>
+          <div>
+            <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted)">Channel 07 · Internal</div>
+            <div style="font-size:14px; font-weight:700">Legal &amp; Contracts</div>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div class="section-node">📌 Master Agreements (PAAS, Self-Managed)</div>
+          <div class="section-node">Change Orders &amp; Amendments</div>
+          <div class="section-node">EULAs &amp; Beta Agreements</div>
+          <div class="section-node">Contracting Guides</div>
+        </div>
+        <div style="font-size:10px; color:var(--muted); margin-top:10px; font-style:italic">Direct lift from current Legal Contracts channel — no structural change</div>
+      </div>
+
+    </div>
+
+  </div>
+  </div>
+
+  <!-- ============ BEFORE / AFTER ============ -->
+  <div id="tab-compare" class="tab-content">
+  <div class="compare-view">
+
+    <div class="arch-label">Channel consolidation — 21 channels mapped to 7</div>
+
+    <div class="compare-cols">
+      <div>
+        <div class="compare-col-label before">❌ Current — 21 channels, org-chart structure</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> Sales Process &amp; SOPs <span class="channel-pill-sections">6 pinned</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#3b82f6">01 Start Here</strong> (pinned assets)</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> All GTM Enablement <span class="channel-pill-sections">34 sections</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#64748b">06 GTM Enablement</strong> (internal)</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> Pitch Decks &amp; Slideware <span class="channel-pill-sections">3 sections</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#3b82f6">01 Start Here</strong> + <strong style="color:#f59e0b">03 Solutions</strong></div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> Solutions <span class="channel-pill-sections">11 sections</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#f59e0b">03 Solutions &amp; Products</strong> (direct remap)</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> New Hire Onboarding <span class="channel-pill-sections">1 section</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#64748b">06 GTM Enablement</strong> → Onboarding section</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> Legal Contracts &amp; Attachments <span class="channel-pill-sections">4 sections</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#475569">07 Legal &amp; Contracts</strong> (direct lift)</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> Sales Engineering, PoCs &amp; RFXs <span class="channel-pill-sections">11 sections</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#10b981">02 Buying Stage</strong> → Prove &amp; Evaluate section</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> Customer Success &amp; Services <span class="channel-pill-sections">12 sections</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#10b981">02 Buying Stage</strong> → Retain &amp; Expand + <strong style="color:#64748b">06 Enablement</strong></div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> Industry &amp; Analyst Reports <span class="channel-pill-sections">1 section</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#ef4444">04 Compete &amp; Justify</strong> → Analyst Reports</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> Competitive Intel <span class="channel-pill-sections">2 sections</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#ef4444">04 Compete &amp; Justify</strong> → Battlecards</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> Partners <span class="channel-pill-sections">18 sections</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#8b5cf6">05 Partners</strong> (18 → 3 sections)</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> Sales Engineering — Internal <span class="channel-pill-sections">1 section</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#10b981">02 Buying Stage</strong> → Prove &amp; Evaluate</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> Customer Value Stories Library <span class="channel-pill-sections">4 sections</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#ef4444">04 Compete &amp; Justify</strong> → Customer Proof</div>
+
+        <div class="channel-pill old"><span class="channel-pill-dot" style="background:#ef4444"></span> RevOps, tech stack &amp; ops processes <span class="channel-pill-sections">2 sections</span></div>
+        <div class="arrow-row">↘ → <strong style="color:#64748b">06 GTM Enablement</strong> → Ops &amp; Tooling</div>
+
+        <div class="channel-pill old deprecated"><span class="channel-pill-dot" style="background:#475569"></span> …+ 7 more channels (partially visible/unused) <span class="channel-pill-sections">archived</span></div>
+      </div>
+
+      <div>
+        <div class="compare-col-label after">✅ Proposed — 7 channels, seller-intent structure</div>
+
+        <div class="channel-pill new" style="background:linear-gradient(90deg,#1d4ed8,#3b82f6)">
+          <span style="font-size:16px">🚀</span> 01 · Start Here
+          <span class="channel-pill-sections">≤ 20 pinned</span>
+        </div>
+        <div style="font-size:11px; color:var(--muted); margin:-2px 0 10px 28px">The 15 assets that cover 80% of weekly usage. Monthly review cadence.</div>
+
+        <div class="channel-pill new" style="background:linear-gradient(90deg,#065f46,#10b981)">
+          <span style="font-size:16px">🗺️</span> 02 · By Buying Stage
+          <span class="channel-pill-sections">5 sections</span>
+        </div>
+        <div style="font-size:11px; color:var(--muted); margin:-2px 0 10px 28px">Prospect → Discover → Prove → Negotiate → Expand. One stop per deal stage.</div>
+
+        <div class="channel-pill new" style="background:linear-gradient(90deg,#92400e,#f59e0b)">
+          <span style="font-size:16px">💡</span> 03 · Solutions &amp; Products
+          <span class="channel-pill-sections">7–9 sections</span>
+        </div>
+        <div style="font-size:11px; color:var(--muted); margin:-2px 0 10px 28px">One section per product line. One pinned "current" deck per section. Clear ownership.</div>
+
+        <div class="channel-pill new" style="background:linear-gradient(90deg,#991b1b,#ef4444)">
+          <span style="font-size:16px">⚔️</span> 04 · Compete &amp; Justify
+          <span class="channel-pill-sections">4 sections</span>
+        </div>
+        <div style="font-size:11px; color:var(--muted); margin:-2px 0 10px 28px">Battlecards, Gartner, ROI calculators, win stories — everything to win the deal.</div>
+
+        <div class="channel-pill new" style="background:linear-gradient(90deg,#4c1d95,#8b5cf6)">
+          <span style="font-size:16px">🤝</span> 05 · Partners
+          <span class="channel-pill-sections">3 sections</span>
+        </div>
+        <div style="font-size:11px; color:var(--muted); margin:-2px 0 10px 28px">Hyperscalers, SI partners, tech partners. Links to partner portals for depth.</div>
+
+        <div style="height:1px; background:var(--border); margin:16px 0"></div>
+
+        <div class="channel-pill new" style="background: var(--surface2); border-color: var(--border); color: var(--muted)">
+          <span style="font-size:16px">📚</span> 06 · GTM Enablement (Internal)
+          <span class="channel-pill-sections">5 sections</span>
+        </div>
+        <div style="font-size:11px; color:var(--muted); margin:-2px 0 10px 28px">Onboarding, weekly enablers, sales plays, courses, ops. Not in seller main nav.</div>
+
+        <div class="channel-pill new" style="background: var(--surface2); border-color: var(--border); color: var(--muted)">
+          <span style="font-size:16px">⚖️</span> 07 · Legal &amp; Contracts (Internal)
+          <span class="channel-pill-sections">4 sections</span>
+        </div>
+        <div style="font-size:11px; color:var(--muted); margin:-2px 0 10px 28px">Unchanged in content. Access-controlled. Not in seller main nav.</div>
+
+        <div style="margin-top:24px; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:8px; padding:14px 16px; font-size:12px; color:#6ee7b7">
+          <strong>Net result:</strong> From 21 visible channels to 5 seller-facing. From 132 sections to ~27. From department-first to intent-first. From a fragmented 235-tag taxonomy with 37% missing audience labels to a clean ~180-tag system with 100% audience coverage and full stage tagging.
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+  <!-- ============ TAGGING ============ -->
+  <div id="tab-tagging" class="tab-content">
+  <div class="tagging-view">
+
+    <div class="arch-label">Tag reality — 766/939 active assets tagged · 235 unique tags · build on what exists</div>
+
+    <!-- Status strip -->
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border-radius:10px; overflow:hidden; margin-bottom:24px;">
+      <div style="background:var(--surface2); padding:16px; text-align:center;">
+        <div style="font-size:26px; font-weight:800; color:#10b981; line-height:1;">81.6%</div>
+        <div style="font-size:10px; font-weight:700; text-transform:uppercase; color:var(--muted); margin-top:4px;">Active assets tagged</div>
+        <div style="font-size:11px; color:var(--muted); margin-top:2px;">766 of 939</div>
+      </div>
+      <div style="background:var(--surface2); padding:16px; text-align:center;">
+        <div style="font-size:26px; font-weight:800; color:#ef4444; line-height:1;">37%</div>
+        <div style="font-size:10px; font-weight:700; text-transform:uppercase; color:var(--muted); margin-top:4px;">Missing audience label</div>
+        <div style="font-size:11px; color:var(--muted); margin-top:2px;">347 assets — top priority</div>
+      </div>
+      <div style="background:var(--surface2); padding:16px; text-align:center;">
+        <div style="font-size:26px; font-weight:800; color:#ef4444; line-height:1;">88%</div>
+        <div style="font-size:10px; font-weight:700; text-transform:uppercase; color:var(--muted); margin-top:4px;">Missing stage tag</div>
+        <div style="font-size:11px; color:var(--muted); margin-top:2px;">827 assets — fill during migration</div>
+      </div>
+      <div style="background:var(--surface2); padding:16px; text-align:center;">
+        <div style="font-size:26px; font-weight:800; color:#f59e0b; line-height:1;">235</div>
+        <div style="font-size:10px; font-weight:700; text-transform:uppercase; color:var(--muted); margin-top:4px;">Unique tags (too many)</div>
+        <div style="font-size:11px; color:var(--muted); margin-top:2px;">Target: consolidate to ~180</div>
+      </div>
+    </div>
+
+    <!-- Three action cards -->
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:24px;">
+      <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.3); border-radius:10px; padding:16px;">
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#ef4444; margin-bottom:8px;">Action 1 — Phase 1</div>
+        <div style="font-size:13px; font-weight:700; color:var(--text); margin-bottom:8px;">Close the audience gap</div>
+        <div style="font-size:11px; color:var(--muted); line-height:1.6;">Add <em>External – public</em>, <em>External – NDA confidential</em>, or <em>Internal only</em> to the 347 unlabelled active assets. Prioritise by view count. Compliance risk: a seller sharing an Internal doc because it had no label.</div>
+      </div>
+      <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.3); border-radius:10px; padding:16px;">
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#f59e0b; margin-bottom:8px;">Action 2 — Phase 1</div>
+        <div style="font-size:13px; font-weight:700; color:var(--text); margin-bottom:8px;">Deprecate ~40 noisy tags</div>
+        <div style="font-size:11px; color:var(--muted); line-height:1.6;">Remove or merge: event-specific (Q1 2024, RKO, SKO, FWRD 2025), typos (Anomalo) → Anomalo, CDAta → CData), currency codes (GBP, USD, CAD), onboarding week markers (Week 1–4). Target: ≤180 tags total.</div>
+      </div>
+      <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:10px; padding:16px;">
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#10b981; margin-bottom:8px;">Action 3 — Phase 2</div>
+        <div style="font-size:13px; font-weight:700; color:var(--text); margin-bottom:8px;">Expand stage coverage</div>
+        <div style="font-size:11px; color:var(--muted); line-height:1.6;">The stage taxonomy already exists (Qualify → Develop Solution → Build Value → Validate → Negotiate). Apply to the 827 stage-untagged assets during channel migration — content stewards tag their sections as they move content.</div>
+      </div>
+    </div>
+
+    <!-- What already works well -->
+    <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:12px;">What's already well-tagged and ready to use</div>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+
+      <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 16px; display:flex; align-items:flex-start; gap:12px;">
+        <div style="font-size:20px">📊</div>
+        <div style="flex:1">
+          <div style="font-size:12px; font-weight:600; margin-bottom:6px">Pricing &amp; Licensing (3,210v) — top asset in the org</div>
+          <div>
+            <span class="tag-pill" style="background:rgba(100,116,139,0.15); color:#94a3b8; border-color:rgba(100,116,139,0.3); font-size:10px">Internal only</span>
+            <span class="tag-pill" style="background:rgba(245,158,11,0.1); color:#fcd34d; border-color:rgba(245,158,11,0.3); font-size:10px">Pricing &amp; packaging</span>
+          </div>
+        </div>
+        <div style="font-size:11px; color:var(--muted); text-align:right;">Already tagged<br>→ <span style="color:#3b82f6">Start Here</span></div>
+      </div>
+
+      <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 16px; display:flex; align-items:flex-start; gap:12px;">
+        <div style="font-size:20px">⚔️</div>
+        <div style="flex:1">
+          <div style="font-size:12px; font-weight:600; margin-bottom:6px">Battlecards — 20 assets tagged (Collibra 104v, Informatica 96v, Atlan, Semarchy, Reltio…)</div>
+          <div>
+            <span class="tag-pill" style="background:rgba(239,68,68,0.1); color:#fca5a5; border-color:rgba(239,68,68,0.3); font-size:10px">Battlecard</span>
+            <span class="tag-pill" style="background:rgba(239,68,68,0.1); color:#fca5a5; border-color:rgba(239,68,68,0.3); font-size:10px">Competitive Takeout</span>
+          </div>
+        </div>
+        <div style="font-size:11px; color:var(--muted); text-align:right;">Smart filter ready<br>→ <span style="color:#ef4444">Compete</span></div>
+      </div>
+
+      <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 16px; display:flex; align-items:flex-start; gap:12px;">
+        <div style="font-size:20px">🏢</div>
+        <div style="flex:1">
+          <div style="font-size:12px; font-weight:600; margin-bottom:6px">Customer value stories — 34 tagged (FinServ 29, Insurance 20, Manufacturing 17)</div>
+          <div>
+            <span class="tag-pill" style="background:rgba(16,185,129,0.1); color:#6ee7b7; border-color:rgba(16,185,129,0.3); font-size:10px">Customer value story (CVS)</span>
+            <span class="tag-pill" style="background:rgba(245,158,11,0.1); color:#fcd34d; border-color:rgba(245,158,11,0.3); font-size:10px">Financial Services</span>
+            <span class="tag-pill" style="background:rgba(245,158,11,0.1); color:#fcd34d; border-color:rgba(245,158,11,0.3); font-size:10px">Insurance</span>
+          </div>
+        </div>
+        <div style="font-size:11px; color:var(--muted); text-align:right;">Smart filter ready<br>→ <span style="color:#ef4444">Compete → Customer Proof</span></div>
+      </div>
+
+      <div style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 16px; display:flex; align-items:flex-start; gap:12px;">
+        <div style="font-size:20px">⚠️</div>
+        <div style="flex:1">
+          <div style="font-size:12px; font-weight:600; margin-bottom:6px">173 untagged SE recordings — highest-value gap (some have 100–250 views)</div>
+          <div style="font-size:11px; color:#f59e0b; margin-top:4px;">SE-E Lineage intro (248v) · SE-E MS Fabric (173v) · SE-E Processing Pushdowns (184v) · DBT Overview (154v)</div>
+        </div>
+        <div style="font-size:11px; color:#f59e0b; text-align:right;">Needs tagging<br>Phase 1 fix</div>
+      </div>
+
+    </div>
+
+  </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

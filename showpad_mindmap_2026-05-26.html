@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Showpad Channel Mindmap — Ataccama</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #1f2937;
+      background: #f8fafc;
+      line-height: 1.5;
+    }
+
+    /* ── Header ── */
+    .page-header {
+      background: #1e293b;
+      color: white;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .page-header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .page-header .gen-date {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 10px 32px;
+      display: flex;
+      gap: 32px;
+      font-size: 13px;
+    }
+    .stat { display: flex; gap: 6px; align-items: center; }
+    .stat strong { color: #38bdf8; font-size: 18px; font-weight: 700; }
+
+    /* ── Notice box ── */
+    .notice-box {
+      margin: 20px 24px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid #3b82f6;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #1e3a5f;
+      line-height: 1.7;
+    }
+    .notice-box strong { color: #1d4ed8; }
+
+    /* ── Toolbar ── */
+    .toolbar {
+      padding: 12px 24px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .toolbar input[type="search"] {
+      flex: 1;
+      max-width: 420px;
+      padding: 7px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .toolbar input[type="search"]:focus { border-color: #3b82f6; }
+    .btn {
+      padding: 7px 14px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      background: white;
+      font-size: 13px;
+      cursor: pointer;
+      color: #374151;
+      transition: background 0.12s;
+    }
+    .btn:hover { background: #f1f5f9; }
+    .btn-primary { background: #3b82f6; color: white; border-color: #3b82f6; }
+    .btn-primary:hover { background: #2563eb; }
+    .search-count {
+      font-size: 12px;
+      color: #6b7280;
+      min-width: 80px;
+    }
+
+    /* ── Tree container ── */
+    .tree-container {
+      padding: 20px 24px;
+      max-width: 1100px;
+    }
+
+    /* ── Channel nodes ── */
+    .channel-node {
+      margin-bottom: 8px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .channel-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      border-left: 4px solid var(--ch-color, #64748b);
+      user-select: none;
+      transition: background 0.1s;
+    }
+    .channel-header:hover { background: #f8fafc; }
+    .ch-arrow {
+      font-size: 10px;
+      color: #9ca3af;
+      transition: transform 0.15s;
+      width: 14px;
+      text-align: center;
+    }
+    .channel-node.expanded .ch-arrow { transform: rotate(90deg); }
+    .ch-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: #111827;
+      flex: 1;
+    }
+    .ch-badge {
+      font-size: 11px;
+      background: #f1f5f9;
+      color: #64748b;
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+    .channel-children {
+      padding: 8px 16px 12px 24px;
+      border-top: 1px solid #f1f5f9;
+      background: #fafafa;
+    }
+
+    /* ── Section nodes (smartCollection / collection) ── */
+    .tree-node {
+      margin: 3px 0;
+      border-radius: 5px;
+    }
+    .section-node {
+      background: transparent;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 8px;
+      cursor: pointer;
+      border-radius: 5px;
+      user-select: none;
+      transition: background 0.1s;
+    }
+    .section-header:hover { background: #f1f5f9; }
+    .toggle-arrow {
+      font-size: 9px;
+      color: #9ca3af;
+      width: 12px;
+      text-align: center;
+      transition: transform 0.12s;
+    }
+    .section-node.expanded > .section-header .toggle-arrow { transform: rotate(90deg); }
+    .node-icon { font-size: 15px; flex-shrink: 0; }
+    .node-label {
+      flex: 1;
+      font-size: 13px;
+      color: #374151;
+    }
+    .smart-collection > .section-header .node-label { font-style: italic; }
+    .dynamic-label {
+      font-size: 11px;
+      color: #9ca3af;
+      font-style: italic;
+      margin-left: 4px;
+    }
+    .child-count {
+      font-size: 11px;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+    .children-container {
+      padding-left: 20px;
+      border-left: 1px dashed #e2e8f0;
+      margin-left: 14px;
+      margin-top: 2px;
+    }
+
+    /* ── Item nodes ── */
+    .item-node {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: background 0.1s;
+    }
+    .item-node:hover { background: #f8fafc; }
+    .item-node .node-label {
+      font-size: 13px;
+      color: #1f2937;
+    }
+    .badge {
+      font-size: 11px;
+      background: #dcfce7;
+      color: #15803d;
+      padding: 1px 7px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+    .badge.zero {
+      background: #f1f5f9;
+      color: #9ca3af;
+    }
+    .ft-badge {
+      font-size: 10px;
+      background: #f3f4f6;
+      color: #6b7280;
+      padding: 1px 6px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Search highlighting ── */
+    .search-match { background: #fef9c3; }
+    .search-hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>Showpad Channel Mindmap — Ataccama</h1>
+  </div>
+  <div class="gen-date">Generated: May 26, 2026 at 14:09 UTC</div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><strong>21</strong> channels</div>
+  <div class="stat"><strong>132</strong> sections</div>
+  <div class="stat"><strong>71</strong> directly-pinned assets</div>
+</div>
+
+<div class="notice-box">
+  <strong>How Showpad channels work:</strong>
+  Most content in Showpad channels is organized via <strong>Smart Filters</strong> — dynamic sections
+  marked 📁 that pull assets automatically based on <em>tag rules</em> configured in the Showpad admin.
+  The contents of smart-filter sections <em>cannot be listed via the API</em> — you must view them
+  inside Showpad to see what appears there.
+  Only assets that are <strong>directly pinned</strong> to a channel (marked with file icons) appear
+  in full here.
+  Manual sub-folders (📂) may contain either smart-filter child sections or directly-pinned assets.
+</div>
+
+<div class="toolbar">
+  <input type="search" id="search-input" placeholder="Search channels, sections, assets…" oninput="onSearch(this.value)">
+  <span class="search-count" id="search-count"></span>
+  <button class="btn btn-primary" onclick="expandAll()">Expand All</button>
+  <button class="btn" onclick="collapseAll()">Collapse All</button>
+</div>
+
+<div class="tree-container" id="tree-container">
+<div class="channel-node" data-search="sales process &amp; sops" data-color="#2563eb" data-collapsed="true" style="--ch-color: #2563eb;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Sales Process &amp; SOPs</span>
+    <span class="ch-badge">6 pinned</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node item-node" data-search="sales sop: proposal [template - generic].gslide"><span class="node-icon">📄</span><span class="node-label">Sales SOP: Proposal [TEMPLATE - GENERIC].gslide</span><span class="ft-badge">document</span><span class="badge">612 views</span></div>
+<div class="tree-node item-node" data-search="sales sop [template]: deal update &amp; deal update for legal.gslide"><span class="node-icon">📄</span><span class="node-label">Sales SOP [Template]: Deal Update &amp; Deal Update for Legal.gslide</span><span class="ft-badge">document</span><span class="badge">140 views</span></div>
+<div class="tree-node item-node" data-search="sales sop [template]: deal review.gslide"><span class="node-icon">📄</span><span class="node-label">Sales SOP [Template]: Deal Review.gslide</span><span class="ft-badge">document</span><span class="badge">318 views</span></div>
+<div class="tree-node item-node" data-search="pre-call planning_template_internal_ae_presales_feb 2024_.gslide"><span class="node-icon">📄</span><span class="node-label">Pre-Call Planning_Template_INTERNAL_AE_Presales_Feb 2024_.gslide</span><span class="ft-badge">document</span><span class="badge">212 views</span></div>
+<div class="tree-node item-node" data-search="mutual action plan_template_internal_external_ae_presales_feb 2024.gslide"><span class="node-icon">📄</span><span class="node-label">Mutual Action Plan_Template_INTERNAL_EXTERNAL_AE_Presales_Feb 2024.gslide</span><span class="ft-badge">document</span><span class="badge">124 views</span></div>
+<div class="tree-node item-node" data-search="champion letter - template - internal - jan 2024.gslide"><span class="node-icon">📄</span><span class="node-label">Champion letter - template - INTERNAL - Jan 2024.gslide</span><span class="ft-badge">document</span><span class="badge">45 views</span></div>
+</div>
+</div>
+
+<div class="channel-node" data-search="all gtm enablement" data-color="#16a34a" data-collapsed="true" style="--ch-color: #16a34a;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">All GTM Enablement</span>
+    <span class="ch-badge">34 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="all sales enablement"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">All Sales Enablement</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="weekly gtm enablers"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Weekly GTM Enablers</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="courses &amp; certifications"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Courses &amp; certifications</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="new hire onboarding"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">New hire onboarding</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="sales plays &amp; playbooks"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Sales plays &amp; playbooks</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="sales &amp; company kickoff"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Sales &amp; Company kickoff</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="gtm strategy: icp"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">GTM strategy: ICP</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node collection" data-search="sops, sales processes &amp; tooling" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">SOPs, Sales Processes &amp; Tooling</span>    <span class="child-count">10</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="sales process"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Sales Process</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="sop templates"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">SOP Templates</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node collection" data-search="sales tech stack" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Sales Tech Stack</span>    <span class="child-count">3</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="salesforce"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Salesforce</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="zoominfo"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Zoominfo</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="showpad"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Showpad</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+<div class="tree-node section-node collection" data-search="business tooling we use" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Business tooling we use</span>    <span class="child-count">2</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="slack"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Slack</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="notion"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Notion</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+<div class="tree-node section-node smart-collection" data-search="deal review example library"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Deal Review Example Library</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+<div class="tree-node section-node smart-collection" data-search="customer stories"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Customer Stories</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node collection" data-search="skills &amp; helpful resources" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Skills &amp; Helpful Resources</span>    <span class="child-count">5</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="discovery &amp; meddpicc qualification"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Discovery &amp; MEDDPICC Qualification</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="negotiation"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Negotiation</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="research &amp; prospecting"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Research &amp; Prospecting</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="selling the value prop"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Selling the Value Prop</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="pitching &amp; presenting"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Pitching &amp; Presenting</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+<div class="tree-node section-node collection" data-search="role-based enablement materials" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Role-based enablement materials</span>    <span class="child-count">8</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="bdr"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">BDR</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="global ae"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Global AE</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="global ae"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Global AE</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="global se"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Global SE</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node collection" data-search="csms" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">CSMs</span>    <span class="child-count">2</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="global csm"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Global CSM</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="csm mutual success plans"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">CSM Mutual Success Plans</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+<div class="tree-node section-node smart-collection" data-search="new hire onboarding"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">New Hire Onboarding</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="channel-node" data-search="pitch decks &amp; slideware" data-color="#d97706" data-collapsed="true" style="--ch-color: #d97706;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Pitch Decks &amp; Slideware</span>
+    <span class="ch-badge">3 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="official pitch deck"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Official Pitch Deck</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="supporting pitch slides"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Supporting pitch slides</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="all pitch decks"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">All pitch decks</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="solutions" data-color="#dc2626" data-collapsed="true" style="--ch-color: #dc2626;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Solutions</span>
+    <span class="ch-badge">11 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="ataccama one platform"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Ataccama ONE Platform</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="data quality &amp; catalog"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Data Quality &amp; Catalog</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="data lineage"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Data lineage</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="data observability"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Data observability</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="master data management"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Master Data Management</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="reference data management"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Reference data management</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="one ai"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">ONE AI</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="platform architecture &amp; security"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Platform architecture &amp; security</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="solutions: partners"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Solutions: Partners</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="verticals"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Verticals</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="solution: competitor"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Solution: Competitor</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="new hire onboarding" data-color="#7c3aed" data-collapsed="true" style="--ch-color: #7c3aed;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">New hire onboarding</span>
+    <span class="ch-badge">1 pinned</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node item-node" data-search="new hire onboarding homepage"><span class="node-icon">📋</span><span class="node-label">New hire onboarding homepage</span><span class="ft-badge">page</span><span class="badge">552 views</span></div>
+</div>
+</div>
+
+<div class="channel-node" data-search="legal contracts &amp; attachments" data-color="#0891b2" data-collapsed="true" style="--ch-color: #0891b2;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Legal contracts &amp; attachments</span>
+    <span class="ch-badge">4 sections · 1 pinned</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node item-node" data-search="legal library"><span class="node-icon">📋</span><span class="node-label">Legal Library</span><span class="ft-badge">page</span><span class="badge">1,192 views</span></div>
+<div class="tree-node section-node smart-collection" data-search="change order for any modifications to existing order forms or sow"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Change Order for any modifications to existing order forms or SOW</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="beta test agreements"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Beta test agreements</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="end user license agreement (eula)"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">End User License agreement (EULA)</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="contracting how-to guides"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Contracting How-To Guides</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="sales engineering, pocs and rfxs" data-color="#c2410c" data-collapsed="true" style="--ch-color: #c2410c;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Sales Engineering, PoCs and RFXs</span>
+    <span class="ch-badge">11 sections · 52 pinned</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node item-node" data-search="important sales engineering updates for sales"><span class="node-icon">📋</span><span class="node-label">Important Sales Engineering Updates for Sales</span><span class="ft-badge">page</span><span class="badge">286 views</span></div>
+<div class="tree-node section-node smart-collection" data-search="initiate a poc"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Initiate a PoC</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="poc supporting materials"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">PoC Supporting Materials</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="respond to rfx"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Respond to RFX</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="rfx response attachments"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">RFX Response Attachments</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="license sizing questionnaires"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">License Sizing Questionnaires</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="se internal sop materials"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">SE Internal SOP Materials</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="guides for clients"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Guides for Clients</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node collection" data-search="poc deployment documents" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">PoC Deployment Documents</span>    <span class="child-count">4</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node item-node" data-search="ataccama self-managed deployment plan and pre-requisites for poc.gdoc"><span class="node-icon">📄</span><span class="node-label">ATACCAMA Self-Managed Deployment plan and pre-requisites for PoC.gdoc</span><span class="ft-badge">document</span><span class="badge">65 views</span></div>
+<div class="tree-node item-node" data-search="ataccama hybrid dpe specification document and deployment plan.gdoc"><span class="node-icon">📄</span><span class="node-label">ATACCAMA Hybrid DPE Specification Document and Deployment Plan.gdoc</span><span class="ft-badge">document</span><span class="badge">57 views</span></div>
+<div class="tree-node item-node" data-search="ataccama hybrid dpe high-level checklist.docx"><span class="node-icon">📄</span><span class="node-label">ATACCAMA Hybrid DPE High-Level Checklist.docx</span><span class="ft-badge">document</span><span class="badge">54 views</span></div>
+<div class="tree-node item-node" data-search="ataccama architecture options.pdf"><span class="node-icon">📄</span><span class="node-label">Ataccama Architecture options.pdf</span><span class="ft-badge">document</span><span class="badge">107 views</span></div>
+</div>
+</div>
+<div class="tree-node section-node collection" data-search="demo one-pagers" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Demo ONE-pagers</span>    <span class="child-count">3</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node item-node" data-search="demo one-pagers"><span class="node-icon">📋</span><span class="node-label">Demo ONE-pagers</span><span class="ft-badge">page</span><span class="badge">44 views</span></div>
+<div class="tree-node item-node" data-search="dq for ai and model training demo one-pager"><span class="node-icon">📋</span><span class="node-label">DQ for AI and Model Training Demo ONE-pager</span><span class="ft-badge">page</span><span class="badge">44 views</span></div>
+<div class="tree-node item-node" data-search="grow from catalog to dq demo one-pager"><span class="node-icon">📋</span><span class="node-label">Grow from Catalog to DQ Demo ONE-pager</span><span class="ft-badge">page</span><span class="badge">20 views</span></div>
+</div>
+</div>
+<div class="tree-node section-node collection" data-search="poc scorecards" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">PoC Scorecards</span>    <span class="child-count">1</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node item-node" data-search="dq&amp;c poc scoring example.xlsx"><span class="node-icon">📄</span><span class="node-label">DQ&amp;C PoC Scoring Example.xlsx</span><span class="ft-badge">document</span><span class="badge">53 views</span></div>
+</div>
+</div>
+<div class="tree-node section-node collection" data-search="se internal recordings" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">SE Internal Recordings</span>    <span class="child-count">43</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node item-node" data-search="20250910 se-e dq gates deployment walkthrough.mp4"><span class="node-icon">🎥</span><span class="node-label">20250910 SE-E DQ Gates Deployment Walkthrough.mp4</span><span class="ft-badge">video</span><span class="badge">30 views</span></div>
+<div class="tree-node item-node" data-search="20250905 se-e atlan demo session.mp4"><span class="node-icon">🎥</span><span class="node-label">20250905 SE-E Atlan Demo session.mp4</span><span class="ft-badge">video</span><span class="badge">163 views</span></div>
+<div class="tree-node item-node" data-search="20250825 product intro to mdm.mp4"><span class="node-icon">🎥</span><span class="node-label">20250825 Product Intro to MDM.mp4</span><span class="ft-badge">video</span><span class="badge">2 views</span></div>
+<div class="tree-node item-node" data-search="20250822 dq gates tech follow up.gslide"><span class="node-icon">📄</span><span class="node-label">20250822 DQ Gates Tech Follow up.gslide</span><span class="ft-badge">document</span><span class="badge">6 views</span></div>
+<div class="tree-node item-node" data-search="20250822 se-e dq gates tech follow-up.mp4"><span class="node-icon">🎥</span><span class="node-label">20250822 SE-E DQ Gates Tech Follow-up.mp4</span><span class="ft-badge">video</span><span class="badge">201 views</span></div>
+<div class="tree-node item-node" data-search="20250725 se-e snowflake overview.mp4"><span class="node-icon">🎥</span><span class="node-label">20250725 SE-E Snowflake Overview.mp4</span><span class="ft-badge">video</span><span class="badge">10 views</span></div>
+<div class="tree-node item-node" data-search="20250702 dbt overview.mp4"><span class="node-icon">🎥</span><span class="node-label">20250702 DBT Overview.mp4</span><span class="ft-badge">video</span><span class="badge">154 views</span></div>
+<div class="tree-node item-node" data-search="20250621 se allhands.mp4"><span class="node-icon">🎥</span><span class="node-label">20250621 SE Allhands.mp4</span><span class="ft-badge">video</span><span class="badge">7 views</span></div>
+<div class="tree-node item-node" data-search="20250312 se-e nested parquets &amp; se discovery.mp4"><span class="node-icon">🎥</span><span class="node-label">20250312 SE-E Nested Parquets &amp; SE Discovery.mp4</span><span class="ft-badge">video</span><span class="badge">22 views</span></div>
+<div class="tree-node item-node" data-search="20250212 se-e snowflake learning - monitoring re-run - itq sop.mp4"><span class="node-icon">🎥</span><span class="node-label">20250212 SE-E Snowflake Learning - Monitoring Re-run - ITQ SOP.mp4</span><span class="ft-badge">video</span><span class="badge">93 views</span></div>
+<div class="tree-node item-node" data-search="20250204 se-e monitoring stack - practical example.mp4"><span class="node-icon">🎥</span><span class="node-label">20250204 SE-E Monitoring Stack - Practical Example.mp4</span><span class="ft-badge">video</span><span class="badge">8 views</span></div>
+<div class="tree-node item-node" data-search="20250204 se-e monitoring stack - overview.mp4"><span class="node-icon">🎥</span><span class="node-label">20250204 SE-E Monitoring Stack - Overview.mp4</span><span class="ft-badge">video</span><span class="badge">7 views</span></div>
+<div class="tree-node item-node" data-search="20241205 se timely.mp4"><span class="node-icon">🎥</span><span class="node-label">20241205 SE Timely.mp4</span><span class="ft-badge">video</span><span class="badge">19 views</span></div>
+<div class="tree-node item-node" data-search="20241126 se-e sdks 101.mp4"><span class="node-icon">🎥</span><span class="node-label">20241126 SE-E SDKs 101.mp4</span><span class="ft-badge">video</span><span class="badge">94 views</span></div>
+<div class="tree-node item-node" data-search="20241120 se-e data remediation &amp; one data annual update.mp4"><span class="node-icon">🎥</span><span class="node-label">20241120 SE-E Data Remediation &amp; ONE Data Annual Update.mp4</span><span class="ft-badge">video</span><span class="badge">54 views</span></div>
+<div class="tree-node item-node" data-search="20241030 parquet walkthrough.mp4"><span class="node-icon">🎥</span><span class="node-label">20241030 Parquet Walkthrough.mp4</span><span class="ft-badge">video</span><span class="badge">1 views</span></div>
+<div class="tree-node item-node" data-search="20241030 se-e market trends &amp; competitors 101.mp4"><span class="node-icon">🎥</span><span class="node-label">20241030 SE-E Market Trends &amp; Competitors 101.mp4</span><span class="ft-badge">video</span><span class="badge">9 views</span></div>
+<div class="tree-node item-node" data-search="20241015 se-e atlan integration demo.mp4"><span class="node-icon">🎥</span><span class="node-label">20241015 SE-E Atlan Integration Demo.mp4</span><span class="ft-badge">video</span><span class="badge">30 views</span></div>
+<div class="tree-node item-node" data-search="20240913 se-e licensing &amp; deployment updates pt 2.mp4"><span class="node-icon">🎥</span><span class="node-label">20240913 SE-E Licensing &amp; Deployment Updates pt 2.mp4</span><span class="ft-badge">video</span><span class="badge">32 views</span></div>
+<div class="tree-node item-node" data-search="20240828 se-e licensing &amp; deployment updates pt 1.mp4"><span class="node-icon">🎥</span><span class="node-label">20240828 SE-E Licensing &amp; Deployment Updates pt 1.mp4</span><span class="ft-badge">video</span><span class="badge">76 views</span></div>
+<div class="tree-node item-node" data-search="20240731 se-e processing pushdowns.mp4"><span class="node-icon">🎥</span><span class="node-label">20240731 SE-E Processing Pushdowns.mp4</span><span class="ft-badge">video</span><span class="badge">184 views</span></div>
+<div class="tree-node item-node" data-search="20240710 se-e lineage enablement updates.mp4"><span class="node-icon">🎥</span><span class="node-label">20240710 SE-E Lineage Enablement Updates.mp4</span><span class="ft-badge">video</span><span class="badge">159 views</span></div>
+<div class="tree-node item-node" data-search="20240605 what's new in v15.2.mp4"><span class="node-icon">🎥</span><span class="node-label">20240605 What's new in v15.2.mp4</span><span class="ft-badge">video</span><span class="badge">53 views</span></div>
+<div class="tree-node item-node" data-search="20240604 se allhands 2024/06.mp4"><span class="node-icon">🎥</span><span class="node-label">20240604 SE Allhands 2024/06.mp4</span><span class="ft-badge">video</span><span class="badge zero">0 views</span></div>
+<div class="tree-node item-node" data-search="20240529 se-e mdm &amp; rdm in paas+.mp4"><span class="node-icon">🎥</span><span class="node-label">20240529 SE-E MDM &amp; RDM in PaaS+.mp4</span><span class="ft-badge">video</span><span class="badge">70 views</span></div>
+<div class="tree-node item-node" data-search="20240527 se-e pricing q&amp;a.mp4"><span class="node-icon">🎥</span><span class="node-label">20240527 SE-E Pricing Q&amp;A.mp4</span><span class="ft-badge">video</span><span class="badge">35 views</span></div>
+<div class="tree-node item-node" data-search="20240524 se-e anomaly detection in do.mp4"><span class="node-icon">🎥</span><span class="node-label">20240524 SE-E Anomaly Detection in DO.mp4</span><span class="ft-badge">video</span><span class="badge">44 views</span></div>
+<div class="tree-node item-node" data-search="20240507 se-e manta deployment.mp4"><span class="node-icon">🎥</span><span class="node-label">20240507 SE-E Manta Deployment.mp4</span><span class="ft-badge">video</span><span class="badge">49 views</span></div>
+<div class="tree-node item-node" data-search="20240502 se-e lineage intro w feri.mp4"><span class="node-icon">🎥</span><span class="node-label">20240502 SE-E Lineage intro w Feri.mp4</span><span class="ft-badge">video</span><span class="badge">248 views</span></div>
+<div class="tree-node item-node" data-search="20240425 se-e ms fabric.mp4"><span class="node-icon">🎥</span><span class="node-label">20240425 SE-E MS Fabric.mp4</span><span class="ft-badge">video</span><span class="badge">173 views</span></div>
+<div class="tree-node item-node" data-search="20240417-se-e seling ata cloud.mp4"><span class="node-icon">🎥</span><span class="node-label">20240417-SE-E Seling ATA Cloud.mp4</span><span class="ft-badge">video</span><span class="badge">2 views</span></div>
+<div class="tree-node item-node" data-search="20240410 how to talk about ataccama cloud.mp4"><span class="node-icon">🎥</span><span class="node-label">20240410 How to talk about Ataccama Cloud.mp4</span><span class="ft-badge">video</span><span class="badge">5 views</span></div>
+<div class="tree-node item-node" data-search="20240327 se-e update - poc updates.mp4"><span class="node-icon">🎥</span><span class="node-label">20240327 SE-E Update - PoC Updates.mp4</span><span class="ft-badge">video</span><span class="badge">39 views</span></div>
+<div class="tree-node item-node" data-search="20240320 se-e update - rfx updates.mp4"><span class="node-icon">🎥</span><span class="node-label">20240320 SE-E Update - RFX Updates.mp4</span><span class="ft-badge">video</span><span class="badge">7 views</span></div>
+<div class="tree-node item-node" data-search="2024-02-29 se-e open manta designer.mp4"><span class="node-icon">🎥</span><span class="node-label">2024-02-29 SE-E Open Manta Designer.mp4</span><span class="ft-badge">video</span><span class="badge">21 views</span></div>
+<div class="tree-node item-node" data-search="20240214 se-e authentication in post sales.mp4"><span class="node-icon">🎥</span><span class="node-label">20240214 SE-E Authentication in Post Sales.mp4</span><span class="ft-badge">video</span><span class="badge">2 views</span></div>
+<div class="tree-node item-node" data-search="20240202 se-e sko sales rerun with lee.mp4"><span class="node-icon">🎥</span><span class="node-label">20240202 SE-E SKO Sales ReRun with Lee.mp4</span><span class="ft-badge">video</span><span class="badge">8 views</span></div>
+<div class="tree-node item-node" data-search="20240131 se-e sap demo.mp4"><span class="node-icon">🎥</span><span class="node-label">20240131 SE-E SAP Demo.mp4</span><span class="ft-badge">video</span><span class="badge">27 views</span></div>
+<div class="tree-node item-node" data-search="20240105 se-e allhands jan 24.mp4"><span class="node-icon">🎥</span><span class="node-label">20240105 SE-E Allhands Jan 24.mp4</span><span class="ft-badge">video</span><span class="badge">3 views</span></div>
+<div class="tree-node item-node" data-search="20231221 presales rfp process intro.mp4"><span class="node-icon">🎥</span><span class="node-label">20231221 Presales RFP process intro.mp4</span><span class="ft-badge">video</span><span class="badge">1 views</span></div>
+<div class="tree-node item-node" data-search="20231208 one data q&amp;a with petr zacek.mp4"><span class="node-icon">🎥</span><span class="node-label">20231208 ONE Data Q&amp;A with Petr Zacek.mp4</span><span class="ft-badge">video</span><span class="badge">4 views</span></div>
+<div class="tree-node item-node" data-search="20231129 se-e demo content hub.mp4"><span class="node-icon">🎥</span><span class="node-label">20231129 SE-E Demo Content Hub.mp4</span><span class="ft-badge">video</span><span class="badge">34 views</span></div>
+<div class="tree-node item-node" data-search="20231012 se-e team ai q&amp;a.mp4"><span class="node-icon">🎥</span><span class="node-label">20231012 SE-E Team AI Q&amp;A.mp4</span><span class="ft-badge">video</span><span class="badge">2 views</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="channel-node" data-search="customer success &amp; services" data-color="#65a30d" data-collapsed="true" style="--ch-color: #65a30d;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Customer Success &amp; Services</span>
+    <span class="ch-badge">12 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="cs materials"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">CS materials</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node collection" data-search="professional services" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Professional Services</span>    <span class="child-count">7</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="anz starter packs"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">ANZ Starter Packs</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node collection" data-search="usa &amp; canada starter packs" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">USA &amp; Canada Starter Packs</span>    <span class="child-count">2</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="usa (usd) starter packs"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">USA (USD) Starter Packs</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="canada (cad) starter packs"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Canada (CAD) Starter Packs</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+<div class="tree-node section-node collection" data-search="uk &amp; emea starter packs" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">UK &amp; EMEA Starter Packs</span>    <span class="child-count">2</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="uk (gbp) starter packs"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">UK (GBP) Starter Packs</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="emea (euro) starter packs"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">EMEA (EURO) Starter Packs</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<div class="tree-node section-node smart-collection" data-search="customer support"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Customer Support</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="business value consulting"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Business Value Consulting</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="customer success plans"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Customer Success Plans</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="industry &amp; analyst reports" data-color="#db2777" data-collapsed="true" style="--ch-color: #db2777;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Industry &amp; Analyst Reports</span>
+    <span class="ch-badge">1 sections · 3 pinned</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node item-node" data-search="tei_of_ataccama_final.pdf"><span class="node-icon">📄</span><span class="node-label">TEI_of_Ataccama_Final.pdf</span><span class="ft-badge">document</span><span class="badge">133 views</span></div>
+<div class="tree-node item-node" data-search="gartner® market guide for master data management solutions.url"><span class="node-icon">🔗</span><span class="node-label">Gartner® Market Guide for Master Data Management Solutions.url</span><span class="ft-badge">url</span><span class="badge">20 views</span></div>
+<div class="tree-node item-node" data-search="2024 gartner magic quadrant-external.url"><span class="node-icon">🔗</span><span class="node-label">2024 Gartner Magic Quadrant-External.url</span><span class="ft-badge">url</span><span class="badge">66 views</span></div>
+<div class="tree-node section-node smart-collection" data-search="gartner"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Gartner</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="competitive intel" data-color="#4f46e5" data-collapsed="true" style="--ch-color: #4f46e5;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Competitive Intel</span>
+    <span class="ch-badge">2 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="competitive intel &amp; enablement"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Competitive intel &amp; enablement</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="battlecards in klue"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Battlecards in Klue</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="partners" data-color="#059669" data-collapsed="true" style="--ch-color: #059669;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Partners</span>
+    <span class="ch-badge">18 sections · 2 pinned</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node item-node" data-search="fy24 enterprise target accounts.xlsx"><span class="node-icon">📄</span><span class="node-label">FY24 Enterprise Target Accounts.xlsx</span><span class="ft-badge">document</span><span class="badge">14 views</span></div>
+<div class="tree-node section-node collection" data-search="hyperscalers" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Hyperscalers</span>    <span class="child-count">3</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="snowflake"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Snowflake</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="microsoft azure"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Microsoft Azure</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="aws"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">AWS</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+<div class="tree-node section-node collection" data-search="solution partners" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Solution Partners</span>    <span class="child-count">2</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="global sis"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Global SIs</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="consultancy partners"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Consultancy Partners</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+<div class="tree-node section-node collection" data-search="tech partners" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Tech Partners</span>    <span class="child-count">3</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="manta"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Manta</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="loqate"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Loqate</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="cdata"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">CData</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+<div class="tree-node section-node smart-collection" data-search="oem/reseller partners"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">OEM/Reseller Partners</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node collection" data-search="partners by region" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Partners by Region</span>    <span class="child-count">3</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node section-node smart-collection" data-search="na partners"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">NA Partners</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="emea partners"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">EMEA Partners</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="anz partners"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">ANZ Partners</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+<div class="tree-node section-node collection" data-search="learn about partners" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Learn about Partners</span>    <span class="child-count">1</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node item-node" data-search="partner strategy 2.0.gslide"><span class="node-icon">📄</span><span class="node-label">Partner Strategy 2.0.gslide</span><span class="ft-badge">document</span><span class="badge">37 views</span></div>
+</div>
+</div>
+<div class="tree-node section-node smart-collection" data-search="partner mapping"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Partner mapping</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="sales engineering - internal" data-color="#b45309" data-collapsed="true" style="--ch-color: #b45309;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Sales Engineering - Internal</span>
+    <span class="ch-badge">1 sections · 3 pinned</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node item-node" data-search="sales engineering overview"><span class="node-icon">📋</span><span class="node-label">Sales Engineering Overview</span><span class="ft-badge">page</span><span class="badge">73 views</span></div>
+<div class="tree-node section-node collection" data-search="demo one-pagers" data-has-children="true" data-collapsed="true">
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">▶</span>    <span class="node-icon">📂</span>    <span class="node-label">Demo ONE-pagers</span>    <span class="child-count">1</span>  </div>
+  <div class="children-container" style="display:none;"><div class="tree-node item-node" data-search="demo one-pagers"><span class="node-icon">📋</span><span class="node-label">Demo ONE-pagers</span><span class="ft-badge">page</span><span class="badge">44 views</span></div>
+</div>
+</div>
+<div class="tree-node item-node" data-search="lineage questionnaire.gsheet"><span class="node-icon">📄</span><span class="node-label">Lineage Questionnaire.gsheet</span><span class="ft-badge">document</span><span class="badge">8 views</span></div>
+</div>
+</div>
+
+<div class="channel-node" data-search="customer value stories library" data-color="#9333ea" data-collapsed="true" style="--ch-color: #9333ea;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Customer Value Stories Library</span>
+    <span class="ch-badge">4 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="all customer value stories"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">All Customer Value Stories</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="tier 1: financial services customer value stories (cvs)"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Tier 1: Financial Services Customer Value Stories (CVS)</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="tier 1: manufacturing customer value stories (cvs)"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Tier 1: Manufacturing Customer Value Stories (CVS)</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="tier 1: insurance customer value stories (cvs)"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Tier 1: Insurance Customer Value Stories (CVS)</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="revops, tech stack &amp; operational processes" data-color="#0369a1" data-collapsed="true" style="--ch-color: #0369a1;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">RevOps, tech stack &amp; operational processes</span>
+    <span class="ch-badge">2 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="sales tooling &amp; tech stack"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Sales Tooling &amp; Tech stack</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="deal desk, quoting &amp; proposals"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Deal Desk, Quoting &amp; Proposals</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="vertical value" data-color="#be123c" data-collapsed="true" style="--ch-color: #be123c;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Vertical value</span>
+    <span class="ch-badge">3 sections · 3 pinned</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node item-node" data-search="insurance vertical"><span class="node-icon">📋</span><span class="node-label">Insurance Vertical</span><span class="ft-badge">page</span><span class="badge">389 views</span></div>
+<div class="tree-node item-node" data-search="financial services vertical"><span class="node-icon">📋</span><span class="node-label">Financial Services Vertical</span><span class="ft-badge">page</span><span class="badge">540 views</span></div>
+<div class="tree-node item-node" data-search="manufacturing vertical"><span class="node-icon">📋</span><span class="node-label">Manufacturing Vertical</span><span class="ft-badge">page</span><span class="badge">338 views</span></div>
+<div class="tree-node section-node smart-collection" data-search="all insurance content"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">All Insurance content</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="all financial services content"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">All Financial Services content</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="all manufacturing content"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">All Manufacturing content</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="solutions - new" data-color="#15803d" data-collapsed="true" style="--ch-color: #15803d;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Solutions - NEW</span>
+    <span class="ch-badge">4 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="product"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Product</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="partners"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Partners</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="verticals"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Verticals</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="competitors"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Competitors</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="process - new" data-color="#1d4ed8" data-collapsed="true" style="--ch-color: #1d4ed8;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Process - NEW</span>
+    <span class="ch-badge">2 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="standard operating procedures (sops)"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Standard Operating Procedures (SOPs)</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="internal systems &amp; tooling enablement"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Internal systems &amp; tooling enablement</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="skills - new" data-color="#c026d3" data-collapsed="true" style="--ch-color: #c026d3;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Skills - NEW</span>
+    <span class="ch-badge">2 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="value-based selling"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Value-based selling</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="storytelling, presentation &amp; pitch"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Storytelling, presentation &amp; pitch</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="for enablement only" data-color="#0f766e" data-collapsed="true" style="--ch-color: #0f766e;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">For enablement only</span>
+    <span class="ch-badge">10 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="sales sops &amp; sales process"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Sales SOPs &amp; Sales process</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="sales tech stack"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Sales tech stack</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="onboarding content"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Onboarding content</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="product enablement"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Product enablement</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="pricing enablement"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Pricing enablement</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="partner ecosystem enablement"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Partner ecosystem enablement</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="competitive enablement"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Competitive enablement</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="skills enablement"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Skills enablement</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="courses"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Courses</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="pages"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Pages</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="marketing" data-color="#a16207" data-collapsed="true" style="--ch-color: #a16207;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Marketing</span>
+    <span class="ch-badge">7 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="fwrd 2025"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">FWRD 2025</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="webinars"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Webinars</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="product sheets &amp; one pagers"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Product sheets &amp; One pagers</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="marketing events"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Marketing Events</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="blogs, whitepapers &amp; ebooks"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Blogs, Whitepapers &amp; Ebooks</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node smart-collection" data-search="website case studies"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">Website Case Studies</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+<div class="tree-node section-node collection" data-search="marias folder"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📂</span>    <span class="node-label">Marias folder</span>      </div>
+  </div>
+</div>
+</div>
+
+<div class="channel-node" data-search="data management best practices" data-color="#7e22ce" data-collapsed="true" style="--ch-color: #7e22ce;">
+  <div class="channel-header" onclick="toggleChannel(this)">
+    <span class="ch-arrow">▶</span>
+    <span class="ch-name">Data Management Best Practices</span>
+    <span class="ch-badge">1 sections</span>
+  </div>
+  <div class="channel-children" style="display:none;"><div class="tree-node section-node smart-collection" data-search="all best practices materials"  >
+  <div class="section-header" onclick="toggleNode(this)">    <span class="toggle-arrow">•</span>    <span class="node-icon">📁</span>    <span class="node-label">All best practices materials</span>    <span class="dynamic-label">(dynamic filter)</span>  </div>
+  </div>
+</div>
+</div>
+
+</div>
+
+<script>
+// ── Toggle helpers ──────────────────────────────────────────────
+function toggleChannel(header) {
+  const node = header.closest('.channel-node');
+  const children = node.querySelector('.channel-children');
+  if (!children) return;
+  const isCollapsed = node.dataset.collapsed === 'true';
+  if (isCollapsed) {
+    children.style.display = '';
+    node.dataset.collapsed = 'false';
+    node.classList.add('expanded');
+  } else {
+    children.style.display = 'none';
+    node.dataset.collapsed = 'true';
+    node.classList.remove('expanded');
+  }
+}
+
+function toggleNode(header) {
+  const node = header.closest('.section-node');
+  const container = node.querySelector('.children-container');
+  if (!container) return;
+  const isCollapsed = node.dataset.collapsed === 'true';
+  if (isCollapsed) {
+    container.style.display = '';
+    node.dataset.collapsed = 'false';
+    node.classList.add('expanded');
+  } else {
+    container.style.display = 'none';
+    node.dataset.collapsed = 'true';
+    node.classList.remove('expanded');
+  }
+}
+
+function expandAll() {
+  document.querySelectorAll('.channel-node[data-collapsed]').forEach(node => {
+    const children = node.querySelector('.channel-children');
+    if (children) children.style.display = '';
+    node.dataset.collapsed = 'false';
+    node.classList.add('expanded');
+  });
+  document.querySelectorAll('.section-node[data-collapsed]').forEach(node => {
+    const container = node.querySelector('.children-container');
+    if (container) container.style.display = '';
+    node.dataset.collapsed = 'false';
+    node.classList.add('expanded');
+  });
+}
+
+function collapseAll() {
+  document.querySelectorAll('.section-node[data-collapsed]').forEach(node => {
+    const container = node.querySelector('.children-container');
+    if (container) container.style.display = 'none';
+    node.dataset.collapsed = 'true';
+    node.classList.remove('expanded');
+  });
+  document.querySelectorAll('.channel-node[data-collapsed]').forEach(node => {
+    const children = node.querySelector('.channel-children');
+    if (children) children.style.display = 'none';
+    node.dataset.collapsed = 'true';
+    node.classList.remove('expanded');
+  });
+}
+
+// ── Search ──────────────────────────────────────────────────────
+function onSearch(query) {
+  query = query.trim().toLowerCase();
+  const countEl = document.getElementById('search-count');
+  if (!query) {
+    // Reset: show all, restore collapse state
+    document.querySelectorAll('.search-hidden').forEach(el => el.classList.remove('search-hidden'));
+    document.querySelectorAll('.search-match').forEach(el => el.classList.remove('search-match'));
+    // Re-hide children that were open only because of search
+    document.querySelectorAll('.channel-node[data-collapsed="true"] .channel-children').forEach(el => {
+      el.style.display = 'none';
+    });
+    document.querySelectorAll('.section-node[data-collapsed="true"] .children-container').forEach(el => {
+      el.style.display = 'none';
+    });
+    countEl.textContent = '';
+    return;
+  }
+
+  // Expand everything first so we can search
+  document.querySelectorAll('.channel-children, .children-container').forEach(el => {
+    el.style.display = '';
+  });
+
+  let matchCount = 0;
+
+  // Process item nodes
+  document.querySelectorAll('.item-node').forEach(el => {
+    const text = el.dataset.search || '';
+    if (text.includes(query)) {
+      el.classList.remove('search-hidden');
+      el.classList.add('search-match');
+      matchCount++;
+    } else {
+      el.classList.add('search-hidden');
+      el.classList.remove('search-match');
+    }
+  });
+
+  // Process section nodes (show if label matches OR has visible child)
+  function processSection(sectionEl) {
+    const label = sectionEl.dataset.search || '';
+    const container = sectionEl.querySelector(':scope > .children-container');
+    let hasVisibleChild = false;
+    if (container) {
+      // Recurse children first
+      container.querySelectorAll(':scope > .section-node').forEach(child => processSection(child));
+      container.querySelectorAll(':scope > .item-node').forEach(item => {
+        if (!item.classList.contains('search-hidden')) hasVisibleChild = true;
+      });
+      container.querySelectorAll(':scope > .section-node').forEach(child => {
+        if (!child.classList.contains('search-hidden')) hasVisibleChild = true;
+      });
+    }
+    if (label.includes(query) || hasVisibleChild) {
+      sectionEl.classList.remove('search-hidden');
+      if (label.includes(query)) { sectionEl.classList.add('search-match'); matchCount++; }
+      else sectionEl.classList.remove('search-match');
+    } else {
+      sectionEl.classList.add('search-hidden');
+      sectionEl.classList.remove('search-match');
+    }
+  }
+
+  document.querySelectorAll('.channel-children > .section-node').forEach(s => processSection(s));
+
+  // Process channel nodes
+  document.querySelectorAll('.channel-node').forEach(ch => {
+    const label = ch.dataset.search || '';
+    const childrenEl = ch.querySelector('.channel-children');
+    let hasVisibleChild = false;
+    if (childrenEl) {
+      childrenEl.querySelectorAll(':scope > .section-node, :scope > .item-node').forEach(child => {
+        if (!child.classList.contains('search-hidden')) hasVisibleChild = true;
+      });
+    }
+    if (label.includes(query) || hasVisibleChild) {
+      ch.classList.remove('search-hidden');
+    } else {
+      ch.classList.add('search-hidden');
+    }
+  });
+
+  countEl.textContent = matchCount ? `${matchCount} match${matchCount !== 1 ? 'es' : ''}` : 'No matches';
+}
+</script>
+
+</body>
+</html>
