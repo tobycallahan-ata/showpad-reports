@@ -1164,6 +1164,79 @@ dfn[data-def].tip-open::after { opacity: 1; }
 }
 .hs-footer { padding: 12px 20px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--border); }
 
+/* ---- Scenario ---- */
+.scenario-block {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+.scenario-intro {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--plum) 100%);
+  color: #fff;
+  padding: 18px 24px;
+  font-size: 0.93rem;
+  line-height: 1.6;
+  position: relative;
+  overflow: hidden;
+}
+.scenario-intro::after {
+  content: "";
+  position: absolute; top: -30px; right: -30px;
+  width: 100px; height: 100px;
+  background: var(--pink); opacity: 0.18; border-radius: 50%;
+}
+.scenario-progress {
+  font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-soft); font-weight: 600;
+  padding: 10px 20px 0;
+}
+.scenario-situation {
+  background: linear-gradient(135deg, #FDEDF7 0%, #F3E8FF 100%);
+  border-radius: 10px; margin: 12px 20px;
+  padding: 18px 22px; font-size: 0.96rem; line-height: 1.6; color: var(--navy);
+  border: 1px solid var(--purple-30);
+}
+.scenario-choices { display: flex; flex-direction: column; gap: 10px; padding: 0 20px 4px; }
+.scen-choice {
+  background: #fff; border: 1.5px solid var(--navy-30); border-radius: 10px;
+  padding: 13px 16px; text-align: left; cursor: pointer; font-size: 0.94rem;
+  font-weight: 500; color: var(--navy); font-family: inherit; line-height: 1.4;
+  transition: border-color 0.12s, background 0.12s;
+}
+.scen-choice:hover:not(:disabled) { border-color: var(--purple); background: #FBF9FE; }
+.scen-choice:disabled { opacity: 0.6; cursor: default; }
+.scen-choice.picked.strong { border-width: 2px; border-color: var(--hl-green); background: #E0FFF7; }
+.scen-choice.picked.neutral { border-width: 2px; border-color: var(--purple); background: #F3E8FF; }
+.scen-choice.picked.weak { border-width: 2px; border-color: var(--hl-red); background: #FFE6E7; }
+.scenario-history {
+  margin: 12px 20px 0;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.scen-hist-title {
+  font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-soft); font-weight: 600; margin-bottom: 8px;
+}
+.scen-hist-row {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.84rem; color: var(--navy); margin-bottom: 6px; line-height: 1.35;
+}
+.scen-hist-num {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--purple-30); color: var(--purple);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: 700; flex-shrink: 0;
+}
+.scen-hist-badge {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 100px; flex-shrink: 0;
+}
+.scen-hist-badge.strong { background: var(--hl-green); color: var(--navy); }
+.scen-hist-badge.neutral { background: var(--purple); color: #fff; }
+.scen-hist-badge.weak { background: var(--hl-red); color: #fff; }
+.scenario-footer { padding: 8px 20px 18px; }
+
 /* === Content (scroll) phase === */
 #content-phase { width: 100%; max-width: 880px; }
 .content-doc {
@@ -1245,6 +1318,107 @@ dfn[data-def].tip-open::after { opacity: 1; }
 .quiz-intro .stats { font-size: 0.95rem; opacity: 0.9; position: relative; z-index: 1; }
 .quiz-back-row { margin-top: 14px; }
 
+/* ---- Video ---- */
+.video-block { background: #000; border-radius: 12px; overflow: hidden; position: relative; }
+.video-el { width: 100%; display: block; max-height: 480px; background: #000; }
+.video-iframe { width: 100%; height: 400px; border: none; display: block; background: #000; }
+.video-chapters {
+  background: #FAF8FC; border-top: 1px solid var(--border);
+  padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 8px;
+}
+.chapter-btn {
+  background: #fff; border: 1.5px solid var(--border); border-radius: 20px;
+  padding: 5px 14px; font-size: 0.82rem; font-weight: 600; color: var(--navy);
+  cursor: pointer; font-family: var(--font-sans); transition: border-color 0.12s;
+}
+.chapter-btn:hover { border-color: var(--purple); color: var(--purple); }
+.chapter-btn.active { border-color: var(--pink); color: var(--pink); }
+.video-checkpoint-overlay {
+  position: absolute; inset: 0;
+  background: rgba(26, 12, 66, 0.88);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 10;
+  border-radius: 12px;
+}
+.video-checkpoint-overlay.show { display: flex; }
+.vcp-card {
+  background: #fff; border-radius: 12px; padding: 24px 28px;
+  width: 100%; max-width: 560px; box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+.vcp-badge {
+  display: inline-block; background: var(--pink); color: #fff;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 100px; margin-bottom: 14px;
+}
+.vcp-question { font-size: 1.05rem; font-weight: 600; color: var(--navy); margin-bottom: 16px; line-height: 1.45; }
+
+/* ---- TOC panel ---- */
+.btn-toc {
+  background: transparent; border: 1.5px solid rgba(255,255,255,0.3);
+  color: #fff; border-radius: 6px; padding: 6px 10px;
+  cursor: pointer; font-size: 1rem; font-family: var(--font-sans);
+  transition: background 0.15s;
+}
+.btn-toc:hover { background: rgba(255,255,255,0.12); }
+.toc-panel {
+  position: fixed; top: 0; left: 0; bottom: 0; width: 280px;
+  background: #fff; box-shadow: 4px 0 24px rgba(26,12,66,0.15);
+  z-index: 1000; display: flex; flex-direction: column;
+  overflow: hidden; border-right: 1px solid var(--border);
+}
+.toc-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; background: var(--navy); color: #fff; flex-shrink: 0;
+}
+.toc-title { font-weight: 600; font-size: 0.95rem; letter-spacing: 0.01em; }
+.toc-close {
+  background: transparent; border: none; color: #fff; cursor: pointer;
+  font-size: 1rem; padding: 4px 8px; border-radius: 4px;
+}
+.toc-close:hover { background: rgba(255,255,255,0.15); }
+.toc-list { overflow-y: auto; padding: 12px 0; flex: 1; }
+.toc-item {
+  display: block; width: 100%; background: transparent; border: none;
+  text-align: left; padding: 10px 20px; font-family: var(--font-sans);
+  font-size: 0.88rem; color: var(--navy); cursor: pointer; line-height: 1.4;
+  transition: background 0.12s; border-left: 3px solid transparent;
+}
+.toc-item:hover { background: #FAF8FC; border-left-color: var(--purple); }
+.toc-item.toc-active { background: var(--purple-30); border-left-color: var(--pink); font-weight: 600; }
+.toc-item.toc-quiz { color: var(--text-soft); font-style: italic; }
+.toc-overlay {
+  position: fixed; inset: 0; background: rgba(26,12,66,0.35); z-index: 999; display: none;
+}
+.toc-overlay.show { display: block; }
+
+/* ---- Print ---- */
+@media print {
+  #progress-bar-track, header, .nav-row, .quiz-back-row, footer.brand-footer,
+  .btn, #quiz-phase, #completion-screen, .phase-cta, #toc-panel, .toc-overlay,
+  .engagement-pill, .interactive-block-header .label {
+    display: none !important;
+  }
+  body { background: #fff; }
+  #content-phase { display: block !important; }
+  .content-doc { box-shadow: none; border: none; padding: 0; }
+  .content-section { page-break-inside: avoid; border-bottom: 1px solid #eee; padding: 16px 0; }
+  .slide-body { padding: 0; }
+  .accordion-body { max-height: none !important; padding: 4px 18px 18px !important; }
+  .accordion-item.opened, .accordion-item { display: block; }
+  .tab-panel { display: block !important; }
+  .tab-panel::before { content: attr(id); display: block; font-weight: 700; margin-bottom: 4px; }
+  .flip-card-back { display: block; transform: none !important; position: static !important;
+                     width: auto; height: auto; backface-visibility: visible !important; }
+  .flip-card-front { display: none !important; }
+  .flip-card-outer { height: auto !important; perspective: none !important; }
+  .flip-card-inner { transform: none !important; transform-style: flat !important;
+                      position: static !important; height: auto !important; }
+}
+
 @media (max-width: 720px) {
   main { padding: 24px 14px; }
   .slide-body { padding: 24px 20px; }
@@ -1266,10 +1440,23 @@ dfn[data-def].tip-open::after { opacity: 1; }
     <span class="brand-a">a</span>
     <h1>SCORM Interaction Showcase — All Capabilities Test</h1>
   </div>
-  <span id="slide-counter"></span>
+  <div style="display:flex;align-items:center;gap:8px">
+    <span id="slide-counter"></span>
+    <button class="btn-toc" id="btn-toc" onclick="toggleTOC()" title="Table of contents" aria-label="Table of contents">&#9776;</button>
+    <button class="btn-toc" onclick="window.print()" title="Print / save as PDF">Print</button>
+  </div>
 </header>
 
 <main>
+
+  <div id="toc-overlay" class="toc-overlay" onclick="toggleTOC()"></div>
+  <div id="toc-panel" class="toc-panel" style="display:none">
+    <div class="toc-header">
+      <span class="toc-title">Contents</span>
+      <button class="toc-close" onclick="toggleTOC()">&#10005;</button>
+    </div>
+    <div class="toc-list" id="toc-list"></div>
+  </div>
 
   <!-- ===== Phase 1: Content (scroll) ===== -->
   <div id="content-phase">
@@ -1320,7 +1507,7 @@ dfn[data-def].tip-open::after { opacity: 1; }
 <footer class="brand-footer"><span class="wordmark">ataccama</span></footer>
 
 <script>
-var SLIDES = [{"type": "content", "title": "Interaction Showcase", "body": [{"kind": "html", "value": "<div class='title-hero'><span class='lesson-tag'>QA Test Course · All Capabilities</span><h2>SCORM Interaction Showcase</h2><p class='deck'>This course exercises every interactive element built into the SCORM deck shell. Each section is labeled with its interaction type and includes notes on what behavior to verify.</p><div class='key-concepts'><div class='heading'>Capabilities tested</div><ul><li><strong>Passive:</strong> Glossary tooltips (dfn)</li><li><strong>Phase 1 gated:</strong> Flip cards, Accordion, Tabs</li><li><strong>Phase 1 gated:</strong> Knowledge checks (single / multi / true-false)</li><li><strong>Phase 1 gated:</strong> Drag-sort, Branching, Matching, Sequencing</li><li><strong>Phase 1 gated:</strong> Fill-in, Numeric, Hotspot</li><li><strong>Quiz carousel:</strong> Single-choice, Multi-select, True/false, Unscored</li></ul></div></div>"}], "html": ""}, {"type": "content", "title": "Glossary Tooltips (passive — dfn)", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 1</span><h2>Glossary Tooltips</h2><p class='subhead'>Passive — hover or tap each underlined term. No engagement gate.</p></div><p>The platform combines <dfn data-def='Data Quality — detecting, measuring, and correcting data defects at source.'>DQ</dfn>, <dfn data-def='Data Catalog — a searchable inventory of data assets with lineage, ownership, and usage metadata.'>Catalog</dfn>, and <dfn data-def='Master Data Management — a single authoritative record for critical business entities like customers, products, and accounts.'>MDM</dfn> in a single integrated product.</p><div class='callout'><div class='callout-title'>What to verify</div>Hovering each underlined term shows a navy tooltip above it. Tapping on mobile shows it on click. No engagement gate — the <strong>Continue / Begin assessment</strong> button is <em>not</em> locked by this block.</div>"}], "html": ""}, {"type": "content", "title": "Flip Cards", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 2</span><h2>Flip Cards</h2><p class='subhead'>Tap each card to flip it. All cards must be flipped at least once to unlock Continue.</p></div>"}, {"kind": "flip-card", "title": "Test: flip each card to reveal the back", "cards": [{"front": "Card 1", "back": "<strong>Back of Card 1.</strong> Verify: purple front turns pink-gradient after flipping. This is the definition side."}, {"front": "Card 2", "back": "<strong>Back of Card 2.</strong> The engagement pill should say ✓ Completed once all three cards are flipped."}, {"front": "Card 3", "back": "<strong>Back of Card 3.</strong> Verify: you can flip any card back to front and front to back repeatedly. Only the first flip of each card counts toward completion."}]}], "html": ""}, {"type": "content", "title": "Accordion", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 3</span><h2>Accordion</h2><p class='subhead'>Click each panel header to expand it. All panels must be opened to unlock Continue.</p></div>"}, {"kind": "accordion", "title": "Test: open every panel to mark complete", "items": [{"label": "Panel A — click to open", "detail": "<p>This is panel A. <strong>Verify:</strong> the left border turns from purple to pink when open. The + chevron rotates to ×.</p>"}, {"label": "Panel B — click to open", "detail": "<p>This is panel B. <strong>Verify:</strong> the engagement pill increments as each new panel is opened for the first time.</p>"}, {"label": "Panel C — click to open", "detail": "<p>This is panel C. Once all three panels have been opened at least once, the pill shows ✓ Completed and the Continue button unlocks.</p>"}]}], "html": ""}, {"type": "content", "title": "Tabs", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 4</span><h2>Tabs</h2><p class='subhead'>Click each tab label. All tabs must be visited to unlock Continue.</p></div>"}, {"kind": "tabs", "title": "Test: visit every tab to mark complete", "tabs": [{"label": "Tab A", "content": "<p><strong>Tab A content.</strong> Verify: the active tab has a pink underline. Visited tabs get a purple-tinted label.</p>"}, {"label": "Tab B", "content": "<p><strong>Tab B content.</strong> Verify: switching tabs swaps the content panel without a page reload.</p>"}, {"label": "Tab C", "content": "<p><strong>Tab C content.</strong> Once all three tabs have been visited at least once, the engagement pill shows ✓ Completed.</p>"}]}], "html": ""}, {"type": "content", "title": "Knowledge Check — Single Choice", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 5</span><h2>Knowledge Check — Single Choice</h2><p class='subhead'>Inline ungraded quiz. Submit button is disabled until a selection is made.</p></div>"}, {"kind": "knowledge-check", "title": "Test: single-choice knowledge check", "question": "Which answer is correct? (Single choice — only one selection is allowed at a time.)", "qkind": "single", "options": ["Wrong answer A", "Correct answer B", "Wrong answer C", "Wrong answer D"], "correct": [1], "explanation": "B is correct. Verify: B highlights green, wrong options gray out. Selecting a wrong option should show it red. The explanation text (this box) appears after submission. Submit is disabled before a selection is made."}], "html": ""}, {"type": "content", "title": "Knowledge Check — Multi-Select", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 6</span><h2>Knowledge Check — Multi-Select</h2><p class='subhead'>Inline ungraded quiz. Option markers are square for multi-select.</p></div>"}, {"kind": "knowledge-check", "title": "Test: multi-select knowledge check", "question": "Which answers are correct? (Select all that apply — multiple selections allowed.)", "qkind": "multi", "options": ["Correct answer A", "Wrong answer B", "Correct answer C", "Wrong answer D"], "correct": [0, 2], "explanation": "A and C are correct. Verify: option markers are square (not round). Both A and C highlight green; B and D show with reduced opacity. Selecting a wrong answer highlights it red after submission."}], "html": ""}, {"type": "content", "title": "Knowledge Check — True / False", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 7</span><h2>Knowledge Check — True / False</h2><p class='subhead'>Inline ungraded quiz. Only two options appear; correct answer is True.</p></div>"}, {"kind": "knowledge-check", "title": "Test: true/false knowledge check", "question": "This statement is TRUE. Select the correct answer to verify true/false rendering.", "qkind": "truefalse", "correct": [0], "explanation": "True is correct. Verify: exactly two options appear (True / False) with round markers. Selecting True highlights it green; selecting False highlights it red.", "options": ["True", "False"]}], "html": ""}, {"type": "content", "title": "Drag-Sort (Categorization)", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 8</span><h2>Drag-Sort — Categorization</h2><p class='subhead'>Drag each card from the pool into the correct bucket. All items must be placed before checking.</p></div>"}, {"kind": "drag-sort", "title": "Test: drag-and-drop categorization", "prompt": "Sort each item into Bucket A or Bucket B. Items 1–2 belong in Bucket A; items 3–4 belong in Bucket B.", "buckets": [{"id": "bucket-a", "label": "Bucket A"}, {"id": "bucket-b", "label": "Bucket B"}], "items": [{"text": "Item 1 → belongs in Bucket A", "correct": "bucket-a"}, {"text": "Item 2 → belongs in Bucket A", "correct": "bucket-a"}, {"text": "Item 3 → belongs in Bucket B", "correct": "bucket-b"}, {"text": "Item 4 → belongs in Bucket B", "correct": "bucket-b"}], "explanation": "Verify: drag handles work; cards snap into buckets; correct placements go green; wrong placements go red. Check button is disabled until all items are placed."}], "html": ""}, {"type": "content", "title": "Branching Scenario", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 9</span><h2>Branching Scenario</h2><p class='subhead'>Pick a response to see the verdict. One pick per session — restart to test a different verdict.</p></div>"}, {"kind": "branching", "title": "Test: branching scenario with three verdict types", "scenario": "<strong>Scenario:</strong> A prospect asks why they should replace their existing data platform. You need to respond. Each option maps to a different verdict color. Pick one to verify the outcome panel.", "branches": [{"label": "Option A — Ask what problems their current platform doesn’t solve (STRONG)", "verdict": "strong", "consequence": "<strong>Verify (strong):</strong> This button gets a green border. The outcome panel shows a green <em>Strong move</em> badge."}, {"label": "Option B — Immediately send the competitor battlecard (WEAK)", "verdict": "weak", "consequence": "<strong>Verify (weak):</strong> This button gets a red border. The outcome panel shows a red <em>Risky move</em> badge."}, {"label": "Option C — Mention you’d like to schedule a deeper call (NEUTRAL)", "verdict": "neutral", "consequence": "<strong>Verify (neutral):</strong> This button gets a purple border. The outcome panel shows a purple <em>Worth a thought</em> badge."}]}], "html": ""}, {"type": "content", "title": "Matching", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 10</span><h2>Matching</h2><p class='subhead'>Drag each chip from the pool to the matching left-column slot. Check button activates when all slots are filled.</p></div>"}, {"kind": "matching", "title": "Test: drag-to-match pairs", "pairs": [{"left": "Left label 1", "right": "Right match for 1"}, {"left": "Left label 2", "right": "Right match for 2"}, {"left": "Left label 3", "right": "Right match for 3"}, {"left": "Left label 4", "right": "Right match for 4"}], "explanation": "Verify: chips start in the pool (shuffled order). Dragging a chip to a slot fills it; dragging a second chip to a filled slot swaps them. Correct chips go green, incorrect chips go red after checking."}], "html": ""}, {"type": "content", "title": "Sequencing", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 11</span><h2>Sequencing</h2><p class='subhead'>Drag items into the correct order. Numbered badges update live as you drag.</p></div>"}, {"kind": "sequencing", "title": "Test: drag-to-sequence (correct order: First, Second, Third, Fourth)", "prompt": "Arrange these items so they read: First → Second → Third → Fourth.", "items": [{"text": "FIRST (correct position: 1)", "pos": 0}, {"text": "SECOND (correct position: 2)", "pos": 1}, {"text": "THIRD (correct position: 3)", "pos": 2}, {"text": "FOURTH (correct position: 4)", "pos": 3}], "explanation": "Verify: items render in shuffled order. Numbered badges update live as you drag. Correct positions go green, wrong positions go red after checking."}], "html": ""}, {"type": "content", "title": "Fill-in the Blank", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 12</span><h2>Fill-in the Blank</h2><p class='subhead'>Type the answer and press Enter or Submit. Case-insensitive.</p></div>"}, {"kind": "fill-in", "title": "Test: text input with accepted-variant matching", "question": "Type the word “SCORM” to verify the fill-in input. Any capitalisation is accepted.", "accepted": ["SCORM", "scorm", "Scorm"], "case_sensitive": false, "hint": "The answer is: SCORM (any case)", "explanation": "Verify: typing ‘scorm’, ‘SCORM’, or ‘Scorm’ all turn the input green. Typing anything else turns it red and shows the accepted answers. Pressing Enter also submits."}], "html": ""}, {"type": "content", "title": "Numeric Input", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 13</span><h2>Numeric Input</h2><p class='subhead'>Enter a number and press Enter or Submit. Tolerance is ±2.</p></div>"}, {"kind": "numeric", "title": "Test: number input with ±2 tolerance", "question": "Enter the number 42. Values from 40 to 44 are accepted (tolerance ±2).", "correct": 42, "tolerance": 2, "unit": "", "hint": "The answer is 42. Values 40–44 are all correct.", "explanation": "Verify: entering 40, 41, 42, 43, or 44 turns the input green. Entering 39 or 45 turns it red and shows the accepted range (40–44)."}], "html": ""}, {"type": "content", "title": "Hotspot Image", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 14</span><h2>Hotspot</h2><p class='subhead'>Click a region on the image, then hit Submit. Only one region is correct.</p></div>"}, {"kind": "hotspot", "title": "Test: click-on-image hotspot", "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgNjAwIDIwMCI+CiAgPGRlZnM+CiAgICA8bWFya2VyIGlkPSJhcnJvd2hlYWQiIG1hcmtlcldpZHRoPSIxMCIgbWFya2VySGVpZ2h0PSI3IiByZWZYPSI5IiByZWZZPSIzLjUiIG9yaWVudD0iYXV0byI+CiAgICAgIDxwb2x5Z29uIHBvaW50cz0iMCAwLCAxMCAzLjUsIDAgNyIgZmlsbD0iI0NDQzlENSIvPgogICAgPC9tYXJrZXI+CiAgPC9kZWZzPgoKICA8IS0tIEJhY2tncm91bmQgLS0+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNGQUY4RkMiIHJ4PSI4Ii8+CgogIDwhLS0gQm94IEE6IERRIEVuZ2luZSAoaW5jb3JyZWN0KSAtLT4KICA8cmVjdCB4PSIyNSIgeT0iMzYiIHdpZHRoPSIxNTAiIGhlaWdodD0iMTIwIiByeD0iOCIgZmlsbD0iI0VERThGQiIgc3Ryb2tlPSIjNkEyQ0Y1IiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9IjM4IiB5PSI1OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjNkEyQ0Y1Ij5BPC90ZXh0PgogIDx0ZXh0IHg9IjEwMCIgeT0iOTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFBMEM0MiI+RFEgRW5naW5lPC90ZXh0PgogIDx0ZXh0IHg9IjEwMCIgeT0iMTE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY2NUQ4MSI+VmFsaWRhdGVzICZhbXA7IGNsZWFuczwvdGV4dD4KICA8dGV4dCB4PSIxMDAiIHk9IjEyOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NjVEODEiPmRhdGEgYXQgc291cmNlPC90ZXh0PgoKICA8IS0tIEFycm93IEEgdG8gQiAtLT4KICA8bGluZSB4MT0iMTc1IiB5MT0iOTYiIHgyPSIyMTgiIHkyPSI5NiIgc3Ryb2tlPSIjQ0NDOUQ1IiBzdHJva2Utd2lkdGg9IjIiIG1hcmtlci1lbmQ9InVybCgjYXJyb3doZWFkKSIvPgoKICA8IS0tIEJveCBCOiBEYXRhIENhdGFsb2cgKGNvcnJlY3QpIC0tPgogIDxyZWN0IHg9IjIyMiIgeT0iMzYiIHdpZHRoPSIxNTYiIGhlaWdodD0iMTIwIiByeD0iOCIgZmlsbD0iI0ZERURGNyIgc3Ryb2tlPSIjRjEwMDkwIiBzdHJva2Utd2lkdGg9IjIuNSIvPgogIDx0ZXh0IHg9IjIzNiIgeT0iNTgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0YxMDA5MCI+QjwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9Ijk1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxQTBDNDIiPkRhdGEgQ2F0YWxvZzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjExNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NjVEODEiPkNlbnRyYWwgbWV0YWRhdGEgaHViOjwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjEyOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NjVEODEiPmxpbmVhZ2UgKyBvd25lcnNoaXA8L3RleHQ+CgogIDwhLS0gQXJyb3cgQiB0byBDIC0tPgogIDxsaW5lIHgxPSIzNzgiIHkxPSI5NiIgeDI9IjQxOCIgeTI9Ijk2IiBzdHJva2U9IiNDQ0M5RDUiIHN0cm9rZS13aWR0aD0iMiIgbWFya2VyLWVuZD0idXJsKCNhcnJvd2hlYWQpIi8+CgogIDwhLS0gQm94IEM6IE1ETSBIdWIgKGluY29ycmVjdCkgLS0+CiAgPHJlY3QgeD0iNDIyIiB5PSIzNiIgd2lkdGg9IjE1MiIgaGVpZ2h0PSIxMjAiIHJ4PSI4IiBmaWxsPSIjRURFOEZCIiBzdHJva2U9IiM2QTJDRjUiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPHRleHQgeD0iNDM2IiB5PSI1OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjNkEyQ0Y1Ij5DPC90ZXh0PgogIDx0ZXh0IHg9IjQ5OCIgeT0iOTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFBMEM0MiI+TURNIEh1YjwvdGV4dD4KICA8dGV4dCB4PSI0OTgiIHk9IjExNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NjVEODEiPk1hbmFnZXMgbWFzdGVyPC90ZXh0PgogIDx0ZXh0IHg9IjQ5OCIgeT0iMTI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY2NUQ4MSI+cmVjb3JkcyBmb3IgZW50aXRpZXM8L3RleHQ+CgogIDwhLS0gQm90dG9tIGxhYmVsIC0tPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzY2NUQ4MSI+Q2xpY2sgdGhlIGNvbXBvbmVudCB0aGF0IGFjdHMgYXMgdGhlIGNlbnRyYWwgbWV0YWRhdGEgaHViLjwvdGV4dD4KPC9zdmc+Cg==", "alt": "Architecture diagram with three labeled boxes: A (DQ Engine), B (Data Catalog), C (MDM Hub)", "prompt": "Click the component that acts as the central metadata hub.", "hotspots": [{"id": "box-a", "x": 4, "y": 18, "w": 26, "h": 56, "label": "A", "correct": false, "feedback": "Incorrect — Box A is the DQ Engine (validates data). The metadata hub is Box B."}, {"id": "box-b", "x": 37, "y": 18, "w": 27, "h": 56, "label": "B", "correct": true, "feedback": "Correct — Box B is the Data Catalog, the central metadata hub."}, {"id": "box-c", "x": 70, "y": 18, "w": 26, "h": 56, "label": "C", "correct": false, "feedback": "Incorrect — Box C is the MDM Hub (master records). The metadata hub is Box B."}], "explanation": "Verify: clicking Box A or C shows it in red with per-region feedback. Clicking Box B shows it in green. The explanation (this box) appears below after Submit."}], "html": ""}, {"type": "quiz", "title": "Quiz 1 — Single Choice", "question": "Test quiz slide 1 (scored, single-choice). Which option is correct?", "kind": "single", "options": ["Wrong option A", "Correct option B", "Wrong option C", "Wrong option D"], "correct": [1], "scored": true, "explanation": "Option B is correct. Verify: B highlights green, wrong selections highlight red. SCORM score updates via cmi.core.score.raw after all scored questions are answered."}, {"type": "quiz", "title": "Quiz 2 — Multi-Select", "question": "Test quiz slide 2 (scored, multi-select). Which options are correct? (Select all that apply.)", "kind": "multi", "options": ["Correct option A", "Wrong option B", "Correct option C", "Wrong option D"], "correct": [0, 2], "scored": true, "explanation": "Options A and C are correct. Verify: markers are square for multi-select. Must select BOTH correct options for full credit — partial selection is scored as wrong."}, {"type": "quiz", "title": "Quiz 3 — True / False", "question": "Test quiz slide 3 (scored, true/false). The correct answer is True.", "kind": "truefalse", "correct": [0], "scored": true, "explanation": "True is correct. Verify: only two options appear in the quiz carousel. Selecting True highlights green; False highlights red.", "options": ["True", "False"]}, {"type": "quiz", "title": "Quiz 4 — Single Choice (scored)", "question": "Test quiz slide 4 (scored, single-choice). Which option maps to the second correct index?", "kind": "single", "options": ["Wrong — index 0", "Wrong — index 1", "Correct — index 2", "Wrong — index 3"], "correct": [2], "scored": true, "explanation": "Option C (index 2) is correct. This is the fourth scored question, bringing the scored total to 4 and satisfying the minimum for reliable grade reporting."}, {"type": "quiz", "title": "Quiz 5 — Unscored Knowledge Check", "question": "Test quiz slide 5 (scored: false — this question does NOT count toward the final score). Select any option to verify unscored behavior.", "kind": "single", "options": ["Any option — this is unscored", "Also fine — does not affect pass/fail", "Third option — distractor to satisfy minimum"], "correct": [1], "scored": false, "explanation": "Verify: this question appears in the quiz carousel but selecting the ‘wrong’ answer does NOT change cmi.core.score.raw or the pass/fail outcome on the completion screen."}];
+var SLIDES = [{"type": "content", "title": "Interaction Showcase", "body": [{"kind": "html", "value": "<div class='title-hero'><span class='lesson-tag'>QA Test Course · All Capabilities</span><h2>SCORM Interaction Showcase</h2><p class='deck'>This course exercises every interactive element built into the SCORM deck shell. Each section is labeled with its interaction type and includes notes on what behavior to verify.</p><div class='key-concepts'><div class='heading'>Capabilities tested</div><ul><li><strong>Passive:</strong> Glossary tooltips (dfn), Video embed</li><li><strong>Phase 1 gated:</strong> Flip cards, Accordion, Tabs</li><li><strong>Phase 1 gated:</strong> Knowledge checks (single / multi / true-false)</li><li><strong>Phase 1 gated:</strong> Drag-sort, Branching, Matching, Sequencing</li><li><strong>Phase 1 gated:</strong> Fill-in, Numeric, Hotspot</li><li><strong>Phase 1 gated:</strong> Multi-step Scenario, Video with checkpoint</li><li><strong>Quiz carousel:</strong> Single-choice, Multi-select, True/false, Unscored</li></ul></div></div>"}], "html": ""}, {"type": "content", "title": "Glossary Tooltips (passive — dfn)", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 1</span><h2>Glossary Tooltips</h2><p class='subhead'>Passive — hover or tap each underlined term. No engagement gate.</p></div><p>The platform combines <dfn data-def='Data Quality — detecting, measuring, and correcting data defects at source.'>DQ</dfn>, <dfn data-def='Data Catalog — a searchable inventory of data assets with lineage, ownership, and usage metadata.'>Catalog</dfn>, and <dfn data-def='Master Data Management — a single authoritative record for critical business entities like customers, products, and accounts.'>MDM</dfn> in a single integrated product.</p><div class='callout'><div class='callout-title'>What to verify</div>Hovering each underlined term shows a navy tooltip above it. Tapping on mobile shows it on click. No engagement gate — the <strong>Continue / Begin assessment</strong> button is <em>not</em> locked by this block.</div>"}], "html": ""}, {"type": "content", "title": "Flip Cards", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 2</span><h2>Flip Cards</h2><p class='subhead'>Tap each card to flip it. All cards must be flipped at least once to unlock Continue.</p></div>"}, {"kind": "flip-card", "title": "Test: flip each card to reveal the back", "cards": [{"front": "Card 1", "back": "<strong>Back of Card 1.</strong> Verify: purple front turns pink-gradient after flipping. This is the definition side."}, {"front": "Card 2", "back": "<strong>Back of Card 2.</strong> The engagement pill should say ✓ Completed once all three cards are flipped."}, {"front": "Card 3", "back": "<strong>Back of Card 3.</strong> Verify: you can flip any card back to front and front to back repeatedly. Only the first flip of each card counts toward completion."}]}], "html": ""}, {"type": "content", "title": "Accordion", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 3</span><h2>Accordion</h2><p class='subhead'>Click each panel header to expand it. All panels must be opened to unlock Continue.</p></div>"}, {"kind": "accordion", "title": "Test: open every panel to mark complete", "items": [{"label": "Panel A — click to open", "detail": "<p>This is panel A. <strong>Verify:</strong> the left border turns from purple to pink when open. The + chevron rotates to ×.</p>"}, {"label": "Panel B — click to open", "detail": "<p>This is panel B. <strong>Verify:</strong> the engagement pill increments as each new panel is opened for the first time.</p>"}, {"label": "Panel C — click to open", "detail": "<p>This is panel C. Once all three panels have been opened at least once, the pill shows ✓ Completed and the Continue button unlocks.</p>"}]}], "html": ""}, {"type": "content", "title": "Tabs", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 4</span><h2>Tabs</h2><p class='subhead'>Click each tab label. All tabs must be visited to unlock Continue.</p></div>"}, {"kind": "tabs", "title": "Test: visit every tab to mark complete", "tabs": [{"label": "Tab A", "content": "<p><strong>Tab A content.</strong> Verify: the active tab has a pink underline. Visited tabs get a purple-tinted label.</p>"}, {"label": "Tab B", "content": "<p><strong>Tab B content.</strong> Verify: switching tabs swaps the content panel without a page reload.</p>"}, {"label": "Tab C", "content": "<p><strong>Tab C content.</strong> Once all three tabs have been visited at least once, the engagement pill shows ✓ Completed.</p>"}]}], "html": ""}, {"type": "content", "title": "Knowledge Check — Single Choice", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 5</span><h2>Knowledge Check — Single Choice</h2><p class='subhead'>Inline ungraded quiz. Submit button is disabled until a selection is made.</p></div>"}, {"kind": "knowledge-check", "title": "Test: single-choice knowledge check", "question": "Which answer is correct? (Single choice — only one selection is allowed at a time.)", "qkind": "single", "options": ["Wrong answer A", "Correct answer B", "Wrong answer C", "Wrong answer D"], "correct": [1], "explanation": "B is correct. Verify: B highlights green, wrong options gray out. Selecting a wrong option should show it red. The explanation text (this box) appears after submission. Submit is disabled before a selection is made."}], "html": ""}, {"type": "content", "title": "Knowledge Check — Multi-Select", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 6</span><h2>Knowledge Check — Multi-Select</h2><p class='subhead'>Inline ungraded quiz. Option markers are square for multi-select.</p></div>"}, {"kind": "knowledge-check", "title": "Test: multi-select knowledge check", "question": "Which answers are correct? (Select all that apply — multiple selections allowed.)", "qkind": "multi", "options": ["Correct answer A", "Wrong answer B", "Correct answer C", "Wrong answer D"], "correct": [0, 2], "explanation": "A and C are correct. Verify: option markers are square (not round). Both A and C highlight green; B and D show with reduced opacity. Selecting a wrong answer highlights it red after submission."}], "html": ""}, {"type": "content", "title": "Knowledge Check — True / False", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 7</span><h2>Knowledge Check — True / False</h2><p class='subhead'>Inline ungraded quiz. Only two options appear; correct answer is True.</p></div>"}, {"kind": "knowledge-check", "title": "Test: true/false knowledge check", "question": "This statement is TRUE. Select the correct answer to verify true/false rendering.", "qkind": "truefalse", "correct": [0], "explanation": "True is correct. Verify: exactly two options appear (True / False) with round markers. Selecting True highlights it green; selecting False highlights it red.", "options": ["True", "False"]}], "html": ""}, {"type": "content", "title": "Drag-Sort (Categorization)", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 8</span><h2>Drag-Sort — Categorization</h2><p class='subhead'>Drag each card from the pool into the correct bucket. All items must be placed before checking.</p></div>"}, {"kind": "drag-sort", "title": "Test: drag-and-drop categorization", "prompt": "Sort each item into Bucket A or Bucket B. Items 1–2 belong in Bucket A; items 3–4 belong in Bucket B.", "buckets": [{"id": "bucket-a", "label": "Bucket A"}, {"id": "bucket-b", "label": "Bucket B"}], "items": [{"text": "Item 1 → belongs in Bucket A", "correct": "bucket-a"}, {"text": "Item 2 → belongs in Bucket A", "correct": "bucket-a"}, {"text": "Item 3 → belongs in Bucket B", "correct": "bucket-b"}, {"text": "Item 4 → belongs in Bucket B", "correct": "bucket-b"}], "explanation": "Verify: drag handles work; cards snap into buckets; correct placements go green; wrong placements go red. Check button is disabled until all items are placed."}], "html": ""}, {"type": "content", "title": "Branching Scenario", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 9</span><h2>Branching Scenario</h2><p class='subhead'>Pick a response to see the verdict. One pick per session — restart to test a different verdict.</p></div>"}, {"kind": "branching", "title": "Test: branching scenario with three verdict types", "scenario": "<strong>Scenario:</strong> A prospect asks why they should replace their existing data platform. You need to respond. Each option maps to a different verdict color. Pick one to verify the outcome panel.", "branches": [{"label": "Option A — Ask what problems their current platform doesn’t solve (STRONG)", "verdict": "strong", "consequence": "<strong>Verify (strong):</strong> This button gets a green border. The outcome panel shows a green <em>Strong move</em> badge."}, {"label": "Option B — Immediately send the competitor battlecard (WEAK)", "verdict": "weak", "consequence": "<strong>Verify (weak):</strong> This button gets a red border. The outcome panel shows a red <em>Risky move</em> badge."}, {"label": "Option C — Mention you’d like to schedule a deeper call (NEUTRAL)", "verdict": "neutral", "consequence": "<strong>Verify (neutral):</strong> This button gets a purple border. The outcome panel shows a purple <em>Worth a thought</em> badge."}]}], "html": ""}, {"type": "content", "title": "Matching", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 10</span><h2>Matching</h2><p class='subhead'>Drag each chip from the pool to the matching left-column slot. Check button activates when all slots are filled.</p></div>"}, {"kind": "matching", "title": "Test: drag-to-match pairs", "pairs": [{"left": "Left label 1", "right": "Right match for 1"}, {"left": "Left label 2", "right": "Right match for 2"}, {"left": "Left label 3", "right": "Right match for 3"}, {"left": "Left label 4", "right": "Right match for 4"}], "explanation": "Verify: chips start in the pool (shuffled order). Dragging a chip to a slot fills it; dragging a second chip to a filled slot swaps them. Correct chips go green, incorrect chips go red after checking."}], "html": ""}, {"type": "content", "title": "Sequencing", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 11</span><h2>Sequencing</h2><p class='subhead'>Drag items into the correct order. Numbered badges update live as you drag.</p></div>"}, {"kind": "sequencing", "title": "Test: drag-to-sequence (correct order: First, Second, Third, Fourth)", "prompt": "Arrange these items so they read: First → Second → Third → Fourth.", "items": [{"text": "FIRST (correct position: 1)", "pos": 0}, {"text": "SECOND (correct position: 2)", "pos": 1}, {"text": "THIRD (correct position: 3)", "pos": 2}, {"text": "FOURTH (correct position: 4)", "pos": 3}], "explanation": "Verify: items render in shuffled order. Numbered badges update live as you drag. Correct positions go green, wrong positions go red after checking."}], "html": ""}, {"type": "content", "title": "Fill-in the Blank", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 12</span><h2>Fill-in the Blank</h2><p class='subhead'>Type the answer and press Enter or Submit. Case-insensitive.</p></div>"}, {"kind": "fill-in", "title": "Test: text input with accepted-variant matching", "question": "Type the word “SCORM” to verify the fill-in input. Any capitalisation is accepted.", "accepted": ["SCORM", "scorm", "Scorm"], "case_sensitive": false, "hint": "The answer is: SCORM (any case)", "explanation": "Verify: typing ‘scorm’, ‘SCORM’, or ‘Scorm’ all turn the input green. Typing anything else turns it red and shows the accepted answers. Pressing Enter also submits."}], "html": ""}, {"type": "content", "title": "Numeric Input", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 13</span><h2>Numeric Input</h2><p class='subhead'>Enter a number and press Enter or Submit. Tolerance is ±2.</p></div>"}, {"kind": "numeric", "title": "Test: number input with ±2 tolerance", "question": "Enter the number 42. Values from 40 to 44 are accepted (tolerance ±2).", "correct": 42, "tolerance": 2, "unit": "", "hint": "The answer is 42. Values 40–44 are all correct.", "explanation": "Verify: entering 40, 41, 42, 43, or 44 turns the input green. Entering 39 or 45 turns it red and shows the accepted range (40–44)."}], "html": ""}, {"type": "content", "title": "Hotspot Image", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 14</span><h2>Hotspot</h2><p class='subhead'>Click a region on the image, then hit Submit. Only one region is correct.</p></div>"}, {"kind": "hotspot", "title": "Test: click-on-image hotspot", "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgNjAwIDIwMCI+CiAgPGRlZnM+CiAgICA8bWFya2VyIGlkPSJhcnJvd2hlYWQiIG1hcmtlcldpZHRoPSIxMCIgbWFya2VySGVpZ2h0PSI3IiByZWZYPSI5IiByZWZZPSIzLjUiIG9yaWVudD0iYXV0byI+CiAgICAgIDxwb2x5Z29uIHBvaW50cz0iMCAwLCAxMCAzLjUsIDAgNyIgZmlsbD0iI0NDQzlENSIvPgogICAgPC9tYXJrZXI+CiAgPC9kZWZzPgoKICA8IS0tIEJhY2tncm91bmQgLS0+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNGQUY4RkMiIHJ4PSI4Ii8+CgogIDwhLS0gQm94IEE6IERRIEVuZ2luZSAoaW5jb3JyZWN0KSAtLT4KICA8cmVjdCB4PSIyNSIgeT0iMzYiIHdpZHRoPSIxNTAiIGhlaWdodD0iMTIwIiByeD0iOCIgZmlsbD0iI0VERThGQiIgc3Ryb2tlPSIjNkEyQ0Y1IiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9IjM4IiB5PSI1OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjNkEyQ0Y1Ij5BPC90ZXh0PgogIDx0ZXh0IHg9IjEwMCIgeT0iOTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFBMEM0MiI+RFEgRW5naW5lPC90ZXh0PgogIDx0ZXh0IHg9IjEwMCIgeT0iMTE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY2NUQ4MSI+VmFsaWRhdGVzICZhbXA7IGNsZWFuczwvdGV4dD4KICA8dGV4dCB4PSIxMDAiIHk9IjEyOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NjVEODEiPmRhdGEgYXQgc291cmNlPC90ZXh0PgoKICA8IS0tIEFycm93IEEgdG8gQiAtLT4KICA8bGluZSB4MT0iMTc1IiB5MT0iOTYiIHgyPSIyMTgiIHkyPSI5NiIgc3Ryb2tlPSIjQ0NDOUQ1IiBzdHJva2Utd2lkdGg9IjIiIG1hcmtlci1lbmQ9InVybCgjYXJyb3doZWFkKSIvPgoKICA8IS0tIEJveCBCOiBEYXRhIENhdGFsb2cgKGNvcnJlY3QpIC0tPgogIDxyZWN0IHg9IjIyMiIgeT0iMzYiIHdpZHRoPSIxNTYiIGhlaWdodD0iMTIwIiByeD0iOCIgZmlsbD0iI0ZERURGNyIgc3Ryb2tlPSIjRjEwMDkwIiBzdHJva2Utd2lkdGg9IjIuNSIvPgogIDx0ZXh0IHg9IjIzNiIgeT0iNTgiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI0YxMDA5MCI+QjwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9Ijk1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiMxQTBDNDIiPkRhdGEgQ2F0YWxvZzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjExNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NjVEODEiPkNlbnRyYWwgbWV0YWRhdGEgaHViOjwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjEyOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NjVEODEiPmxpbmVhZ2UgKyBvd25lcnNoaXA8L3RleHQ+CgogIDwhLS0gQXJyb3cgQiB0byBDIC0tPgogIDxsaW5lIHgxPSIzNzgiIHkxPSI5NiIgeDI9IjQxOCIgeTI9Ijk2IiBzdHJva2U9IiNDQ0M5RDUiIHN0cm9rZS13aWR0aD0iMiIgbWFya2VyLWVuZD0idXJsKCNhcnJvd2hlYWQpIi8+CgogIDwhLS0gQm94IEM6IE1ETSBIdWIgKGluY29ycmVjdCkgLS0+CiAgPHJlY3QgeD0iNDIyIiB5PSIzNiIgd2lkdGg9IjE1MiIgaGVpZ2h0PSIxMjAiIHJ4PSI4IiBmaWxsPSIjRURFOEZCIiBzdHJva2U9IiM2QTJDRjUiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPHRleHQgeD0iNDM2IiB5PSI1OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjNkEyQ0Y1Ij5DPC90ZXh0PgogIDx0ZXh0IHg9IjQ5OCIgeT0iOTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzFBMEM0MiI+TURNIEh1YjwvdGV4dD4KICA8dGV4dCB4PSI0OTgiIHk9IjExNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM2NjVEODEiPk1hbmFnZXMgbWFzdGVyPC90ZXh0PgogIDx0ZXh0IHg9IjQ5OCIgeT0iMTI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzY2NUQ4MSI+cmVjb3JkcyBmb3IgZW50aXRpZXM8L3RleHQ+CgogIDwhLS0gQm90dG9tIGxhYmVsIC0tPgogIDx0ZXh0IHg9IjMwMCIgeT0iMTgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZmlsbD0iIzY2NUQ4MSI+Q2xpY2sgdGhlIGNvbXBvbmVudCB0aGF0IGFjdHMgYXMgdGhlIGNlbnRyYWwgbWV0YWRhdGEgaHViLjwvdGV4dD4KPC9zdmc+Cg==", "alt": "Architecture diagram with three labeled boxes: A (DQ Engine), B (Data Catalog), C (MDM Hub)", "prompt": "Click the component that acts as the central metadata hub.", "hotspots": [{"id": "box-a", "x": 4, "y": 18, "w": 26, "h": 56, "label": "A", "correct": false, "feedback": "Incorrect — Box A is the DQ Engine (validates data). The metadata hub is Box B."}, {"id": "box-b", "x": 37, "y": 18, "w": 27, "h": 56, "label": "B", "correct": true, "feedback": "Correct — Box B is the Data Catalog, the central metadata hub."}, {"id": "box-c", "x": 70, "y": 18, "w": 26, "h": 56, "label": "C", "correct": false, "feedback": "Incorrect — Box C is the MDM Hub (master records). The metadata hub is Box B."}], "explanation": "Verify: clicking Box A or C shows it in red with per-region feedback. Clicking Box B shows it in green. The explanation (this box) appears below after Submit."}], "html": ""}, {"type": "content", "title": "Multi-Step Scenario", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 15</span><h2>Multi-Step Scenario</h2><p class='subhead'>Navigate a 2-decision scenario. Each choice gets a verdict; the debrief scores the full path.</p></div>"}, {"kind": "scenario", "title": "Test: multi-step branching scenario", "intro": "You are on a discovery call. The prospect has 15 minutes. Navigate to the best outcome — your choices are tracked and scored at the end.", "debrief": "The strongest path: qualify pain first, then confirm the timeline before talking product. Rushing to a demo before understanding the pain almost always stalls the deal.", "explanation": "Verify: decision nodes appear one at a time. Picking a choice marks it strong/neutral/weak and transitions to the next node after a brief delay. The 'Decisions so far' history panel grows with each pick. The debrief appears on completion showing X of Y strong moves. Engagement pill unlocks after reaching a terminal node.", "nodes": [{"id": "start", "situation": "<strong>Step 1 of 2 —</strong> The prospect says they have 15 minutes and asks you to get to the point. What do you do?", "choices": [{"label": "Ask one focused question: 'What's your biggest data headache right now?' (STRONG)", "verdict": "strong", "next": "step2"}, {"label": "Launch straight into the product demo (WEAK)", "verdict": "weak", "next": "step2"}, {"label": "Suggest rescheduling for when they have more time (NEUTRAL)", "verdict": "neutral", "next": "step2"}], "terminal": false, "verdict": "neutral"}, {"id": "step2", "situation": "<strong>Step 2 of 2 —</strong> The prospect mentions a Q3 compliance audit deadline. How do you respond?", "choices": [{"label": "Confirm the deadline and tie your value prop directly to it (STRONG)", "verdict": "strong", "next": "end-strong"}, {"label": "Continue pitching features and ignore the deadline entirely (WEAK)", "verdict": "weak", "next": "end-weak"}], "terminal": false, "verdict": "neutral"}, {"id": "end-strong", "terminal": true, "verdict": "strong", "situation": "The prospect agrees to a follow-up with their data team. <strong>Verify (strong ending):</strong> debrief shows 'Excellent — demo secured' or similar and reflects majority-strong choices."}, {"id": "end-weak", "terminal": true, "verdict": "weak", "situation": "The prospect says they'll think about it and ends the call. <strong>Verify (weak ending):</strong> debrief shows 'Lost the room' and reflects the weak choices taken."}]}], "html": ""}, {"type": "content", "title": "Video Embed", "body": [{"kind": "html", "value": "<div class='section-opener'><span class='eyebrow'>Capability 16</span><h2>Video Embed</h2><p class='subhead'>Iframe embed with a timed checkpoint overlay. The checkpoint triggers ~5 seconds after page load (wall-clock timer for iframe sources).</p></div><div class='callout warning'><div class='callout-title'>What to verify</div><ul><li>The iframe player renders and is playable.</li><li>~5 seconds after the slide loads, a checkpoint overlay appears on top of the video.</li><li>Answering the checkpoint correctly shows green feedback and hides the overlay.</li><li>For local HTML5 video files, the checkpoint triggers at the exact playback timestamp instead.</li><li>Chapter buttons render below the player (seek only works for local video, not iframes).</li></ul></div>"}, {"kind": "video", "title": "Test: video with timed checkpoint and chapters", "src": "https://www.youtube.com/embed/dQw4w9WgXcQ", "chapters": [{"at": 0, "label": "Intro"}, {"at": 30, "label": "Section 2"}, {"at": 60, "label": "Section 3"}], "checkpoints": [{"at": 5, "question": "Checkpoint test: this question appears ~5 s after the slide loads. Which option is correct?", "kind": "single", "options": ["Wrong option A", "Correct option B", "Wrong option C"], "correct": [1], "explanation": "Option B is correct. Verify: the overlay paused the video (for local HTML5) or appeared over the iframe. After submitting, the overlay fades and the video resumes (local only)."}], "_is_local": false}], "html": ""}, {"type": "quiz", "title": "Quiz 1 — Single Choice", "question": "Test quiz slide 1 (scored, single-choice). Which option is correct?", "kind": "single", "options": ["Wrong option A", "Correct option B", "Wrong option C", "Wrong option D"], "correct": [1], "scored": true, "explanation": "Option B is correct. Verify: B highlights green, wrong selections highlight red. SCORM score updates via cmi.core.score.raw after all scored questions are answered.", "retries": 0, "retry_penalty": 25}, {"type": "quiz", "title": "Quiz 2 — Multi-Select", "question": "Test quiz slide 2 (scored, multi-select). Which options are correct? (Select all that apply.)", "kind": "multi", "options": ["Correct option A", "Wrong option B", "Correct option C", "Wrong option D"], "correct": [0, 2], "scored": true, "explanation": "Options A and C are correct. Verify: markers are square for multi-select. Must select BOTH correct options for full credit — partial selection is scored as wrong.", "retries": 0, "retry_penalty": 25}, {"type": "quiz", "title": "Quiz 3 — True / False", "question": "Test quiz slide 3 (scored, true/false). The correct answer is True.", "kind": "truefalse", "correct": [0], "scored": true, "explanation": "True is correct. Verify: only two options appear in the quiz carousel. Selecting True highlights green; False highlights red.", "retries": 0, "retry_penalty": 25, "options": ["True", "False"]}, {"type": "quiz", "title": "Quiz 4 — Single Choice (scored)", "question": "Test quiz slide 4 (scored, single-choice). Which option maps to the second correct index?", "kind": "single", "options": ["Wrong — index 0", "Wrong — index 1", "Correct — index 2", "Wrong — index 3"], "correct": [2], "scored": true, "explanation": "Option C (index 2) is correct. This is the fourth scored question, bringing the scored total to 4 and satisfying the minimum for reliable grade reporting.", "retries": 0, "retry_penalty": 25}, {"type": "quiz", "title": "Quiz 5 — Unscored Knowledge Check", "question": "Test quiz slide 5 (scored: false — this question does NOT count toward the final score). Select any option to verify unscored behavior.", "kind": "single", "options": ["Any option — this is unscored", "Also fine — does not affect pass/fail", "Third option — distractor to satisfy minimum"], "correct": [1], "scored": false, "explanation": "Verify: this question appears in the quiz carousel but selecting the ‘wrong’ answer does NOT change cmi.core.score.raw or the pass/fail outcome on the completion screen.", "retries": 0, "retry_penalty": 25}];
 var MASTERY_SCORE = 75;
 
 // Separate content and quiz slides
@@ -1362,13 +1549,18 @@ function escapeHTML(s) {
 
 function computeScore() {
   if (SCORED_QUIZ_COUNT === 0) return null;
-  var correct = 0;
+  var totalPct = 0;
   QUIZ_SLIDES.forEach(function (s, qi) {
     if (s.scored === false) return;
     var a = answers[qi];
-    if (a && a.submitted && a.correct) correct++;
+    if (!a || !a.submitted) return;
+    if (a.correct) {
+      var retriesUsed = Math.max(0, (a.attempts || 1) - 1);
+      var pen = (s.retry_penalty !== undefined) ? Number(s.retry_penalty) : 25;
+      totalPct += Math.max(0, 100 - pen * retriesUsed);
+    }
   });
-  return Math.round(correct / SCORED_QUIZ_COUNT * 100);
+  return Math.round(totalPct / SCORED_QUIZ_COUNT);
 }
 
 // ----- Engagement tracking -----
@@ -1439,6 +1631,7 @@ function renderContent() {
   wireDragSortBlocks();
   wireMatchingBlocks();
   wireSequencingBlocks();
+  _wireAllVideoBlocks();
 
   // CTA label/button
   var btn = document.getElementById("btn-begin-quiz");
@@ -1465,7 +1658,9 @@ function renderBlock(block, id, si, bi) {
     case "fill-in":          REQUIRED_INTERACTIVES.push(id); return renderFillIn(block, id);
     case "numeric":          REQUIRED_INTERACTIVES.push(id); return renderNumeric(block, id);
     case "hotspot":          REQUIRED_INTERACTIVES.push(id); return renderHotspot(block, id);
+    case "scenario":         REQUIRED_INTERACTIVES.push(id); return renderScenario(block, id);
     case "branching":        REQUIRED_INTERACTIVES.push(id); return renderBranching(block, id);
+    case "video":            return renderVideo(block, id);
     default:                 return "";
   }
 }
@@ -2208,6 +2403,335 @@ function checkHotspot(id) {
   markEngaged(id); setPillDone(id);
 }
 
+// ----- Video block -----
+var VIDEO_CP_STATE = {};  // id -> {answered: {cpIdx: bool}, launched: {cpIdx: bool}}
+
+function renderVideo(block, id) {
+  if (block.checkpoints && block.checkpoints.length > 0) {
+    REQUIRED_INTERACTIVES.push(id);
+    VIDEO_CP_STATE[id] = { answered: {}, launched: {} };
+  }
+
+  var isLocal = block._is_local !== false && !block.src.startsWith("http");
+  var playerHtml;
+  if (isLocal) {
+    playerHtml = '<video class="video-el" id="vid-' + id + '" controls preload="metadata"' +
+                 (block.poster ? ' poster="' + escapeHTML(block.poster) + '"' : '') + '>' +
+                 '<source src="' + escapeHTML(block.src) + '">' +
+                 '</video>';
+  } else {
+    playerHtml = '<iframe class="video-iframe" id="vid-' + id + '" src="' + escapeHTML(block.src) + '" ' +
+                 'allowfullscreen allow="autoplay"></iframe>';
+  }
+
+  var chaptersHtml = '';
+  if (block.chapters && block.chapters.length > 0) {
+    var btns = block.chapters.map(function (ch, ci) {
+      return '<button class="chapter-btn" id="chap-' + id + '-' + ci + '" ' +
+             'onclick="seekVideoChapter(\'' + id + '\',' + ci + ',' + ch.at + ',' + (isLocal ? 'true' : 'false') + ')">' +
+             escapeHTML(ch.label) + '</button>';
+    }).join('');
+    chaptersHtml = '<div class="video-chapters">' + btns + '</div>';
+  }
+
+  var cpHtml = (block.checkpoints || []).map(function (cp, ci) {
+    var letters = "ABCDEFGHIJ";
+    var multi = cp.kind === 'multi';
+    var optsHtml = (cp.options || []).map(function (opt, oi) {
+      return '<div class="quiz-option' + (multi ? ' multi' : '') + '" ' +
+             'onclick="vcp_toggle(\'' + id + '\',' + ci + ',' + oi + ',' + multi + ')">' +
+             '<span class="marker">' + (multi ? '' : letters[oi]) + '</span>' +
+             '<span>' + escapeHTML(opt) + '</span>' +
+             '</div>';
+    }).join('');
+    return '<div class="video-checkpoint-overlay" id="vcp-' + id + '-' + ci + '">' +
+           '<div class="vcp-card">' +
+             '<span class="vcp-badge">Checkpoint</span>' +
+             '<div class="vcp-question">' + escapeHTML(cp.question) + '</div>' +
+             '<div class="quiz-options" id="vcp-opts-' + id + '-' + ci + '">' + optsHtml + '</div>' +
+             '<div class="quiz-submit-row"><button class="btn btn-primary" id="vcp-btn-' + id + '-' + ci + '" ' +
+               'onclick="vcp_submit(\'' + id + '\',' + ci + ')" disabled>Submit</button></div>' +
+             '<div class="quiz-feedback" id="vcp-fb-' + id + '-' + ci + '"></div>' +
+           '</div>' +
+           '</div>';
+  }).join('');
+
+  return '<div class="interactive-block" id="' + id + '">' +
+         (block.title ? '<div class="interactive-block-header"><span class="label">Video</span><span class="title">' + escapeHTML(block.title) + '</span>' + pillHtml(id) + '</div>' : '') +
+         '<div class="video-block" id="vb-' + id + '">' +
+           playerHtml +
+           cpHtml +
+         '</div>' +
+         chaptersHtml +
+         '</div>';
+}
+
+var VCP_SELECTED = {};  // "id:ci" -> [selected indices]
+
+function vcp_toggle(id, ci, oi, multi) {
+  var key = id + ':' + ci;
+  if (!VCP_SELECTED[key]) VCP_SELECTED[key] = [];
+  var sel = VCP_SELECTED[key];
+  if (multi) {
+    var pos = sel.indexOf(oi);
+    if (pos === -1) sel.push(oi); else sel.splice(pos, 1);
+  } else {
+    VCP_SELECTED[key] = [oi];
+  }
+  var opts = document.querySelectorAll('#vcp-opts-' + id + '-' + ci + ' .quiz-option');
+  opts.forEach(function (el, bi) { el.classList.toggle('selected', VCP_SELECTED[key].indexOf(bi) !== -1); });
+  var btn = document.getElementById('vcp-btn-' + id + '-' + ci);
+  if (btn) btn.disabled = VCP_SELECTED[key].length === 0;
+}
+
+function vcp_submit(id, ci) {
+  var state = VIDEO_CP_STATE[id];
+  if (!state || state.answered[ci]) return;
+  var block = findBlockById(id);
+  if (!block) return;
+  var cp = block.checkpoints[ci];
+  if (!cp) return;
+  var key = id + ':' + ci;
+  var sel = (VCP_SELECTED[key] || []).slice().sort();
+  var correct = (cp.correct || []).slice().sort();
+  var ok = sel.length === correct.length && sel.every(function (v, i) { return v === correct[i]; });
+
+  // Lock options + show feedback
+  var opts = document.querySelectorAll('#vcp-opts-' + id + '-' + ci + ' .quiz-option');
+  opts.forEach(function (el, bi) {
+    el.classList.add('disabled');
+    if (cp.correct.indexOf(bi) !== -1) el.classList.add('correct');
+    else if (sel.indexOf(bi) !== -1) el.classList.add('incorrect');
+    el.onclick = null;
+  });
+  var btn = document.getElementById('vcp-btn-' + id + '-' + ci);
+  if (btn) { btn.disabled = true; btn.style.display = 'none'; }
+  var fb = document.getElementById('vcp-fb-' + id + '-' + ci);
+  if (fb) {
+    fb.className = 'quiz-feedback show ' + (ok ? 'correct' : 'incorrect');
+    fb.innerHTML = '<div class="quiz-feedback-title">' + (ok ? 'Correct' : 'Not quite') + '</div>' + escapeHTML(cp.explanation || '');
+  }
+  state.answered[ci] = true;
+
+  // Resume video after short delay
+  setTimeout(function () {
+    var overlay = document.getElementById('vcp-' + id + '-' + ci);
+    if (overlay) overlay.classList.remove('show');
+    var vid = document.getElementById('vid-' + id);
+    if (vid && vid.tagName === 'VIDEO') vid.play();
+  }, 1800);
+
+  // Check if all checkpoints answered
+  var allDone = block.checkpoints.every(function (cp2, i) { return !!state.answered[i]; });
+  if (allDone) { markEngaged(id); setPillDone(id); }
+  recordInteraction(id + ':cp' + ci, 'choice', sel.join('[,]'), correct.join('[,]'), ok);
+}
+
+function _videoLaunchCheckpoint(id, ci) {
+  var state = VIDEO_CP_STATE[id];
+  if (!state || state.launched[ci] || state.answered[ci]) return;
+  state.launched[ci] = true;
+  // Pause local video
+  var vid = document.getElementById('vid-' + id);
+  if (vid && vid.tagName === 'VIDEO') vid.pause();
+  var overlay = document.getElementById('vcp-' + id + '-' + ci);
+  if (overlay) overlay.classList.add('show');
+}
+
+function _wireVideoBlock(id, block) {
+  if (!block.checkpoints || block.checkpoints.length === 0) return;
+  var vid = document.getElementById('vid-' + id);
+  if (!vid) return;
+
+  if (vid.tagName === 'VIDEO') {
+    // Local video: use timeupdate
+    vid.addEventListener('timeupdate', function () {
+      var t = vid.currentTime;
+      block.checkpoints.forEach(function (cp, ci) {
+        if (!VIDEO_CP_STATE[id].launched[ci] && t >= cp.at - 0.3) {
+          _videoLaunchCheckpoint(id, ci);
+        }
+      });
+      _updateChapterActive(id, block, t);
+    });
+  } else {
+    // External iframe: use wall-clock timer (approximate)
+    var startWall = Date.now();
+    var checkpoints = block.checkpoints.slice().sort(function (a, b) { return a.at - b.at; });
+    var launched = {};
+    var timer = setInterval(function () {
+      if (VIDEO_CP_STATE[id] && Object.keys(VIDEO_CP_STATE[id].answered).length >= checkpoints.length) {
+        clearInterval(timer); return;
+      }
+      var elapsed = (Date.now() - startWall) / 1000;
+      checkpoints.forEach(function (cp, ci) {
+        if (!launched[ci] && elapsed >= cp.at) {
+          launched[ci] = true;
+          _videoLaunchCheckpoint(id, ci);
+        }
+      });
+    }, 500);
+  }
+}
+
+function _updateChapterActive(id, block, t) {
+  if (!block.chapters || block.chapters.length === 0) return;
+  var active = 0;
+  block.chapters.forEach(function (ch, ci) { if (t >= ch.at) active = ci; });
+  block.chapters.forEach(function (ch, ci) {
+    var btn = document.getElementById('chap-' + id + '-' + ci);
+    if (btn) btn.classList.toggle('active', ci === active);
+  });
+}
+
+function seekVideoChapter(id, ci, atSec, isLocal) {
+  if (!isLocal) return;  // can't seek iframes
+  var vid = document.getElementById('vid-' + id);
+  if (vid && vid.tagName === 'VIDEO') { vid.currentTime = atSec; vid.play(); }
+}
+
+function _wireAllVideoBlocks() {
+  CONTENT_SLIDES.forEach(function (s, si) {
+    (s.body || []).forEach(function (block, bi) {
+      if (block.kind === 'video') {
+        var id = interactiveId(si, bi);
+        _wireVideoBlock(id, block);
+      }
+    });
+  });
+}
+
+// ----- Scenario block -----
+var SCENARIO_STATE = {};
+
+function renderScenario(block, id) {
+  var firstNode = block.nodes[0];
+  SCENARIO_STATE[id] = { current: firstNode.id, history: [], done: false };
+  var introHtml = block.intro
+    ? '<div class="scenario-intro">' + escapeHTML(block.intro) + '</div>'
+    : '';
+  var totalNonTerminal = block.nodes.filter(function (n) { return !n.terminal; }).length;
+  return '<div class="interactive-block" id="' + id + '">' +
+         '<div class="interactive-block-header">' +
+           '<span class="label">Scenario</span>' +
+           '<span class="title">' + escapeHTML(block.title || "Work through this scenario") + '</span>' +
+           pillHtml(id) +
+         '</div>' +
+         '<div class="scenario-block">' +
+           introHtml +
+           '<div class="scenario-progress" id="scen-prog-' + id + '">Step 1 of ' + totalNonTerminal + '</div>' +
+           '<div id="scen-stage-' + id + '">' + _scenNodeHtml(block, id, firstNode) + '</div>' +
+           '<div class="scenario-history" id="scen-hist-' + id + '" style="display:none"></div>' +
+           '<div class="quiz-feedback" id="scen-fb-' + id + '" style="display:none"></div>' +
+         '</div>' +
+         '<div class="scenario-footer"></div>' +
+         '</div>';
+}
+
+function _scenNodeHtml(block, id, node) {
+  if (node.terminal) {
+    return '<div class="scenario-situation" style="margin-bottom:12px">' + (node.situation || '') + '</div>';
+  }
+  var choicesHtml = node.choices.map(function (c, ci) {
+    return '<button class="scen-choice" onclick="pickScenChoice(\'' + id + '\',\'' + escapeHTML(node.id) + '\',' + ci + ')">' +
+           escapeHTML(c.label) + '</button>';
+  }).join('');
+  return '<div class="scenario-situation">' + (node.situation || '') + '</div>' +
+         '<div class="scenario-choices">' + choicesHtml + '</div>';
+}
+
+function pickScenChoice(id, nodeId, ci) {
+  var state = SCENARIO_STATE[id];
+  if (!state || state.done) return;
+  var block = findBlockById(id);
+  if (!block) return;
+  var node = block.nodes.find(function (n) { return n.id === nodeId; });
+  if (!node) return;
+  var choice = node.choices[ci];
+  if (!choice) return;
+
+  // Visually mark the picked choice and disable all
+  var stage = document.getElementById('scen-stage-' + id);
+  if (stage) {
+    stage.querySelectorAll('.scen-choice').forEach(function (btn, bi) {
+      btn.disabled = true;
+      if (bi === ci) btn.classList.add('picked', choice.verdict || 'neutral');
+    });
+  }
+
+  state.history.push({ nodeId: nodeId, choiceIdx: ci, verdict: choice.verdict || 'neutral', label: choice.label });
+
+  // Find next node
+  var nextNode = block.nodes.find(function (n) { return n.id === choice.next; });
+  if (!nextNode) return;
+  state.current = nextNode.id;
+
+  // Update history panel
+  _scenUpdateHistory(id, state);
+
+  // Short delay so learner sees the pick before transition
+  setTimeout(function () {
+    if (nextNode.terminal) {
+      state.done = true;
+      _scenShowDebrief(id, block, state, nextNode);
+      // Update progress to done
+      var prog = document.getElementById('scen-prog-' + id);
+      if (prog) prog.textContent = 'Complete';
+      // SCORM
+      var pathStr = state.history.map(function (h) { return h.nodeId + ':' + h.choiceIdx; }).join('[,]');
+      var strongCount = state.history.filter(function (h) { return h.verdict === 'strong'; }).length;
+      var goodPath = strongCount >= Math.ceil(state.history.length / 2);
+      recordInteraction(id, 'performance', pathStr, 'majority-strong', goodPath);
+      markEngaged(id);
+      setPillDone(id);
+    } else {
+      // Transition to next node
+      var totalNT = block.nodes.filter(function (n) { return !n.terminal; }).length;
+      var step = state.history.length + 1;
+      var prog = document.getElementById('scen-prog-' + id);
+      if (prog) prog.textContent = 'Step ' + step + ' of ' + totalNT;
+      if (stage) stage.innerHTML = _scenNodeHtml(block, id, nextNode);
+    }
+  }, 420);
+}
+
+function _scenUpdateHistory(id, state) {
+  var hist = document.getElementById('scen-hist-' + id);
+  if (!hist) return;
+  if (state.history.length === 0) { hist.style.display = 'none'; return; }
+  hist.style.display = 'block';
+  var rows = state.history.map(function (h, i) {
+    var badgeLabel = { strong: '&#10003; Strong', neutral: '&#8594; OK', weak: '&#10007; Risky' }[h.verdict] || h.verdict;
+    return '<div class="scen-hist-row">' +
+           '<span class="scen-hist-num">' + (i + 1) + '</span>' +
+           '<span style="flex:1">' + escapeHTML(h.label) + '</span>' +
+           '<span class="scen-hist-badge ' + h.verdict + '">' + badgeLabel + '</span>' +
+           '</div>';
+  }).join('');
+  hist.innerHTML = '<div class="scen-hist-title">Decisions so far</div>' + rows;
+}
+
+function _scenShowDebrief(id, block, state, terminalNode) {
+  var strong = state.history.filter(function (h) { return h.verdict === 'strong'; }).length;
+  var total = state.history.length;
+  var nodeVerdict = terminalNode.verdict || (strong >= total ? 'strong' : strong >= Math.ceil(total / 2) ? 'neutral' : 'weak');
+  var fbClass = nodeVerdict === 'strong' ? 'correct' : nodeVerdict === 'neutral' ? 'correct' : 'incorrect';
+  var headline = { strong: 'Excellent — demo secured', neutral: 'Solid effort', weak: 'Lost the room' }[nodeVerdict] || 'Scenario complete';
+  if (total > 0) headline += ' (' + strong + ' of ' + total + ' strong moves)';
+
+  var fb = document.getElementById('scen-fb-' + id);
+  if (!fb) return;
+  fb.style.display = 'block';
+  fb.className = 'quiz-feedback show ' + fbClass;
+  fb.innerHTML = '<div class="quiz-feedback-title">' + headline + '</div>' +
+                 (terminalNode.situation ? '<p style="margin-bottom:8px">' + escapeHTML(terminalNode.situation) + '</p>' : '') +
+                 (block.debrief ? '<p><strong>Key insight:</strong> ' + escapeHTML(block.debrief) + '</p>' : '') +
+                 (block.explanation ? '<p>' + escapeHTML(block.explanation) + '</p>' : '');
+
+  // Scroll the debrief into view
+  setTimeout(function () { fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
+}
+
 // ----- Flip cards -----
 var FLIP_VISITED = {};
 
@@ -2322,6 +2846,68 @@ function wireGlossaryTooltips() {
   });
 }
 
+// ----- TOC panel -----
+function toggleTOC() {
+  var panel = document.getElementById('toc-panel');
+  var overlay = document.getElementById('toc-overlay');
+  if (!panel) return;
+  var isOpen = panel.style.display !== 'none';
+  if (!isOpen) {
+    _buildTOC();
+    panel.style.display = 'flex';
+    if (overlay) overlay.classList.add('show');
+  } else {
+    panel.style.display = 'none';
+    if (overlay) overlay.classList.remove('show');
+  }
+}
+
+function _buildTOC() {
+  var list = document.getElementById('toc-list');
+  if (!list) return;
+  list.innerHTML = '';
+  CONTENT_SLIDES.forEach(function (s, si) {
+    if (!s.title) return;
+    var btn = document.createElement('button');
+    btn.className = 'toc-item';
+    btn.textContent = (si + 1) + '. ' + s.title;
+    btn.onclick = function () {
+      toggleTOC();
+      var sections = document.querySelectorAll('.content-section');
+      if (sections[si]) sections[si].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    list.appendChild(btn);
+  });
+  if (QUIZ_SLIDES.length > 0) {
+    var divider = document.createElement('div');
+    divider.style.cssText = 'border-top:1px solid var(--border);margin:8px 0';
+    list.appendChild(divider);
+    var qbtn = document.createElement('button');
+    qbtn.className = 'toc-item toc-quiz';
+    qbtn.textContent = 'Final assessment (' + SCORED_QUIZ_COUNT + ' questions)';
+    qbtn.onclick = function () { toggleTOC(); if (phase !== 'quiz') goToQuizPhase(); };
+    list.appendChild(qbtn);
+  }
+}
+
+// ----- Content scroll position save/restore -----
+function _saveContentLocation() {
+  var sections = document.querySelectorAll('.content-section');
+  var current = 0;
+  sections.forEach(function (sec, i) {
+    var rect = sec.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.6) current = i;
+  });
+  scormSet("cmi.core.lesson_location", "content:" + current);
+  // Throttle commits — only commit every ~5s not on every scroll tick
+  if (!_saveContentLocation._t) {
+    _saveContentLocation._t = setTimeout(function () {
+      scormCommit();
+      _saveContentLocation._t = null;
+    }, 5000);
+  }
+}
+
 function updateProgressBar() {
   // In content phase, track scroll. In quiz phase, track questions answered.
   if (phase === "content") {
@@ -2417,9 +3003,11 @@ function renderQuizBody(slide, qi) {
 
     if (existing && existing.submitted) {
       classes.push("disabled");
-      var isCorrect = slide.correct.indexOf(oi) !== -1;
-      if (isCorrect) classes.push("correct");
-      else if (isSelected) classes.push("incorrect");
+      if (existing.final) {
+        var isCorrect = slide.correct.indexOf(oi) !== -1;
+        if (isCorrect) classes.push("correct");
+        else if (isSelected) classes.push("incorrect");
+      }
     }
 
     var markerText = multi ? (isSelected ? "&#10003;" : "") : letters[oi];
@@ -2438,7 +3026,7 @@ function renderQuizBody(slide, qi) {
   if (existing && existing.submitted) {
     var fbClass = existing.correct ? "correct" : "incorrect";
     var fbTitle = existing.correct ? "Correct" : "Not quite";
-    var expl = slide.explanation || "";
+    var expl = existing.final ? (slide.explanation || "") : "";
     feedback = '<div class="quiz-feedback show ' + fbClass + '">' +
                '<div class="quiz-feedback-title">' + fbTitle + '</div>' +
                '<div>' + escapeHTML(expl) + '</div></div>';
@@ -2448,6 +3036,15 @@ function renderQuizBody(slide, qi) {
   if (!existing || !existing.submitted) {
     submitBtn = '<div class="quiz-submit-row"><button class="btn btn-primary" id="submit-quiz-btn" ' +
                 'onclick="submitQuiz(' + qi + ')" disabled>Submit Answer</button></div>';
+  } else if (existing.submitted && !existing.final) {
+    var maxR = slide.retries !== undefined ? slide.retries : 0;
+    var left = maxR - (existing.attempts || 1) + 1;
+    var leftLabel = left === 1 ? '1 attempt left' : left + ' attempts left';
+    var pen = slide.retry_penalty !== undefined ? slide.retry_penalty : 25;
+    submitBtn = '<div class="quiz-submit-row" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">' +
+                '<button class="btn btn-secondary" onclick="retryQuestion(' + qi + ')">Try again</button>' +
+                '<span style="font-size:0.83rem;color:var(--text-soft)">' + escapeHTML(leftLabel) + ' · ' + pen + '% penalty per retry</span>' +
+                '</div>';
   }
 
   return '<div class="quiz-question">' + escapeHTML(slide.question) + '</div>' +
@@ -2480,14 +3077,31 @@ function submitQuiz(qi) {
   var slide = QUIZ_SLIDES[qi];
   var a = answers[qi];
   if (!a || a.selected.length === 0) return;
+  if (a.final) return;
+
+  if (!a.attempts) a.attempts = 0;
+  a.attempts++;
+  a.submitted = true;
 
   var sel = a.selected.slice().sort();
   var correct = slide.correct.slice().sort();
   var isCorrect = (sel.length === correct.length) &&
                    sel.every(function (v, i) { return v === correct[i]; });
-  a.submitted = true;
   a.correct = isCorrect;
 
+  var maxRetries = slide.retries !== undefined ? slide.retries : 0;
+  if (isCorrect || a.attempts > maxRetries) {
+    a.final = true;
+  }
+  renderQuizSlide();
+}
+
+function retryQuestion(qi) {
+  var a = answers[qi];
+  if (!a || a.final) return;
+  a.submitted = false;
+  a.correct = false;
+  a.selected = [];
   renderQuizSlide();
 }
 
@@ -2497,8 +3111,8 @@ function refreshNavGating() {
   var btnComplete = document.getElementById("btn-complete");
 
   var isScoredQuiz = (slide.scored !== false);
-  var submitted = answers[currentQuizIdx] && answers[currentQuizIdx].submitted;
-  var blocked = isScoredQuiz && !submitted;
+  var finalOrAttempted = answers[currentQuizIdx] && (answers[currentQuizIdx].final || (answers[currentQuizIdx].attempts || 0) > 0);
+  var blocked = isScoredQuiz && !finalOrAttempted;
 
   if (blocked) {
     btnNext.disabled = true;
@@ -2519,7 +3133,7 @@ function completeCourse() {
   // Block completion if any scored quiz is unanswered
   var unanswered = [];
   QUIZ_SLIDES.forEach(function (s, qi) {
-    if (s.scored !== false && !(answers[qi] && answers[qi].submitted)) unanswered.push(qi);
+    if (s.scored !== false && !(answers[qi] && (answers[qi].final || (answers[qi].attempts || 0) > 0))) unanswered.push(qi);
   });
   if (unanswered.length > 0) {
     alert("Please answer all " + SCORED_QUIZ_COUNT + " quiz question" +
@@ -2604,9 +3218,12 @@ function retryQuiz() {
   goToQuizPhase();
 }
 
-// ----- Scroll tracking for progress bar -----
+// ----- Scroll tracking for progress bar and location save -----
 window.addEventListener("scroll", function () {
-  if (phase === "content") updateProgressBar();
+  if (phase === "content") {
+    updateProgressBar();
+    _saveContentLocation();
+  }
 }, {passive: true});
 
 // ----- Init -----
@@ -2622,6 +3239,14 @@ window.onload = function () {
         goToQuizPhase();
         currentQuizIdx = idx;
         renderQuizSlide();
+      }
+    } else if (saved && saved.indexOf("content:") === 0) {
+      var idx = parseInt(saved.split(":")[1], 10);
+      var sections = document.querySelectorAll('.content-section');
+      if (sections[idx]) {
+        setTimeout(function() {
+          sections[idx].scrollIntoView({ behavior: 'instant', block: 'start' });
+        }, 100);
       }
     }
     updateProgressBar();
