@@ -2053,8 +2053,8 @@ function renderFillIn(block, id) {
            hintHtml +
            '<div class="fi-row">' +
              '<input class="fi-input" type="text" id="fi-in-' + id + '" placeholder="Type your answer…" ' +
-               'onkeydown="if(event.key==='Enter')submitFillIn(\'' + id + '\')" ' +
-               'oninput="(function(b){if(b)b.disabled=!document.getElementById('fi-in-' + id + '').value.trim()})(document.getElementById('fi-btn-' + id + ''))">' +
+               'onkeydown="if(event.key===\'Enter\')submitFillIn(\'' + id + '\')" ' +
+               'oninput="(function(b){if(b)b.disabled=!document.getElementById(\'fi-in-' + id + '\').value.trim()})(document.getElementById(\'fi-btn-' + id + '\'))">' +
              '<button class="btn btn-primary" id="fi-btn-' + id + '" onclick="submitFillIn(\'' + id + '\')" disabled>Submit</button>' +
            '</div>' +
            '<div class="quiz-feedback" id="fi-fb-' + id + '"></div>' +
@@ -2098,8 +2098,8 @@ function renderNumeric(block, id) {
            hintHtml +
            '<div class="num-row">' +
              '<input class="num-input" type="number" step="any" id="num-in-' + id + '" placeholder="?" ' +
-               'onkeydown="if(event.key==='Enter')submitNumeric(\'' + id + '\')" ' +
-               'oninput="(function(b){if(b)b.disabled=document.getElementById('num-in-' + id + '').value===''})(document.getElementById('num-btn-' + id + ''))">' +
+               'onkeydown="if(event.key===\'Enter\')submitNumeric(\'' + id + '\')" ' +
+               'oninput="(function(b){if(b)b.disabled=document.getElementById(\'num-in-' + id + '\').value===\'\'})(document.getElementById(\'num-btn-' + id + '\'))">' +
              unitHtml +
              '<button class="btn btn-primary" id="num-btn-' + id + '" onclick="submitNumeric(\'' + id + '\')" disabled>Submit</button>' +
            '</div>' +
