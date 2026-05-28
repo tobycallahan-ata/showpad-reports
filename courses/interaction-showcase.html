@@ -1566,6 +1566,7 @@ function computeScore() {
 // ----- Engagement tracking -----
 // REQUIRED_INTERACTIVES: array of unique IDs ("s0b3" etc.) that the learner must engage with
 // ENGAGED: set of IDs they've engaged with so far
+var REQUIRE_ENGAGEMENT = false;
 var REQUIRED_INTERACTIVES = [];
 var ENGAGED = {};
 
@@ -1580,6 +1581,10 @@ function markEngaged(id) {
 function updateBeginAssessmentButton() {
   var btn = document.getElementById("btn-begin-quiz");
   var label = document.getElementById("cta-label");
+  if (!REQUIRE_ENGAGEMENT) {
+    if (btn) { btn.disabled = false; btn.title = ""; }
+    return;
+  }
   var pending = REQUIRED_INTERACTIVES.filter(function (id) { return !ENGAGED[id]; });
 
   if (pending.length > 0) {
