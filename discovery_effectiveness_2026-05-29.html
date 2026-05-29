@@ -7,168 +7,119 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     :root {
-      --brand:    #1C3FAA;
-      --accent:   #4F8EF7;
-      --bg:       #F4F6FB;
-      --card-bg:  #FFFFFF;
-      --border:   #E2E8F0;
-      --text:     #1E293B;
-      --muted:    #64748B;
-      --green:    #16A34A;
-      --green-bg: #DCFCE7;
-      --red:      #DC2626;
-      --red-bg:   #FEE2E2;
-      --amber:    #D97706;
-      --amber-bg: #FEF3C7;
-      --radius:   10px;
+      --brand:#1C3FAA; --accent:#4F8EF7; --bg:#F4F6FB; --card-bg:#FFFFFF;
+      --border:#E2E8F0; --text:#1E293B; --muted:#64748B;
+      --green:#16A34A; --green-bg:#DCFCE7; --red:#DC2626; --red-bg:#FEE2E2;
+      --amber:#D97706; --amber-bg:#FEF3C7; --radius:10px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      padding: 40px 16px 80px;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-    .container { max-width: 980px; margin: 0 auto; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);padding:40px 16px 80px;font-size:14px;line-height:1.6}
+    .container{max-width:980px;margin:0 auto}
 
-    /* ── Header ── */
-    .page-header {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      flex-wrap: wrap; gap: 16px; margin-bottom: 8px;
-      padding-bottom: 20px; border-bottom: 3px solid var(--brand);
-    }
-    .page-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--brand); line-height: 1.2; }
-    .page-header p  { font-size: 0.85rem; color: var(--muted); margin-top: 4px; max-width: 540px; }
-    .meta { font-size: 0.75rem; color: var(--muted); text-align: right; line-height: 1.8; }
-    .meta strong { color: var(--text); }
+    /* Header */
+    .page-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:8px;padding-bottom:20px;border-bottom:3px solid var(--brand)}
+    .page-header h1{font-size:1.75rem;font-weight:800;color:var(--brand);line-height:1.2}
+    .page-header p{font-size:0.85rem;color:var(--muted);margin-top:4px;max-width:540px}
+    .meta{font-size:0.75rem;color:var(--muted);text-align:right;line-height:1.8}
+    .meta strong{color:var(--text)}
 
-    /* ── KPI chips ── */
-    .kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 24px 0 36px; }
-    @media(max-width:680px){ .kpi-grid { grid-template-columns: repeat(2,1fr); } }
-    .kpi-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; text-align: center; }
-    .kpi-card .kpi-value { font-size: 2rem; font-weight: 800; color: var(--brand); line-height: 1; }
-    .kpi-card .kpi-label { font-size: 0.75rem; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+    /* KPI */
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0 24px}
+    @media(max-width:680px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+    .kpi-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;text-align:center}
+    .kpi-card .kpi-value{font-size:2rem;font-weight:800;color:var(--brand);line-height:1}
+    .kpi-card .kpi-label{font-size:0.75rem;color:var(--muted);margin-top:6px;line-height:1.4}
 
-    /* ── Sections ── */
-    .section { margin-bottom: 40px; }
-    .section-heading {
-      font-size: 1.05rem; font-weight: 700; color: var(--brand);
-      margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--border);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .section-heading .n {
-      background: var(--brand); color: #fff; font-size: 0.7rem; font-weight: 700;
-      width: 20px; height: 20px; border-radius: 50%;
-      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
-    .section-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 16px; max-width: 780px; }
+    /* Quarter filter bar */
+    .qfilter-bar{display:flex;align-items:center;gap:10px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;margin-bottom:28px;flex-wrap:wrap}
+    .qfilter-bar .qlabel{font-size:0.78rem;font-weight:700;color:var(--muted);margin-right:4px}
+    .qbtn{padding:5px 16px;border-radius:99px;border:1.5px solid var(--border);font-size:0.8rem;font-weight:600;cursor:pointer;background:var(--card-bg);color:var(--muted);transition:all .15s;font-family:inherit}
+    .qbtn.active{border-color:var(--brand);background:var(--brand);color:#fff}
+    .qbtn:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+    .qfilter-note{font-size:0.75rem;color:var(--muted);margin-left:auto}
 
-    /* ── Insight ── */
-    .insight {
-      background: #EFF6FF; border-left: 4px solid var(--accent);
-      border-radius: 0 var(--radius) var(--radius) 0;
-      padding: 12px 16px; margin: 16px 0; font-size: 0.84rem;
-    }
-    .insight strong { color: var(--brand); }
+    /* Sections */
+    .section{margin-bottom:40px}
+    .section-heading{font-size:1.05rem;font-weight:700;color:var(--brand);margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:10px}
+    .section-heading .n{background:var(--brand);color:#fff;font-size:0.7rem;font-weight:700;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+    .section-sub{font-size:0.82rem;color:var(--muted);margin-bottom:16px;max-width:780px}
 
-    /* ── Panel / table ── */
-    .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-    thead th {
-      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: .06em; color: var(--muted);
-      padding: 11px 14px; text-align: left; background: #F8FAFC;
-      border-bottom: 1px solid var(--border); white-space: nowrap;
-    }
-    th.r, td.r { text-align: right; }
-    th.c, td.c { text-align: center; }
-    tbody tr { border-top: 1px solid var(--border); transition: background .1s; }
-    tbody tr:first-child { border-top: none; }
-    tbody tr:hover { background: #F8FAFC; }
-    td { padding: 10px 14px; vertical-align: middle; }
-    td strong { color: var(--brand); }
+    /* Insight */
+    .insight{background:#EFF6FF;border-left:4px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:12px 16px;margin:16px 0;font-size:0.84rem}
+    .insight strong{color:var(--brand)}
 
-    /* ── Badges ── */
-    .lift { display: inline-block; padding: 2px 8px; border-radius: 99px; font-weight: 700; font-size: 0.78rem; white-space: nowrap; }
-    .lift-pos { background: var(--green-bg); color: var(--green); }
-    .lift-neg { background: var(--red-bg); color: var(--red); }
-    .lift-neu { background: #F1F5F9; color: var(--muted); }
-    .speed { font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
-    .speed-fast { color: var(--green); }
-    .speed-slow { color: var(--red); }
-    .speed-neu  { color: var(--muted); }
-    .badge-key  { display: inline-block; background: #FEF3C7; color: #92400E; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 2px 7px; border-radius: 99px; }
-    .badge-complete { background: var(--green-bg); color: var(--green); font-size: 0.65rem; font-weight: 700; padding: 2px 7px; border-radius: 99px; }
+    /* Panel / table */
+    .panel{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:16px}
+    table{width:100%;border-collapse:collapse;font-size:0.83rem}
+    thead th{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:11px 14px;text-align:left;background:#F8FAFC;border-bottom:1px solid var(--border);white-space:nowrap}
+    th.r,td.r{text-align:right} th.c,td.c{text-align:center}
+    tbody tr{border-top:1px solid var(--border);transition:background .1s}
+    tbody tr:first-child{border-top:none}
+    tbody tr:hover{background:#F8FAFC}
+    td{padding:10px 14px;vertical-align:middle}
+    td strong{color:var(--brand)}
 
-    /* ── Health indicator ── */
-    .health { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
-    .health-green  { background: var(--green); }
-    .health-amber  { background: var(--amber); }
-    .health-red    { background: var(--red); }
+    /* Badges */
+    .lift{display:inline-block;padding:2px 8px;border-radius:99px;font-weight:700;font-size:0.78rem;white-space:nowrap}
+    .lift-pos{background:var(--green-bg);color:var(--green)}
+    .lift-neg{background:var(--red-bg);color:var(--red)}
+    .lift-neu{background:#F1F5F9;color:var(--muted)}
+    .speed{font-size:0.78rem;font-weight:600;white-space:nowrap}
+    .speed-fast{color:var(--green)} .speed-slow{color:var(--red)} .speed-neu{color:var(--muted)}
+    .badge-key{display:inline-block;background:#FEF3C7;color:#92400E;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:99px}
+    .badge-won{background:var(--green-bg);color:var(--green);font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:99px}
+    .badge-lost{background:var(--red-bg);color:var(--red);font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:99px}
+    .badge-open{background:#F1F5F9;color:var(--muted);font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:99px}
+    .badge-disc{background:var(--green-bg);color:var(--green);font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:99px}
 
-    /* ── Deal coverage bar ── */
-    .cov-bar { display: flex; gap: 3px; align-items: center; }
-    .cov-pip { width: 8px; height: 8px; border-radius: 2px; }
-    .cov-pip.on-pain     { background: #1C3FAA; }
-    .cov-pip.on-timeline { background: #4F8EF7; }
-    .cov-pip.on-value    { background: #86EFAC; }
-    .cov-pip.off         { background: #E2E8F0; }
+    /* Health dot */
+    .health{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0}
+    .health-green{background:var(--green)} .health-amber{background:var(--amber)} .health-red{background:var(--red)}
 
-    /* ── Heat cells ── */
-    .heat-0 { color: var(--muted); }
-    .heat-1 { color: var(--amber); font-weight: 600; }
-    .heat-2 { color: var(--green); font-weight: 700; }
+    /* Coverage pips */
+    .cov-pip{width:8px;height:8px;border-radius:2px;display:inline-block}
+    .on-pain{background:#1C3FAA} .on-timeline{background:#4F8EF7} .on-value{background:#16A34A} .off{background:#E2E8F0}
 
-    /* ── Chart ── */
-    .chart-wrap { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
-    .chart-title { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+    /* Heat */
+    .heat-0{color:var(--muted)} .heat-1{color:var(--amber);font-weight:600} .heat-2{color:var(--green);font-weight:700}
 
-    /* ── Toggle controls ── */
-    .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; }
-    .controls label { font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-right: 4px; }
-    .toggle-btn {
-      padding: 4px 12px; border-radius: 99px; border: 1.5px solid var(--border);
-      font-size: 0.75rem; font-weight: 600; cursor: pointer;
-      background: var(--card-bg); color: var(--muted); transition: all .15s;
-    }
-    .toggle-btn.active { border-color: var(--brand); background: var(--brand); color: #fff; }
-    .toggle-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
-    select.rep-select {
-      padding: 5px 10px; border-radius: var(--radius); border: 1.5px solid var(--border);
-      font-size: 0.8rem; font-family: inherit; background: var(--card-bg);
-      color: var(--text); cursor: pointer;
-    }
+    /* Charts */
+    .chart-wrap{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+    .chart-title{font-size:0.78rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
 
-    /* ── Two-col ── */
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    @media(max-width:680px){ .two-col { grid-template-columns: 1fr; } }
+    /* Controls */
+    .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
+    .controls label{font-size:0.78rem;font-weight:600;color:var(--muted);margin-right:4px}
+    .toggle-btn{padding:4px 12px;border-radius:99px;border:1.5px solid var(--border);font-size:0.75rem;font-weight:600;cursor:pointer;background:var(--card-bg);color:var(--muted);transition:all .15s;font-family:inherit}
+    .toggle-btn.active{border-color:var(--brand);background:var(--brand);color:#fff}
+    .toggle-btn:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+    select.rep-select{padding:5px 10px;border-radius:var(--radius);border:1.5px solid var(--border);font-size:0.8rem;font-family:inherit;background:var(--card-bg);color:var(--text);cursor:pointer}
 
-    /* ── Method box ── */
-    .method-box {
-      background: #F8FAFC; border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 16px 20px; font-size: 0.8rem; color: var(--muted); margin-bottom: 36px; line-height: 1.7;
-    }
-    .method-box strong { color: var(--text); }
+    /* Layout */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:680px){.two-col{grid-template-columns:1fr}}
 
-    /* ── Actions ── */
-    .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-    @media(max-width:680px){ .action-grid { grid-template-columns: 1fr; } }
-    .action-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
-    .action-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--brand); margin-bottom: 10px; }
-    .action-card ul { list-style: none; padding: 0; }
-    .action-card li { font-size: 0.82rem; padding: 5px 0; border-top: 1px solid var(--border); }
-    .action-card li:first-child { border-top: none; padding-top: 0; }
-    .action-card li::before { content: "→ "; color: var(--accent); font-weight: 700; }
+    /* Method box */
+    .method-box{background:#F8FAFC;border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;font-size:0.8rem;color:var(--muted);margin-bottom:28px;line-height:1.7}
+    .method-box strong{color:var(--text)}
 
-    .caveat-list { list-style: none; padding: 0; }
-    .caveat-list li { font-size: 0.8rem; color: var(--muted); padding: 4px 0 4px 16px; position: relative; }
-    .caveat-list li::before { content: "•"; position: absolute; left: 4px; color: var(--border); }
+    /* Actions */
+    .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+    @media(max-width:680px){.action-grid{grid-template-columns:1fr}}
+    .action-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}
+    .action-card h4{font-size:0.85rem;font-weight:700;color:var(--brand);margin-bottom:10px}
+    .action-card ul{list-style:none;padding:0}
+    .action-card li{font-size:0.82rem;padding:5px 0;border-top:1px solid var(--border)}
+    .action-card li:first-child{border-top:none;padding-top:0}
+    .action-card li::before{content:"→ ";color:var(--accent);font-weight:700}
+    .caveat-list{list-style:none;padding:0}
+    .caveat-list li{font-size:0.8rem;color:var(--muted);padding:4px 0 4px 16px;position:relative}
+    .caveat-list li::before{content:"•";position:absolute;left:4px;color:var(--border)}
+    .divider-row td{background:#F8FAFC;font-size:0.7rem;color:var(--muted);font-style:italic;padding:6px 14px;border-top:2px dashed var(--border)!important}
+    footer{margin-top:48px;font-size:0.73rem;color:var(--muted);text-align:center}
 
-    .divider-row td { background: #F8FAFC; font-size: 0.7rem; color: var(--muted); font-style: italic; padding: 6px 14px; border-top: 2px dashed var(--border) !important; }
-
-    footer { margin-top: 48px; font-size: 0.73rem; color: var(--muted); text-align: center; }
+    /* Empty state */
+    .empty-state{padding:32px;text-align:center;color:var(--muted);font-size:0.85rem}
   </style>
 </head>
 <body>
@@ -179,11 +130,7 @@
       <h1>Discovery Effectiveness Report</h1>
       <p>How discovery quality in Qualify relates to deal progression rate and velocity — evidence from recorded sales calls</p>
     </div>
-    <div class="meta">
-      <strong>Ataccama Sales Enablement</strong><br/>
-      Source: Chorus moments + Salesforce stage history<br/>
-      Cohort: Qualify-stage calls ≥ 10 min · May 29, 2026
-    </div>
+    <div class="meta"><strong>Ataccama Sales Enablement</strong><br/>Source: Chorus moments + Salesforce stage history<br/>Cohort: Qualify-stage calls ≥ 10 min · May 29, 2026</div>
   </header>
 
   <div class="kpi-grid">
@@ -193,9 +140,16 @@
     <div class="kpi-card"><div class="kpi-value">24 days</div><div class="kpi-label">Faster to Build Value when Pain is captured</div></div>
   </div>
 
-  <div class="method-box">
-    <strong>How we measured.</strong> Every attended, recorded sales call of 10+ minutes tagged with at least one discovery moment in Chorus was included. Discovery depth is the count of distinct dimensions covered — Pain, Goals, Value/Metrics, Decision Criteria, Authority, Budget, Timeline, Next Steps. Progression is measured from Salesforce stage entry dates. Speed is median days between transitions. Win/loss is not yet measurable: the cohort is too young — <strong>Build Value progression is the working outcome metric</strong>.
+  <!-- Quarter filter bar -->
+  <div class="qfilter-bar">
+    <span class="qlabel">Time period:</span>
+    <button class="qbtn" data-q="Q1" onclick="setQuarter('Q1')">Q1 2026 (Jan–Mar)</button>
+    <button class="qbtn active" data-q="Q2" onclick="setQuarter('Q2')">Q2 2026 (Apr–Jun)</button>
+    <button class="qbtn" data-q="ALL" onclick="setQuarter('ALL')">All 2026</button>
+    <span class="qfilter-note" id="qfilterNote">Sections 4–6 filtered · Analysis (1–3) uses full cohort</span>
   </div>
+
+  <div class="method-box"><strong>How we measured.</strong> Every attended, recorded sales call of 10+ minutes tagged with at least one discovery moment in Chorus was included. Discovery depth is the count of distinct dimensions covered — Pain, Goals, Value/Metrics, Decision Criteria, Authority, Budget, Timeline, Next Steps. Progression is measured from Salesforce stage entry dates. Speed is median days between transitions. Win/loss is not yet measurable for the full cohort — <strong>Build Value progression is the working outcome metric</strong> (sections 1–3).</div>
 
   <!-- ── Section 1 ── -->
   <div class="section">
@@ -211,7 +165,7 @@
   <!-- ── Section 2 ── -->
   <div class="section">
     <h2 class="section-heading"><span class="n">2</span> Discovery depth in Qualify predicts both progression rate and speed</h2>
-    <p class="section-sub">Banding the 164-deal cohort by Qualify depth shows a clear gradient. Deep-discovery deals advance to Build Value at 2.4× the rate of shallow ones. The speed story is more nuanced.</p>
+    <p class="section-sub">Banding the 164-deal cohort by Qualify depth shows a clear gradient. Deep-discovery deals advance to Build Value at 2.4× the rate of shallow ones.</p>
     <div class="two-col">
       <div class="panel">
         <table>
@@ -228,16 +182,16 @@
         <canvas id="depthRateChart" height="160"></canvas>
       </div>
     </div>
-    <div class="insight"><strong>Speed note:</strong> Low-depth deals that do advance reach BV fastest (58 days) — simpler, transactional engagements. High-depth deals take 68 days to BV but travel further (109 days to close vs. 86). Mid-depth is the slowest at 86 days — consistent with partially-worked, stalled deals.</div>
+    <div class="insight"><strong>Speed note:</strong> High-depth deals take 68 days to BV but travel further (109 days to close vs. 86). Mid-depth is the slowest at 86 days — consistent with partially-worked, stalled deals.</div>
   </div>
 
   <!-- ── Section 3 ── -->
   <div class="section">
     <h2 class="section-heading"><span class="n">3</span> Which discovery dimensions drive progression — and which slow it down</h2>
-    <p class="section-sub">Splitting the cohort by whether each dimension was covered in Qualify isolates what matters. Pain, Value, and Next Steps lift progression. Budget and Authority show flat-to-negative association — and they also make deals measurably slower.</p>
+    <p class="section-sub">Splitting the cohort by whether each dimension was covered in Qualify isolates what matters. Pain, Value, and Next Steps lift progression. Budget and Authority are flat-to-negative and slow deals down.</p>
     <div class="panel">
       <table>
-        <thead><tr><th>Discovery dimension</th><th class="r">% of cohort</th><th class="r">→ BV if covered</th><th class="r">→ BV if not</th><th class="c">Lift</th><th class="r">Median days→BV <small>(covered)</small></th><th class="c">Speed delta</th></tr></thead>
+        <thead><tr><th>Discovery dimension</th><th class="r">% of cohort</th><th class="r">→ BV if covered</th><th class="r">→ BV if not</th><th class="c">Lift</th><th class="r">Median days→BV</th><th class="c">Speed delta</th></tr></thead>
         <tbody>
           <tr><td><strong>Pain</strong></td><td class="r">56%</td><td class="r">21.1%</td><td class="r">6.7%</td><td class="c"><span class="lift lift-pos">+14.4pp</span></td><td class="r">68 days</td><td class="c"><span class="speed speed-fast">▲ 24 days faster</span></td></tr>
           <tr><td><strong>Value / Metrics</strong></td><td class="r">61%</td><td class="r">18.3%</td><td class="r">9.1%</td><td class="c"><span class="lift lift-pos">+9.2pp</span></td><td class="r">70 days</td><td class="c"><span class="speed speed-neu">neutral</span></td></tr>
@@ -251,38 +205,28 @@
         </tbody>
       </table>
     </div>
-    <div class="insight"><strong>Pain is uniquely powerful:</strong> it is the only signal that simultaneously increases the likelihood of progression (+14.4pp) <em>and</em> makes deals move faster (24 days). Budget and Authority are double negatives — lower progression rates AND slower velocity.</div>
+    <div class="insight"><strong>Pain is uniquely powerful:</strong> the only signal that increases both the likelihood of progression (+14.4pp) <em>and</em> velocity (24 days faster). Budget and Authority are double negatives — lower rate AND slower deals.</div>
     <div class="chart-wrap">
       <div class="chart-title">Build Value rate: signal present vs. absent</div>
       <canvas id="signalLiftChart" height="120"></canvas>
     </div>
   </div>
 
-  <!-- ── Section 4: Q2 Pipeline ── -->
+  <!-- ── Section 4: Pipeline ── -->
   <div class="section">
-    <h2 class="section-heading"><span class="n">4</span> Q2 2026 pipeline — discovery coverage by deal</h2>
-    <p class="section-sub">All open opportunities closing in Q2 2026, joined to Chorus call data. Key deals flagged in Salesforce shown first. Deals with zero Chorus coverage are blind spots — calls may be unrecorded or happening off-platform.</p>
-
-    <div class="insight" style="margin-bottom:16px">
-      <strong>Blind spot alert:</strong> AXA Italy ($485K, Negotiate), Canada Post ($285K, Proposal Sent), Bank of Indonesia ($193K), African Bank ($176K closing May 28), and IATA ($134K) have <strong>zero recorded Chorus calls</strong>. These are high-ARR deals with no discovery signal visibility.
-    </div>
-
+    <h2 class="section-heading"><span class="n">4</span> Pipeline — discovery coverage by deal <span id="qPipelineLabel" style="font-weight:400;font-size:0.85rem;color:var(--muted);margin-left:4px"></span></h2>
+    <p class="section-sub">Open deals (Q2) or closed deals (Q1) joined to Chorus. Key deals flagged in Salesforce shown first. Deals with zero Chorus calls are blind spots.</p>
+    <div id="dealInsight"></div>
     <div class="panel">
       <table>
         <thead>
           <tr>
-            <th></th>
-            <th>Deal / Account</th>
-            <th>AE</th>
-            <th>Stage</th>
-            <th class="r">ARR</th>
-            <th class="c">Calls</th>
-            <th class="c">w/ Discovery</th>
-            <th class="c">Pain</th>
-            <th class="c">Timeline</th>
-            <th class="c">Value</th>
-            <th>Close</th>
-            <th>SFDC</th>
+            <th></th><th>Deal / Account</th><th>AE</th><th>Stage</th>
+            <th class="r">ARR</th><th class="c">Calls</th><th class="c">w/ Disc.</th>
+            <th class="c" title="Calls with Pain captured">Pain</th>
+            <th class="c" title="Calls with Timeline captured">Time.</th>
+            <th class="c" title="Calls with Value/Metrics captured">Value</th>
+            <th>Close</th><th>Result / SFDC</th>
           </tr>
         </thead>
         <tbody id="dealTable"></tbody>
@@ -292,19 +236,14 @@
 
   <!-- ── Section 5: Rep Coverage + Trend ── -->
   <div class="section">
-    <h2 class="section-heading"><span class="n">5</span> Rep signal coverage — last 90 days + weekly trend</h2>
-    <p class="section-sub">Leaderboard for the last 90 days (above), then a week-by-week trend by rep and signal type. Use the rep selector and signal toggles to explore individual coaching conversations.</p>
-
+    <h2 class="section-heading"><span class="n">5</span> Rep signal coverage <span id="qRepLabel" style="font-weight:400;font-size:0.85rem;color:var(--muted);margin-left:4px"></span></h2>
+    <p class="section-sub">Leaderboard and week-by-week trend filtered to the selected period. Use the rep selector and signal toggles to explore individual coaching conversations.</p>
     <div class="panel" style="margin-bottom:24px">
       <table>
-        <thead>
-          <tr><th>Rep</th><th class="r">Calls</th><th class="r">Signals</th><th class="r">Avg/call</th><th class="c">Pain</th><th class="c">Timeline</th><th class="c">Value</th><th class="c">Dec. Crit.</th><th class="c">Budget</th><th class="c">Auth.</th></tr>
-        </thead>
+        <thead><tr><th>Rep</th><th class="r">Calls</th><th class="r">Signals</th><th class="r">Avg/call</th><th class="c">Pain</th><th class="c">Timeline</th><th class="c">Dec. Crit.</th><th class="c">Budget</th><th class="c">Auth.</th></tr></thead>
         <tbody id="repTable"></tbody>
       </table>
     </div>
-
-    <!-- Rep trend chart with toggles -->
     <div class="chart-wrap">
       <div class="chart-title">Weekly discovery signals by rep and signal type</div>
       <div class="controls" style="margin-bottom:12px">
@@ -320,13 +259,13 @@
 
   <!-- ── Section 6: Overall Trend ── -->
   <div class="section">
-    <h2 class="section-heading"><span class="n">6</span> Discovery signal volume — overall weekly trend</h2>
+    <h2 class="section-heading"><span class="n">6</span> Overall signal volume — weekly trend</h2>
     <p class="section-sub">Total discovery signals captured per week since trackers were established in February 2026.</p>
     <div class="chart-wrap">
-      <div class="chart-title">Weekly discovery signals captured (Feb–May 2026)</div>
+      <div class="chart-title">Weekly discovery signals (Feb–May 2026)</div>
       <canvas id="trendChart" height="100"></canvas>
     </div>
-    <div class="insight"><strong>Adoption is holding:</strong> After an initial ramp to 170–276/week by March–May, 28–33 reps are actively tagging discovery signals each week. The Apr 6 dip aligns with a lighter call week.</div>
+    <div class="insight"><strong>Adoption is holding:</strong> After an initial ramp, 28–33 reps actively tag signals each week through March–May. The Apr 6 dip aligns with a lighter call week. Quarter filter adjusts the view.</div>
   </div>
 
   <!-- ── Section 7: Actions ── -->
@@ -338,7 +277,7 @@
         <ul>
           <li>Make pain-probing a deliberate Qualify habit — it is the only signal that increases both rate and speed</li>
           <li>Aim to cover <strong>Pain + Timeline + Value</strong> as the non-negotiable core of every first call</li>
-          <li>Sequence Budget and Authority conversations after pain is established — early BANT does not help and drags deals</li>
+          <li>Sequence Budget and Authority conversations after pain is established — early BANT does not help</li>
           <li>When the prospect voices decision uncertainty, slow down and re-establish value before advancing</li>
         </ul>
       </div>
@@ -346,309 +285,325 @@
         <h4>For enablement</h4>
         <ul>
           <li>Adopt <strong>Pain coverage rate</strong> as the primary coachable KPI on Qualify calls</li>
-          <li>Target ≥4 discovery dimensions covered per Qualify call as the quality bar</li>
-          <li>Investigate the 5 high-ARR Q2 deals with zero Chorus coverage — confirm calls are being recorded</li>
-          <li>Re-run this analysis in Q3 2026 as the cohort matures — win/loss will become measurable</li>
+          <li>Target ≥4 discovery dimensions per Qualify call as the quality bar</li>
+          <li>Investigate high-ARR deals with zero Chorus coverage — confirm calls are being recorded</li>
+          <li>Re-run the progression and win/loss analysis each quarter as the cohort matures</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- ── Caveats ── -->
   <div class="section">
     <h2 class="section-heading">Caveats</h2>
     <ul class="caveat-list">
       <li><strong>Association, not causation.</strong> Engaged prospects naturally surface more discovery and progress further; depth is partly a marker, not purely a cause.</li>
-      <li><strong>Short, censored window.</strong> Tracker history begins Feb 2025; win/loss is not yet measurable and deeper-stage hops are directional only.</li>
+      <li><strong>Short, censored window.</strong> Tracker history begins Feb 2025; win/loss is not yet measurable for the full pipeline cohort.</li>
       <li><strong>Cohort is Qualify-filtered.</strong> Every deal already reached Qualify — this measures progression from Qualify, not whole-pipeline risk.</li>
-      <li><strong>Speaker attribution.</strong> Moment signals are not speaker-scoped in this view — the PDF's analysis separated rep technique from buyer signals.</li>
-      <li><strong>Chorus coverage gaps.</strong> Deals with zero calls may have unrecorded or external calls; absence of Chorus data ≠ absence of activity.</li>
+      <li><strong>Chorus coverage gaps.</strong> Deals with zero calls may have unrecorded or partner-led calls; absence of Chorus data ≠ absence of activity.</li>
     </ul>
   </div>
 
 </div>
-
 <footer>Ataccama Sales Enablement · Discovery Effectiveness Report · May 29, 2026 · Source: Chorus + Salesforce</footer>
 
 <script>
-// ── Static data ───────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════════════════════════
 
 const STAGE_DEPTH = [
-  { stage: 'Qualify',          high: 11.0, mid: 31.5, low: 57.5 },
-  { stage: 'Build Value',      high: 12.1, mid: 26.8, low: 61.1 },
-  { stage: 'Develop Solution', high: 9.2,  mid: 30.5, low: 60.3 },
-  { stage: 'Proposal Sent',    high: 8.7,  mid: 26.8, low: 64.5 },
-  { stage: 'Negotiate',        high: 13.1, mid: 22.9, low: 64.0 },
+  {stage:'Qualify',high:11.0,mid:31.5,low:57.5},{stage:'Build Value',high:12.1,mid:26.8,low:61.1},
+  {stage:'Develop Solution',high:9.2,mid:30.5,low:60.3},{stage:'Proposal Sent',high:8.7,mid:26.8,low:64.5},
+  {stage:'Negotiate',high:13.1,mid:22.9,low:64.0},
 ];
-
 const SIGNALS_CHART = [
-  { name: 'Pain',             bv_present: 21.1, bv_absent: 6.7  },
-  { name: 'Value/Metrics',    bv_present: 18.3, bv_absent: 9.1  },
-  { name: 'Timeline',         bv_present: 17.9, bv_absent: 11.6 },
-  { name: 'Next Steps',       bv_present: 16.1, bv_absent: 7.4  },
-  { name: 'Decision Criteria',bv_present: 14.3, bv_absent: 14.8 },
-  { name: 'Goals',            bv_present: 13.6, bv_absent: 16.4 },
-  { name: 'Budget',           bv_present: 11.5, bv_absent: 16.1 },
-  { name: 'Authority',        bv_present: 6.9,  bv_absent: 16.3 },
+  {name:'Pain',bv_present:21.1,bv_absent:6.7},{name:'Value/Metrics',bv_present:18.3,bv_absent:9.1},
+  {name:'Timeline',bv_present:17.9,bv_absent:11.6},{name:'Next Steps',bv_present:16.1,bv_absent:7.4},
+  {name:'Decision Criteria',bv_present:14.3,bv_absent:14.8},{name:'Goals',bv_present:13.6,bv_absent:16.4},
+  {name:'Budget',bv_present:11.5,bv_absent:16.1},{name:'Authority',bv_present:6.9,bv_absent:16.3},
 ];
 
-const REPS = [
-  { name: 'Kevin Duffey',       calls: 77, signals: 185, avg: 2.4, pain: 10, timeline: 8,  dc: 12, budget: 8,  auth: 7  },
-  { name: 'Jon Lewis',          calls: 66, signals: 184, avg: 2.8, pain: 7,  timeline: 15, dc: 1,  budget: 2,  auth: 1  },
-  { name: 'Ilayda Esin',        calls: 41, signals: 144, avg: 3.5, pain: 6,  timeline: 7,  dc: 6,  budget: 9,  auth: 6  },
-  { name: 'Joshua Eidell',      calls: 55, signals: 136, avg: 2.5, pain: 7,  timeline: 10, dc: 6,  budget: 13, auth: 1  },
-  { name: 'Nickolas Thibault',  calls: 38, signals: 119, avg: 3.1, pain: 3,  timeline: 5,  dc: 3,  budget: 4,  auth: 0  },
-  { name: 'Della Zhuang',       calls: 41, signals: 112, avg: 2.7, pain: 7,  timeline: 9,  dc: 7,  budget: 5,  auth: 0  },
-  { name: 'Shannon Rutz',       calls: 44, signals: 106, avg: 2.4, pain: 5,  timeline: 10, dc: 1,  budget: 1,  auth: 1  },
-  { name: 'Alexander Sweetser', calls: 38, signals: 103, avg: 2.7, pain: 4,  timeline: 1,  dc: 2,  budget: 5,  auth: 5  },
-  { name: 'Edris Ibrahim',      calls: 34, signals: 100, avg: 2.9, pain: 3,  timeline: 3,  dc: 3,  budget: 0,  auth: 6  },
-  { name: 'Brody Rodriguez',    calls: 36, signals: 95,  avg: 2.6, pain: 6,  timeline: 11, dc: 5,  budget: 3,  auth: 0  },
-  { name: 'Kirby Hisler',       calls: 36, signals: 88,  avg: 2.4, pain: 0,  timeline: 5,  dc: 0,  budget: 0,  auth: 1  },
-  { name: 'Cassi Cregar',       calls: 30, signals: 75,  avg: 2.5, pain: 0,  timeline: 5,  dc: 1,  budget: 1,  auth: 0  },
-  { name: 'Steven Emmel',       calls: 24, signals: 72,  avg: 3.0, pain: 12, timeline: 5,  dc: 3,  budget: 0,  auth: 3  },
-];
+// ── Deal data by quarter ──────────────────────────────────────────────────────
+// Fields: opp, ae, stage, arr, calls, disc, pain, timeline, value, key, disc_done, close, won (null=open)
+const DEALS = {
+  Q1: [
+    // Key deals first (all closed)
+    {opp:'NN Group — DQG',               ae:'O. Bates',    stage:'Closed Lost',        arr:709394, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:true, disc_done:true,  close:'Mar 20', won:false},
+    {opp:'Navy Federal CU — DQ',         ae:'A. Wells',    stage:'Closed Won',         arr:560175, calls:25, disc:24, pain:14, timeline:9,  value:10, key:true, disc_done:true,  close:'Mar 11', won:true},
+    {opp:'Novartis — EU/US Upsell',      ae:'T. Miebach',  stage:'Closed Won',         arr:547039, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:true, disc_done:false, close:'Mar 27', won:true},
+    {opp:'Cooley — DQ + MDM',            ae:'S. Rutz',     stage:'Closed Lost',        arr:520720, calls:3,  disc:3,  pain:2,  timeline:0,  value:0,  key:true, disc_done:true,  close:'Feb 4',  won:false},
+    {opp:'Citi — DQ',                    ae:'S. Kumar',    stage:'Closed Lost',        arr:500000, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:true, disc_done:true,  close:'Mar 20', won:false},
+    {opp:'Novartis — DQ Expansion',      ae:'T. Miebach',  stage:'Closed Lost',        arr:438495, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:true, disc_done:false, close:'Mar 12', won:false},
+    {opp:'Progressive — Lineage',        ae:'S. Jelaca',   stage:'Closed Lost',        arr:400000, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:true, disc_done:false, close:'Mar 10', won:false},
+    {opp:'Brooks Running — DQC',         ae:'A. Wells',    stage:'Closed Lost',        arr:350000, calls:1,  disc:1,  pain:0,  timeline:1,  value:1,  key:true, disc_done:true,  close:'Mar 31', won:false},
+    {opp:'ADIA — DQG',                   ae:'F. Cibulec',  stage:'Closed Lost',        arr:344228, calls:4,  disc:4,  pain:2,  timeline:2,  value:3,  key:true, disc_done:true,  close:'Feb 3',  won:false},
+    {opp:'Mondelez — Lineage Upsell',    ae:'K. Sharma',   stage:'Closed Won',         arr:300000, calls:26, disc:23, pain:9,  timeline:5,  value:9,  key:true, disc_done:false, close:'Mar 31', won:true},
+    {opp:'Ahold Delhaize — DQ Exp.',     ae:'J. Cullis',   stage:'Closed Lost',        arr:271125, calls:20, disc:20, pain:12, timeline:7,  value:11, key:true, disc_done:false, close:'Feb 3',  won:false},
+    {opp:'Brewer Science — MDM/DQC',     ae:'J. Kellner',  stage:'Closed Lost',        arr:257250, calls:2,  disc:2,  pain:0,  timeline:2,  value:0,  key:true, disc_done:true,  close:'Jan 30', won:false},
+    {opp:'Sagen — DQC',                  ae:'A. Wells',    stage:'Closed Won',         arr:243821, calls:46, disc:43, pain:20, timeline:23, value:21, key:true, disc_done:true,  close:'Mar 12', won:true},
+    {opp:'OTP Bank — DQ',                ae:'T. Miebach',  stage:'Closed Lost',        arr:240965, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:true, disc_done:false, close:'Mar 23', won:false},
+    {opp:'Brink\'s — MDM',              ae:'K. Duffey',   stage:'Closed Lost',        arr:240000, calls:1,  disc:1,  pain:0,  timeline:0,  value:0,  key:true, disc_done:true,  close:'Mar 23', won:false},
+    // Notable non-key deals
+    {opp:'BAE Systems — DQ',             ae:'J. Cullis',   stage:'Closed Lost',        arr:671160, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:false,disc_done:true,  close:'Jan 7',  won:false},
+    {opp:'Brown and Caldwell',           ae:'S. Rutz',     stage:'Closed Lost',        arr:604125, calls:1,  disc:1,  pain:0,  timeline:1,  value:0,  key:false,disc_done:true,  close:'Feb 24', won:false},
+    {opp:'EHS Emirates — DQG+MDM',      ae:'N. Stammers', stage:'Closed Lost',        arr:571650, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:false,disc_done:true,  close:'Mar 2',  won:false},
+    {opp:'VIG — DQC Billigence',         ae:'T. Miebach',  stage:'Closed Won',         arr:202511, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:false,disc_done:true,  close:'Mar 31', won:true},
+    {opp:'Sagen — CA DQC',               ae:'A. Wells',    stage:'Closed Won',         arr:243821, calls:46, disc:43, pain:20, timeline:23, value:21, key:false,disc_done:true,  close:'Mar 12', won:true},
+  ],
+  Q2: [
+    {opp:'Blackstone — MDM',             ae:'J. Eidell',   stage:'Negotiate',          arr:837097, calls:6,  disc:3,  pain:2,  timeline:1,  value:0,  key:true, disc_done:true,  close:'Jun 30', won:null},
+    {opp:'PG&E — Data Catalog + Agentic',ae:'K. Duffey',   stage:'Develop Solution',   arr:820250, calls:89, disc:87, pain:47, timeline:31, value:45, key:true, disc_done:false, close:'Jun 30', won:null},
+    {opp:'AXA Italy — DQG',              ae:'N. Stammers', stage:'Negotiate',          arr:485013, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:true, disc_done:false, close:'Jun 30', won:null},
+    {opp:'USAble Life — DQ',             ae:'B. Rodriguez',stage:'Negotiate',          arr:204120, calls:9,  disc:9,  pain:4,  timeline:3,  value:6,  key:true, disc_done:true,  close:'Jun 30', won:null},
+    {opp:'Canada Post — DG/DQ RFP',      ae:'K. Sharma',   stage:'Proposal Sent',      arr:285420, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:false,disc_done:true,  close:'Jun 30', won:null},
+    {opp:'Grange Insurance — DQC',       ae:'J. Eidell',   stage:'Negotiate',          arr:270000, calls:7,  disc:6,  pain:0,  timeline:1,  value:4,  key:false,disc_done:false, close:'Jun 30', won:null},
+    {opp:'Bank of Indonesia — DQC',      ae:'D. Zhuang',   stage:'Proposal Sent',      arr:192754, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:false,disc_done:false, close:'Jun 30', won:null},
+    {opp:'African Bank — DQ',            ae:'N. Stammers', stage:'Negotiate',          arr:175680, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:false,disc_done:false, close:'May 28', won:null},
+    {opp:'IATA — DQC',                   ae:'T. Miebach',  stage:'Develop Solution',   arr:133629, calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:false,disc_done:true,  close:'Jun 19', won:null},
+    {opp:'Optus — RDM',                  ae:'D. Zhuang',   stage:'Negotiate',          arr:108857, calls:10, disc:10, pain:7,  timeline:4,  value:4,  key:false,disc_done:false, close:'Jun 30', won:null},
+    {opp:'Optus — MDM add-on',           ae:'D. Zhuang',   stage:'Negotiate',          arr:102015, calls:1,  disc:1,  pain:0,  timeline:1,  value:0,  key:false,disc_done:false, close:'Jun 30', won:null},
+    {opp:'Truist — 50 Users',            ae:'K. Duffey',   stage:'Negotiate',          arr:57500,  calls:15, disc:15, pain:4,  timeline:8,  value:5,  key:false,disc_done:false, close:'Jun 19', won:null},
+    {opp:'Rocket Lineage — Ahold',       ae:'F. Cibulec',  stage:'Negotiate',          arr:55000,  calls:7,  disc:7,  pain:5,  timeline:4,  value:4,  key:false,disc_done:false, close:'Jun 30', won:null},
+    {opp:'SSEN — Add-on',                ae:'O. Bates',    stage:'Proposal Sent',      arr:54000,  calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:false,disc_done:false, close:'Jun 30', won:null},
+    {opp:'Harley-Davidson — DQ add-on',  ae:'B. Rodriguez',stage:'Proposal Sent',      arr:45500,  calls:4,  disc:4,  pain:2,  timeline:2,  value:2,  key:false,disc_done:true,  close:'Jun 30', won:null},
+    {opp:'Optus — Loqate',               ae:'D. Zhuang',   stage:'Negotiate',          arr:26812,  calls:0,  disc:0,  pain:0,  timeline:0,  value:0,  key:false,disc_done:false, close:'Jun 30', won:null},
+    {opp:'Mondelez — Lineage',           ae:'J. Cass',     stage:'Negotiate',          arr:0,      calls:32, disc:21, pain:13, timeline:9,  value:9,  key:false,disc_done:false, close:'May 22', won:null},
+    {opp:'Cognizant — Partner Deal',     ae:'J. Goulart',  stage:'Qualify',            arr:0,      calls:19, disc:19, pain:5,  timeline:8,  value:3,  key:false,disc_done:false, close:'May 13', won:null},
+  ],
+};
+DEALS.ALL = [...DEALS.Q1, ...DEALS.Q2];
 
-const WEEKLY = [
-  { week: 'Feb 23', signals: 43,  reps: 9  }, { week: 'Mar 2',  signals: 186, reps: 30 },
-  { week: 'Mar 9',  signals: 166, reps: 31 }, { week: 'Mar 16', signals: 215, reps: 33 },
-  { week: 'Mar 23', signals: 181, reps: 29 }, { week: 'Mar 30', signals: 170, reps: 28 },
-  { week: 'Apr 6',  signals: 92,  reps: 24 }, { week: 'Apr 13', signals: 215, reps: 31 },
-  { week: 'Apr 20', signals: 276, reps: 26 }, { week: 'Apr 27', signals: 174, reps: 25 },
-  { week: 'May 4',  signals: 171, reps: 31 }, { week: 'May 11', signals: 199, reps: 33 },
-  { week: 'May 18', signals: 222, reps: 32 }, { week: 'May 25', signals: 174, reps: 28 },
-];
+// ── Rep leaderboard by quarter ────────────────────────────────────────────────
+const REPS = {
+  Q1: [
+    {name:'Nickolas Thibault', calls:42, signals:184, avg:4.4, pain:10, timeline:8,  dc:4,  budget:8,  auth:3},
+    {name:'Kevin Duffey',      calls:63, signals:174, avg:2.8, pain:11, timeline:11, dc:6,  budget:12, auth:7},
+    {name:'Jon Lewis',         calls:52, signals:146, avg:2.8, pain:5,  timeline:13, dc:0,  budget:2,  auth:1},
+    {name:'Shannon Rutz',      calls:44, signals:136, avg:3.1, pain:3,  timeline:8,  dc:1,  budget:4,  auth:2},
+    {name:'Joshua Eidell',     calls:53, signals:130, avg:2.5, pain:5,  timeline:10, dc:3,  budget:10, auth:3},
+    {name:'Andrew Wells',      calls:36, signals:126, avg:3.5, pain:1,  timeline:11, dc:1,  budget:6,  auth:5},
+    {name:'Della Zhuang',      calls:37, signals:101, avg:2.7, pain:9,  timeline:6,  dc:6,  budget:2,  auth:1},
+    {name:'Ilayda Esin',       calls:29, signals:96,  avg:3.3, pain:4,  timeline:5,  dc:3,  budget:6,  auth:3},
+    {name:'Alexander Sweetser',calls:33, signals:82,  avg:2.5, pain:5,  timeline:3,  dc:2,  budget:2,  auth:2},
+    {name:'Kirby Hisler',      calls:28, signals:81,  avg:2.9, pain:0,  timeline:6,  dc:1,  budget:0,  auth:0},
+    {name:'Cassi Cregar',      calls:23, signals:66,  avg:2.9, pain:0,  timeline:6,  dc:1,  budget:1,  auth:0},
+    {name:'Grace Hart',        calls:23, signals:60,  avg:2.6, pain:2,  timeline:6,  dc:0,  budget:1,  auth:1},
+  ],
+  Q2: [
+    {name:'Kevin Duffey',      calls:77, signals:185, avg:2.4, pain:10, timeline:8,  dc:12, budget:8,  auth:7},
+    {name:'Jon Lewis',         calls:66, signals:184, avg:2.8, pain:7,  timeline:15, dc:1,  budget:2,  auth:1},
+    {name:'Ilayda Esin',       calls:41, signals:144, avg:3.5, pain:6,  timeline:7,  dc:6,  budget:9,  auth:6},
+    {name:'Joshua Eidell',     calls:55, signals:136, avg:2.5, pain:7,  timeline:10, dc:6,  budget:13, auth:1},
+    {name:'Nickolas Thibault', calls:38, signals:119, avg:3.1, pain:3,  timeline:5,  dc:3,  budget:4,  auth:0},
+    {name:'Della Zhuang',      calls:41, signals:112, avg:2.7, pain:7,  timeline:9,  dc:7,  budget:5,  auth:0},
+    {name:'Shannon Rutz',      calls:44, signals:106, avg:2.4, pain:5,  timeline:10, dc:1,  budget:1,  auth:1},
+    {name:'Alexander Sweetser',calls:38, signals:103, avg:2.7, pain:4,  timeline:1,  dc:2,  budget:5,  auth:5},
+    {name:'Edris Ibrahim',     calls:34, signals:100, avg:2.9, pain:3,  timeline:3,  dc:3,  budget:0,  auth:6},
+    {name:'Brody Rodriguez',   calls:36, signals:95,  avg:2.6, pain:6,  timeline:11, dc:5,  budget:3,  auth:0},
+    {name:'Kirby Hisler',      calls:36, signals:88,  avg:2.4, pain:0,  timeline:5,  dc:0,  budget:0,  auth:1},
+    {name:'Steven Emmel',      calls:24, signals:72,  avg:3.0, pain:12, timeline:5,  dc:3,  budget:0,  auth:3},
+  ],
+};
+REPS.ALL = (() => {
+  const map = {};
+  [...REPS.Q1, ...REPS.Q2].forEach(r => {
+    if (!map[r.name]) map[r.name] = {...r};
+    else { map[r.name].calls+=r.calls; map[r.name].signals+=r.signals; map[r.name].pain+=r.pain; map[r.name].timeline+=r.timeline; map[r.name].dc+=r.dc; map[r.name].budget+=r.budget; map[r.name].auth+=r.auth; map[r.name].avg = Math.round(map[r.name].signals/map[r.name].calls*10)/10; }
+  });
+  return Object.values(map).sort((a,b)=>b.signals-a.signals).slice(0,12);
+})();
 
-// Q2 2026 deals (key deals first, then by ARR desc)
-const Q2_DEALS = [
-  { opp: 'Blackstone — MDM',                 ae: 'J. Eidell',    stage: 'Negotiate',        arr: 837097,  calls: 6,  disc: 3,  pain: 2,  timeline: 1,  value: 0,  key: true,  disc_done: true,  close: 'Jun 30' },
-  { opp: 'PG&E — Data Catalog + Agentic',    ae: 'K. Duffey',    stage: 'Develop Solution', arr: 820250,  calls: 89, disc: 87, pain: 47, timeline: 31, value: 45, key: true,  disc_done: false, close: 'Jun 30' },
-  { opp: 'AXA Italy — DQG',                  ae: 'N. Stammers',  stage: 'Negotiate',        arr: 485013,  calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: true,  disc_done: false, close: 'Jun 30' },
-  { opp: 'USAble Life — DQ',                 ae: 'B. Rodriguez', stage: 'Negotiate',        arr: 204120,  calls: 9,  disc: 9,  pain: 4,  timeline: 3,  value: 6,  key: true,  disc_done: true,  close: 'Jun 30' },
-  { opp: 'Canada Post — DG/DQ RFP',          ae: 'K. Sharma',    stage: 'Proposal Sent',    arr: 285420,  calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: true,  close: 'Jun 30' },
-  { opp: 'Grange Insurance — DQC',           ae: 'J. Eidell',    stage: 'Negotiate',        arr: 270000,  calls: 7,  disc: 6,  pain: 0,  timeline: 1,  value: 4,  key: false, disc_done: false, close: 'Jun 30' },
-  { opp: 'Bank of Indonesia — DQC',          ae: 'D. Zhuang',    stage: 'Proposal Sent',    arr: 192754,  calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: false, close: 'Jun 30' },
-  { opp: 'African Bank — DQ',                ae: 'N. Stammers',  stage: 'Negotiate',        arr: 175680,  calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: false, close: 'May 28' },
-  { opp: 'IATA — DQC',                       ae: 'T. Miebach',   stage: 'Develop Solution', arr: 133629,  calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: true,  close: 'Jun 19' },
-  { opp: 'Optus — RDM',                      ae: 'D. Zhuang',    stage: 'Negotiate',        arr: 108857,  calls: 10, disc: 10, pain: 7,  timeline: 4,  value: 4,  key: false, disc_done: false, close: 'Jun 30' },
-  { opp: 'Optus — MDM add-on',               ae: 'D. Zhuang',    stage: 'Negotiate',        arr: 102015,  calls: 1,  disc: 1,  pain: 0,  timeline: 1,  value: 0,  key: false, disc_done: false, close: 'Jun 30' },
-  { opp: 'Truist — Additional 50 Users',     ae: 'K. Duffey',    stage: 'Negotiate',        arr: 57500,   calls: 15, disc: 15, pain: 4,  timeline: 8,  value: 5,  key: false, disc_done: false, close: 'Jun 19' },
-  { opp: 'Rocket Lineage scanners — Ahold',  ae: 'F. Cibulec',   stage: 'Negotiate',        arr: 55000,   calls: 7,  disc: 7,  pain: 5,  timeline: 4,  value: 4,  key: false, disc_done: false, close: 'Jun 30' },
-  { opp: 'SSEN — Additional Power Users',    ae: 'O. Bates',     stage: 'Proposal Sent',    arr: 54000,   calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: false, close: 'Jun 30' },
-  { opp: 'Harley-Davidson — DQ add-on',      ae: 'B. Rodriguez', stage: 'Proposal Sent',    arr: 45500,   calls: 4,  disc: 4,  pain: 2,  timeline: 2,  value: 2,  key: false, disc_done: true,  close: 'Jun 30' },
-  { opp: 'Optus — Loqate',                   ae: 'D. Zhuang',    stage: 'Negotiate',        arr: 26812,   calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: false, close: 'Jun 30' },
-  { opp: 'Mondelez — Lineage',               ae: 'J. Cass',      stage: 'Negotiate',        arr: 0,       calls: 32, disc: 21, pain: 13, timeline: 9,  value: 9,  key: false, disc_done: false, close: 'May 22' },
-  { opp: 'Cognizant — Partner Deal',         ae: 'J. Goulart',   stage: 'Qualify',          arr: 0,       calls: 19, disc: 19, pain: 5,  timeline: 8,  value: 3,  key: false, disc_done: false, close: 'May 13' },
-];
+// ── Weekly trend data ─────────────────────────────────────────────────────────
+// All 14 weeks — quarter filter applied by slicing
+const ALL_WEEKS = ["Feb 23","Mar 2","Mar 9","Mar 16","Mar 23","Mar 30","Apr 6","Apr 13","Apr 20","Apr 27","May 4","May 11","May 18","May 25"];
+const ALL_WEEKLY_SIGNALS = [43,186,166,215,181,170,92,215,276,174,171,199,222,174];
+const ALL_WEEKLY_REPS    = [9,30,31,33,29,28,24,31,26,25,31,33,32,28];
+// Q1=indices 0-5, Q2=indices 6-13
+const QUARTER_WEEK_RANGES = { Q1:[0,6], Q2:[6,14], ALL:[0,14] };
 
-// Rep weekly trends by signal group (top 12 reps, 14 weeks)
-const WEEKS = ["Feb 23","Mar 2","Mar 9","Mar 16","Mar 23","Mar 30","Apr 6","Apr 13","Apr 20","Apr 27","May 4","May 11","May 18","May 25"];
-
-const REP_TRENDS = {"Jon Lewis":{"Pain":[0,2,1,1,0,1,0,0,0,1,1,1,0,0],"Timeline":[0,6,3,14,0,7,0,3,2,8,3,1,0,3],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,10,3,14,1,9,7,11,9,7,6,19,3,7],"Decision Criteria":[0,0,0,0,0,0,0,0,0,0,0,1,0,0],"Goals":[0,0,3,3,0,1,2,1,4,3,3,2,1,2],"Budget":[0,0,0,0,0,2,0,0,0,0,0,1,0,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,1],"Commit":[0,0,0,0,0,0,0,0,1,1,1,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Kevin Duffey":{"Pain":[0,5,1,1,0,0,0,1,0,0,0,0,3,1],"Timeline":[0,6,0,0,3,0,0,3,0,9,3,1,3,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,9,1,5,7,2,2,7,5,5,6,6,7,9],"Decision Criteria":[0,2,2,0,1,3,1,3,2,2,0,0,0,0],"Goals":[0,5,0,1,2,3,0,2,3,2,3,1,2,0],"Budget":[0,1,0,1,2,0,0,1,3,0,0,0,0,1],"Authority":[0,0,0,1,0,0,0,1,4,0,0,0,0,1],"Commit":[0,2,1,0,0,1,1,6,2,1,2,2,1,1],"Decision risk":[0,0,0,1,0,0,0,1,4,0,0,0,0,1]},"Ilayda Esin":{"Pain":[0,1,0,0,0,5,0,0,0,0,0,2,1,0],"Timeline":[0,3,0,3,0,3,0,3,0,0,0,0,0,8],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,4,0,4,1,11,0,4,0,13,3,1,9,4],"Decision Criteria":[0,0,0,0,2,1,1,0,0,0,0,0,2,1],"Goals":[0,1,0,0,3,6,3,1,0,4,1,0,6,1],"Budget":[0,4,0,0,1,0,0,0,0,0,0,1,4,4],"Authority":[0,0,0,0,2,2,0,0,0,1,0,0,1,1],"Commit":[0,2,1,0,2,1,1,0,0,0,0,0,1,0],"Decision risk":[0,0,0,0,1,2,0,0,0,0,0,0,1,0]},"Joshua Eidell":{"Pain":[0,0,1,2,0,0,0,0,0,2,0,0,3,0],"Timeline":[0,1,11,0,0,8,0,8,0,0,0,3,3,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,2,3,3,3,5,0,1,3,5,1,3,8,1],"Decision Criteria":[0,0,1,0,0,2,0,0,1,2,0,0,1,0],"Goals":[0,4,1,4,0,1,0,5,2,3,1,1,3,0],"Budget":[0,0,4,5,1,2,1,2,1,1,0,0,0,0],"Authority":[0,1,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,1,0,3,0,3,0,3,2,2,0,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Della Zhuang":{"Pain":[2,1,2,0,0,0,0,2,0,0,3,0,0,1],"Timeline":[0,4,2,0,2,0,6,4,0,3,0,0,2,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[6,6,5,2,0,3,2,11,0,4,3,1,1,3],"Decision Criteria":[1,4,1,1,0,0,2,0,0,0,2,0,0,1],"Goals":[5,2,1,5,1,2,2,3,0,1,0,0,0,3],"Budget":[0,1,0,0,0,1,0,5,0,0,0,0,0,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[2,0,0,0,0,0,0,0,0,0,0,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Nickolas Thibault":{"Pain":[0,0,0,0,0,1,0,1,1,0,0,0,0,0],"Timeline":[0,0,0,0,0,8,0,0,5,3,0,0,0,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,9,1,7,17,3,1,4,15,5,2,2,2,9],"Decision Criteria":[0,0,0,0,0,0,1,0,2,0,0,0,0,0],"Goals":[0,1,1,5,0,1,0,0,0,2,1,2,1,2],"Budget":[0,1,0,0,0,1,0,0,0,1,0,0,0,1],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,3,0,0,1,0,0,0,0,0,0,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Shannon Rutz":{"Pain":[0,0,3,1,0,0,0,0,2,0,1,0,0,0],"Timeline":[0,3,0,0,0,2,3,0,8,2,4,0,1,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,3,6,2,6,0,5,3,8,0,5,2,0,2],"Decision Criteria":[0,0,0,1,0,0,0,0,0,0,0,0,0,0],"Goals":[0,2,7,5,2,1,3,0,5,0,1,0,1,0],"Budget":[0,0,0,0,0,1,0,0,0,0,0,0,0,0],"Authority":[0,0,1,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,0,0,0,1,0,2,0,1,0,2,0,0,1],"Decision risk":[0,0,1,0,0,0,0,0,0,0,0,0,0,0]},"Alexander Sweetser":{"Pain":[0,0,1,1,0,0,0,0,0,0,0,1,1,0],"Timeline":[0,0,3,0,0,0,0,0,0,0,0,0,0,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[1,2,3,8,5,0,0,1,9,0,5,10,7,2],"Decision Criteria":[0,0,0,0,1,1,0,0,0,0,0,0,0,0],"Goals":[0,0,0,0,2,0,0,1,2,0,2,0,1,1],"Budget":[0,0,0,1,1,0,0,0,1,0,1,1,0,0],"Authority":[0,0,0,0,1,0,0,1,0,0,1,3,0,0],"Commit":[0,0,2,0,1,0,0,0,11,0,1,1,0,1],"Decision risk":[0,0,0,0,1,0,0,1,0,0,1,3,0,0]},"Edris Ibrahim":{"Pain":[0,0,0,1,0,0,0,1,0,0,0,0,1,0],"Timeline":[0,0,0,3,0,0,0,0,4,0,0,0,3,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,2,0,8,2,0,0,4,6,0,5,5,10,5],"Decision Criteria":[0,0,0,0,0,0,0,1,0,0,0,0,2,0],"Goals":[0,1,0,3,1,0,1,0,3,0,1,3,1,3],"Budget":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Authority":[0,1,0,0,1,1,0,2,1,0,1,0,0,0],"Commit":[0,0,0,1,1,0,1,1,4,0,1,0,1,0],"Decision risk":[0,1,0,0,1,1,0,1,0,0,1,0,0,0]},"Brody Rodriguez":{"Pain":[1,0,0,0,2,3,0,0,2,1,0,0,0,0],"Timeline":[0,0,0,0,7,2,2,5,3,4,0,2,2,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,0,0,1,2,0,1,1,3,1,6,5,8,3],"Decision Criteria":[0,0,0,0,1,0,0,1,2,0,0,0,0,1],"Goals":[1,1,1,0,1,2,0,0,2,3,0,0,0,0],"Budget":[0,0,0,0,0,0,0,1,0,0,0,1,1,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,0,0,0,0,1,0,1,3,0,2,5,2,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Kirby Hisler":{"Pain":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Timeline":[0,0,3,0,2,0,0,0,7,0,2,0,0,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,5,5,7,5,1,1,5,11,4,5,2,8,0],"Decision Criteria":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Goals":[0,1,4,1,0,0,0,0,1,0,0,0,1,0],"Budget":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,2,0,0],"Commit":[0,1,0,0,0,0,0,0,1,1,0,1,1,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,2,0,0]},"Cassi Cregar":{"Pain":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Timeline":[0,1,3,1,3,0,0,0,0,0,0,0,0,1],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[4,7,2,8,3,0,1,11,6,4,1,0,2,6],"Decision Criteria":[0,0,1,0,0,0,0,0,0,0,0,0,0,0],"Goals":[1,1,0,2,0,0,0,1,3,0,0,0,0,0],"Budget":[0,0,0,0,0,0,0,0,0,0,0,0,0,2],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,0,0,1,2,0,0,1,1,1,0,0,0,1],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]}};
-
-// ── Signal colours ────────────────────────────────────────────────────────────
+// Rep trend breakdown (12 reps, 14 weeks, 10 signal types)
 const SIG_COLORS = {
-  'Pain':             '#1C3FAA',
-  'Timeline':         '#4F8EF7',
-  'Value/Metrics':    '#16A34A',
-  'Next Steps':       '#64748B',
-  'Decision Criteria':'#D97706',
-  'Goals':            '#7C3AED',
-  'Budget':           '#DC2626',
-  'Authority':        '#0891B2',
-  'Commit':           '#059669',
-  'Decision risk':    '#9F1239',
+  'Pain':'#1C3FAA','Timeline':'#4F8EF7','Value/Metrics':'#16A34A',
+  'Next Steps':'#64748B','Decision Criteria':'#D97706','Goals':'#7C3AED',
+  'Budget':'#DC2626','Authority':'#0891B2','Commit':'#059669','Decision risk':'#9F1239',
 };
 const SIG_NAMES = Object.keys(SIG_COLORS);
 
-// ── Chart defaults ────────────────────────────────────────────────────────────
-Chart.defaults.font.family = '-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
-Chart.defaults.font.size = 12;
-Chart.defaults.color = '#64748B';
+const REP_TRENDS = {"Jon Lewis":{"Pain":[0,2,1,1,0,1,0,0,0,1,1,1,0,0],"Timeline":[0,6,3,14,0,7,0,3,2,8,3,1,0,3],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,10,3,14,1,9,7,11,9,7,6,19,3,7],"Decision Criteria":[0,0,0,0,0,0,0,0,0,0,0,1,0,0],"Goals":[0,0,3,3,0,1,2,1,4,3,3,2,1,2],"Budget":[0,0,0,0,0,2,0,0,0,0,0,1,0,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,1],"Commit":[0,0,0,0,0,0,0,0,1,1,1,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Kevin Duffey":{"Pain":[0,5,1,1,0,0,0,1,0,0,0,0,3,1],"Timeline":[0,6,0,0,3,0,0,3,0,9,3,1,3,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,9,1,5,7,2,2,7,5,5,6,6,7,9],"Decision Criteria":[0,2,2,0,1,3,1,3,2,2,0,0,0,0],"Goals":[0,5,0,1,2,3,0,2,3,2,3,1,2,0],"Budget":[0,1,0,1,2,0,0,1,3,0,0,0,0,1],"Authority":[0,0,0,1,0,0,0,1,4,0,0,0,0,1],"Commit":[0,2,1,0,0,1,1,6,2,1,2,2,1,1],"Decision risk":[0,0,0,1,0,0,0,1,4,0,0,0,0,1]},"Ilayda Esin":{"Pain":[0,1,0,0,0,5,0,0,0,0,0,2,1,0],"Timeline":[0,3,0,3,0,3,0,3,0,0,0,0,0,8],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,4,0,4,1,11,0,4,0,13,3,1,9,4],"Decision Criteria":[0,0,0,0,2,1,1,0,0,0,0,0,2,1],"Goals":[0,1,0,0,3,6,3,1,0,4,1,0,6,1],"Budget":[0,4,0,0,1,0,0,0,0,0,0,1,4,4],"Authority":[0,0,0,0,2,2,0,0,0,1,0,0,1,1],"Commit":[0,2,1,0,2,1,1,0,0,0,0,0,1,0],"Decision risk":[0,0,0,0,1,2,0,0,0,0,0,0,1,0]},"Joshua Eidell":{"Pain":[0,0,1,2,0,0,0,0,0,2,0,0,3,0],"Timeline":[0,1,11,0,0,8,0,8,0,0,0,3,3,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,2,3,3,3,5,0,1,3,5,1,3,8,1],"Decision Criteria":[0,0,1,0,0,2,0,0,1,2,0,0,1,0],"Goals":[0,4,1,4,0,1,0,5,2,3,1,1,3,0],"Budget":[0,0,4,5,1,2,1,2,1,1,0,0,0,0],"Authority":[0,1,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,1,0,3,0,3,0,3,2,2,0,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Della Zhuang":{"Pain":[2,1,2,0,0,0,0,2,0,0,3,0,0,1],"Timeline":[0,4,2,0,2,0,6,4,0,3,0,0,2,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[6,6,5,2,0,3,2,11,0,4,3,1,1,3],"Decision Criteria":[1,4,1,1,0,0,2,0,0,0,2,0,0,1],"Goals":[5,2,1,5,1,2,2,3,0,1,0,0,0,3],"Budget":[0,1,0,0,0,1,0,5,0,0,0,0,0,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[2,0,0,0,0,0,0,0,0,0,0,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Nickolas Thibault":{"Pain":[0,0,0,0,0,1,0,1,1,0,0,0,0,0],"Timeline":[0,0,0,0,0,8,0,0,5,3,0,0,0,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,9,1,7,17,3,1,4,15,5,2,2,2,9],"Decision Criteria":[0,0,0,0,0,0,1,0,2,0,0,0,0,0],"Goals":[0,1,1,5,0,1,0,0,0,2,1,2,1,2],"Budget":[0,1,0,0,0,1,0,0,0,1,0,0,0,1],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,3,0,0,1,0,0,0,0,0,0,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Shannon Rutz":{"Pain":[0,0,3,1,0,0,0,0,2,0,1,0,0,0],"Timeline":[0,3,0,0,0,2,3,0,8,2,4,0,1,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,3,6,2,6,0,5,3,8,0,5,2,0,2],"Decision Criteria":[0,0,0,1,0,0,0,0,0,0,0,0,0,0],"Goals":[0,2,7,5,2,1,3,0,5,0,1,0,1,0],"Budget":[0,0,0,0,0,1,0,0,0,0,0,0,0,0],"Authority":[0,0,1,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,0,0,0,1,0,2,0,1,0,2,0,0,1],"Decision risk":[0,0,1,0,0,0,0,0,0,0,0,0,0,0]},"Alexander Sweetser":{"Pain":[0,0,1,1,0,0,0,0,0,0,0,1,1,0],"Timeline":[0,0,3,0,0,0,0,0,0,0,0,0,0,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[1,2,3,8,5,0,0,1,9,0,5,10,7,2],"Decision Criteria":[0,0,0,0,1,1,0,0,0,0,0,0,0,0],"Goals":[0,0,0,0,2,0,0,1,2,0,2,0,1,1],"Budget":[0,0,0,1,1,0,0,0,1,0,1,1,0,0],"Authority":[0,0,0,0,1,0,0,1,0,0,1,3,0,0],"Commit":[0,0,2,0,1,0,0,0,11,0,1,1,0,1],"Decision risk":[0,0,0,0,1,0,0,1,0,0,1,3,0,0]},"Edris Ibrahim":{"Pain":[0,0,0,1,0,0,0,1,0,0,0,0,1,0],"Timeline":[0,0,0,3,0,0,0,0,4,0,0,0,3,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,2,0,8,2,0,0,4,6,0,5,5,10,5],"Decision Criteria":[0,0,0,0,0,0,0,1,0,0,0,0,2,0],"Goals":[0,1,0,3,1,0,1,0,3,0,1,3,1,3],"Budget":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Authority":[0,1,0,0,1,1,0,2,1,0,1,0,0,0],"Commit":[0,0,0,1,1,0,1,1,4,0,1,0,1,0],"Decision risk":[0,1,0,0,1,1,0,1,0,0,1,0,0,0]},"Brody Rodriguez":{"Pain":[1,0,0,0,2,3,0,0,2,1,0,0,0,0],"Timeline":[0,0,0,0,7,2,2,5,3,4,0,2,2,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,0,0,1,2,0,1,1,3,1,6,5,8,3],"Decision Criteria":[0,0,0,0,1,0,0,1,2,0,0,0,0,1],"Goals":[1,1,1,0,1,2,0,0,2,3,0,0,0,0],"Budget":[0,0,0,0,0,0,0,1,0,0,0,1,1,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,0,0,0,0,1,0,1,3,0,2,5,2,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Kirby Hisler":{"Pain":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Timeline":[0,0,3,0,2,0,0,0,7,0,2,0,0,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,5,5,7,5,1,1,5,11,4,5,2,8,0],"Decision Criteria":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Goals":[0,1,4,1,0,0,0,0,1,0,0,0,1,0],"Budget":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,2,0,0],"Commit":[0,1,0,0,0,0,0,0,1,1,0,1,1,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,2,0,0]},"Cassi Cregar":{"Pain":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Timeline":[0,1,3,1,3,0,0,0,0,0,0,0,0,1],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[4,7,2,8,3,0,1,11,6,4,1,0,2,6],"Decision Criteria":[0,0,1,0,0,0,0,0,0,0,0,0,0,0],"Goals":[1,1,0,2,0,0,0,1,3,0,0,0,0,0],"Budget":[0,0,0,0,0,0,0,0,0,0,0,0,0,2],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,0,0,1,2,0,0,1,1,1,0,0,0,1],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]}};
 
-// ── Chart 1: Depth distribution ───────────────────────────────────────────────
-new Chart(document.getElementById('depthDistChart'), {
-  type: 'bar',
-  data: {
-    labels: STAGE_DEPTH.map(d => d.stage),
-    datasets: [
-      { label: 'Low (0–1)', data: STAGE_DEPTH.map(d => d.low), backgroundColor: '#FECACA', borderRadius: 0 },
-      { label: 'Mid (2–3)', data: STAGE_DEPTH.map(d => d.mid), backgroundColor: '#FED7AA', borderRadius: 0 },
-      { label: 'High (4+)', data: STAGE_DEPTH.map(d => d.high), backgroundColor: '#86EFAC', borderRadius: { topLeft: 4, topRight: 4 } },
-    ],
-  },
-  options: {
-    responsive: true,
-    plugins: { legend: { position: 'top', labels: { boxWidth: 12, padding: 16 } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } } },
-    scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, max: 100, ticks: { callback: v => v+'%' }, grid: { color: '#E2E8F0' } } },
-  }
-});
-
-// ── Chart 2: Depth rate bar ───────────────────────────────────────────────────
-new Chart(document.getElementById('depthRateChart'), {
-  type: 'bar',
-  data: { labels: ['High (4+)','Mid (2–3)','Low (0–1)'], datasets: [{ label: '→ BV rate', data: [18.8,10.9,7.7], backgroundColor: ['#86EFAC','#FED7AA','#FECACA'], borderRadius: 6 }] },
-  options: { indexAxis:'y', responsive: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.raw}%` } } }, scales: { x: { max: 25, ticks: { callback: v => v+'%' }, grid: { color: '#E2E8F0' } }, y: { grid: { display: false } } } }
-});
-
-// ── Chart 3: Signal lift ──────────────────────────────────────────────────────
-new Chart(document.getElementById('signalLiftChart'), {
-  type: 'bar',
-  data: {
-    labels: SIGNALS_CHART.map(s => s.name),
-    datasets: [
-      { label: 'BV rate — present', data: SIGNALS_CHART.map(s => s.bv_present), backgroundColor: '#4F8EF7', borderRadius: { topLeft: 4, topRight: 4 } },
-      { label: 'BV rate — absent',  data: SIGNALS_CHART.map(s => s.bv_absent),  backgroundColor: '#E2E8F0', borderRadius: { topLeft: 4, topRight: 4 } },
-    ]
-  },
-  options: {
-    responsive: true,
-    plugins: { legend: { position: 'top', labels: { boxWidth: 12, padding: 16 } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } } },
-    scales: { x: { grid: { display: false } }, y: { max: 28, ticks: { callback: v => v+'%' }, grid: { color: '#E2E8F0' } } }
-  }
-});
-
-// ── Deal table ────────────────────────────────────────────────────────────────
-function dealHealth(d) {
-  if (d.calls === 0) return 'red';
-  if (d.pain === 0)  return 'amber';
-  return 'green';
-}
-function fmtArr(v) { if (!v) return '<span style="color:var(--muted)">—</span>'; return '$' + (v >= 1000000 ? (v/1000000).toFixed(2)+'M' : Math.round(v/1000)+'K'); }
-function covDot(v, cls) { return `<span class="cov-pip ${v > 0 ? cls : 'off'}" title="${v}"></span>`; }
-
-const dtbody = document.getElementById('dealTable');
-Q2_DEALS.forEach(d => {
-  const h = dealHealth(d);
-  const divider = d.opp === Q2_DEALS.find(x => !x.key).opp ? '<tr style="height:4px;background:#F8FAFC"><td colspan="12" style="border-top:2px dashed var(--border);padding:0"></td></tr>' : '';
-  dtbody.innerHTML += divider + `
-  <tr>
-    <td><span class="health health-${h}" title="${h === 'red' ? 'No Chorus coverage' : h === 'amber' ? 'No pain captured' : 'Good coverage'}"></span></td>
-    <td>
-      ${d.key ? '<span class="badge-key">Key Deal</span> ' : ''}
-      <strong style="font-size:0.82rem">${d.opp}</strong>
-    </td>
-    <td style="font-size:0.78rem;color:var(--muted)">${d.ae}</td>
-    <td style="font-size:0.78rem">${d.stage}</td>
-    <td class="r" style="font-weight:700">${fmtArr(d.arr)}</td>
-    <td class="c">${d.calls || '—'}</td>
-    <td class="c">${d.disc || (d.calls ? '0' : '—')}</td>
-    <td class="c">${covDot(d.pain, 'on-pain')}</td>
-    <td class="c">${covDot(d.timeline, 'on-timeline')}</td>
-    <td class="c">${covDot(d.value, 'on-value')}</td>
-    <td style="font-size:0.78rem;color:var(--muted)">${d.close}</td>
-    <td>${d.disc_done ? '<span class="badge-complete">Disc. ✓</span>' : ''}</td>
-  </tr>`;
-});
-
-// ── Rep leaderboard table ─────────────────────────────────────────────────────
-function heatCls(v, t) { return v === 0 ? 'heat-0' : v >= t ? 'heat-2' : 'heat-1'; }
-const tbody = document.getElementById('repTable');
-REPS.forEach(r => {
-  const avgCls = r.avg >= 3 ? 'lift-pos' : r.avg >= 2.5 ? 'lift-neu' : '';
-  tbody.innerHTML += `<tr>
-    <td><strong>${r.name}</strong></td>
-    <td class="r">${r.calls}</td>
-    <td class="r">${r.signals}</td>
-    <td class="r"><span class="lift ${avgCls}">${r.avg}</span></td>
-    <td class="c ${heatCls(r.pain, 6)}">${r.pain || '—'}</td>
-    <td class="c ${heatCls(r.timeline, 8)}">${r.timeline || '—'}</td>
-    <td class="c heat-0">—</td>
-    <td class="c ${heatCls(r.dc, 5)}">${r.dc || '—'}</td>
-    <td class="c ${heatCls(r.budget, 6)}">${r.budget || '—'}</td>
-    <td class="c ${heatCls(r.auth, 5)}">${r.auth || '—'}</td>
-  </tr>`;
-});
-
-// ── Rep trend chart + toggles ─────────────────────────────────────────────────
-const repNames = Object.keys(REP_TRENDS);
-const repSelect = document.getElementById('repSelect');
-repNames.forEach(r => { const o = document.createElement('option'); o.value = r; o.textContent = r; repSelect.appendChild(o); });
-
-// Active signal set (all on by default)
+// ═══════════════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════════════
+let currentQuarter = 'Q2';
 const activeSigs = new Set(SIG_NAMES);
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// STATIC CHARTS (sections 1–3, not quarter-filtered)
+// ═══════════════════════════════════════════════════════════════════════════════
+Chart.defaults.font.family='-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+Chart.defaults.font.size=12; Chart.defaults.color='#64748B';
+
+new Chart(document.getElementById('depthDistChart'),{type:'bar',data:{labels:STAGE_DEPTH.map(d=>d.stage),datasets:[{label:'Low (0–1)',data:STAGE_DEPTH.map(d=>d.low),backgroundColor:'#FECACA',borderRadius:0},{label:'Mid (2–3)',data:STAGE_DEPTH.map(d=>d.mid),backgroundColor:'#FED7AA',borderRadius:0},{label:'High (4+)',data:STAGE_DEPTH.map(d=>d.high),backgroundColor:'#86EFAC',borderRadius:{topLeft:4,topRight:4}}]},options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:12,padding:16}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw}%`}}},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'},grid:{color:'#E2E8F0'}}}}});
+
+new Chart(document.getElementById('depthRateChart'),{type:'bar',data:{labels:['High (4+)','Mid (2–3)','Low (0–1)'],datasets:[{label:'→ BV rate',data:[18.8,10.9,7.7],backgroundColor:['#86EFAC','#FED7AA','#FECACA'],borderRadius:6}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.raw}%`}}},scales:{x:{max:25,ticks:{callback:v=>v+'%'},grid:{color:'#E2E8F0'}},y:{grid:{display:false}}}}});
+
+new Chart(document.getElementById('signalLiftChart'),{type:'bar',data:{labels:SIGNALS_CHART.map(s=>s.name),datasets:[{label:'BV rate — present',data:SIGNALS_CHART.map(s=>s.bv_present),backgroundColor:'#4F8EF7',borderRadius:{topLeft:4,topRight:4}},{label:'BV rate — absent',data:SIGNALS_CHART.map(s=>s.bv_absent),backgroundColor:'#E2E8F0',borderRadius:{topLeft:4,topRight:4}}]},options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:12,padding:16}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw}%`}}},scales:{x:{grid:{display:false}},y:{max:28,ticks:{callback:v=>v+'%'},grid:{color:'#E2E8F0'}}}}});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// OVERALL TREND CHART (Section 6, quarter-filtered)
+// ═══════════════════════════════════════════════════════════════════════════════
+const trendChart = new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:[],datasets:[{label:'Discovery signals',data:[],borderColor:'#1C3FAA',backgroundColor:'rgba(28,63,170,0.08)',fill:true,tension:0.3,pointRadius:4,pointBackgroundColor:'#1C3FAA',yAxisID:'y'},{label:'Active reps',data:[],borderColor:'#4F8EF7',backgroundColor:'transparent',borderDash:[5,3],tension:0.3,pointRadius:3,pointBackgroundColor:'#4F8EF7',yAxisID:'y2'}]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{boxWidth:12,padding:16}}},scales:{x:{grid:{display:false}},y:{position:'left',min:0,title:{display:true,text:'Signals'},grid:{color:'#E2E8F0'}},y2:{position:'right',min:0,max:40,title:{display:true,text:'Active reps'},grid:{display:false}}}}});
+
+function updateTrendChart(q) {
+  const [s,e] = QUARTER_WEEK_RANGES[q];
+  trendChart.data.labels = ALL_WEEKS.slice(s,e);
+  trendChart.data.datasets[0].data = ALL_WEEKLY_SIGNALS.slice(s,e);
+  trendChart.data.datasets[1].data = ALL_WEEKLY_REPS.slice(s,e);
+  trendChart.update();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DEAL TABLE (Section 4)
+// ═══════════════════════════════════════════════════════════════════════════════
+function fmtArr(v){if(!v)return '<span style="color:var(--muted)">—</span>';return'$'+(v>=1000000?(v/1000000).toFixed(2)+'M':Math.round(v/1000)+'K')}
+function pip(v,cls){return`<span class="cov-pip ${v>0?cls:'off'}" title="${v}"></span>`}
+function healthCls(d){if(d.calls===0)return'red';if(d.pain===0)return'amber';return'green'}
+function resultBadge(won){if(won===null)return'<span class="badge-open">Open</span>';if(won)return'<span class="badge-won">Won ✓</span>';return'<span class="badge-lost">Lost</span>'}
+
+function renderDealTable(q) {
+  const deals = DEALS[q];
+  const tbody = document.getElementById('dealTable');
+  tbody.innerHTML = '';
+  let keyDone = false;
+  deals.forEach(d => {
+    const isFirstNonKey = !keyDone && !d.key && deals.some(x=>x.key);
+    if (isFirstNonKey && deals.some(x=>x.key)) { keyDone = true; tbody.innerHTML += '<tr><td colspan="12" style="padding:0;border-top:2px dashed var(--border);background:#F8FAFC;height:4px"></td></tr>'; }
+    tbody.innerHTML += `<tr>
+      <td><span class="health health-${healthCls(d)}"></span></td>
+      <td>${d.key?'<span class="badge-key">Key</span> ':''}<strong style="font-size:0.82rem">${d.opp}</strong></td>
+      <td style="font-size:0.78rem;color:var(--muted)">${d.ae}</td>
+      <td style="font-size:0.78rem">${d.stage}</td>
+      <td class="r" style="font-weight:700">${fmtArr(d.arr)}</td>
+      <td class="c">${d.calls||'—'}</td>
+      <td class="c">${d.disc||(d.calls?'0':'—')}</td>
+      <td class="c">${pip(d.pain,'on-pain')}</td>
+      <td class="c">${pip(d.timeline,'on-timeline')}</td>
+      <td class="c">${pip(d.value,'on-value')}</td>
+      <td style="font-size:0.78rem;color:var(--muted)">${d.close}</td>
+      <td style="white-space:nowrap">${resultBadge(d.won)}${d.disc_done?' <span class="badge-disc">Disc✓</span>':''}</td>
+    </tr>`;
+  });
+  // Blind spot insight
+  const blind = deals.filter(d=>d.calls===0&&d.arr>100000);
+  const insightEl = document.getElementById('dealInsight');
+  if(blind.length>0){
+    insightEl.innerHTML=`<div class="insight"><strong>Blind spots (${blind.length} deals, £0 Chorus calls, ARR > $100K):</strong> ${blind.map(d=>`${d.opp} ($${Math.round(d.arr/1000)}K)`).join(' · ')}</div>`;
+  } else {
+    insightEl.innerHTML='';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// REP LEADERBOARD (Section 5)
+// ═══════════════════════════════════════════════════════════════════════════════
+function heatCls(v,t){return v===0?'heat-0':v>=t?'heat-2':'heat-1'}
+
+function renderRepTable(q) {
+  const reps = REPS[q];
+  const tbody = document.getElementById('repTable');
+  tbody.innerHTML='';
+  reps.forEach(r=>{
+    const avgCls=r.avg>=3?'lift-pos':r.avg>=2.5?'lift-neu':'';
+    tbody.innerHTML+=`<tr>
+      <td><strong>${r.name}</strong></td>
+      <td class="r">${r.calls}</td><td class="r">${r.signals}</td>
+      <td class="r"><span class="lift ${avgCls}">${r.avg}</span></td>
+      <td class="c ${heatCls(r.pain,6)}">${r.pain||'—'}</td>
+      <td class="c ${heatCls(r.timeline,8)}">${r.timeline||'—'}</td>
+      <td class="c ${heatCls(r.dc,5)}">${r.dc||'—'}</td>
+      <td class="c ${heatCls(r.budget,6)}">${r.budget||'—'}</td>
+      <td class="c ${heatCls(r.auth,5)}">${r.auth||'—'}</td>
+    </tr>`;
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// REP TREND CHART (Section 5, quarter + signal filtered)
+// ═══════════════════════════════════════════════════════════════════════════════
+// Populate rep selector
+const repSelect = document.getElementById('repSelect');
+Object.keys(REP_TRENDS).forEach(r=>{const o=document.createElement('option');o.value=r;o.textContent=r;repSelect.appendChild(o);});
 
 // Build toggle buttons
 const togglesEl = document.getElementById('sigToggles');
-SIG_NAMES.forEach(sig => {
-  const btn = document.createElement('button');
-  btn.className = 'toggle-btn active';
-  btn.textContent = sig;
-  btn.dataset.sig = sig;
-  btn.style.borderColor = SIG_COLORS[sig];
-  btn.addEventListener('click', () => {
-    if (activeSigs.has(sig)) { activeSigs.delete(sig); btn.className = 'toggle-btn'; btn.style.background = ''; btn.style.color = ''; }
-    else { activeSigs.add(sig); btn.className = 'toggle-btn active'; btn.style.background = SIG_COLORS[sig]; btn.style.color = '#fff'; }
+SIG_NAMES.forEach(sig=>{
+  const btn=document.createElement('button');
+  btn.className='toggle-btn active'; btn.textContent=sig; btn.dataset.sig=sig;
+  btn.style.background=SIG_COLORS[sig]; btn.style.color='#fff'; btn.style.borderColor=SIG_COLORS[sig];
+  btn.addEventListener('click',()=>{
+    if(activeSigs.has(sig)){activeSigs.delete(sig);btn.className='toggle-btn';btn.style.background='';btn.style.color='';btn.style.borderColor=SIG_COLORS[sig];}
+    else{activeSigs.add(sig);btn.className='toggle-btn active';btn.style.background=SIG_COLORS[sig];btn.style.color='#fff';}
     updateRepChart();
   });
-  btn.style.background = SIG_COLORS[sig];
-  btn.style.color = '#fff';
   togglesEl.appendChild(btn);
 });
 
-function getRepData(repKey) {
-  if (repKey === '__all__') {
-    const combined = {};
-    SIG_NAMES.forEach(sig => { combined[sig] = WEEKS.map((_, i) => Object.values(REP_TRENDS).reduce((s, r) => s + (r[sig]?.[i] || 0), 0)); });
-    return combined;
+function getRepTrendData(repKey, q) {
+  const [s,e]=QUARTER_WEEK_RANGES[q];
+  const weeks=ALL_WEEKS.slice(s,e);
+  let data;
+  if(repKey==='__all__'){
+    data={};
+    SIG_NAMES.forEach(sig=>{data[sig]=weeks.map((_,i)=>Object.values(REP_TRENDS).reduce((sum,r)=>sum+(r[sig]?.[s+i]||0),0));});
+  } else {
+    const raw=REP_TRENDS[repKey]||{};
+    data={};
+    SIG_NAMES.forEach(sig=>{data[sig]=(raw[sig]||[]).slice(s,e);});
   }
-  return REP_TRENDS[repKey] || {};
+  return {weeks,data};
 }
 
-function buildDatasets(repKey) {
-  const data = getRepData(repKey);
-  return SIG_NAMES.filter(s => activeSigs.has(s)).map(sig => ({
-    label: sig,
-    data: data[sig] || WEEKS.map(() => 0),
-    borderColor: SIG_COLORS[sig],
-    backgroundColor: SIG_COLORS[sig] + '22',
-    fill: false,
-    tension: 0.3,
-    pointRadius: 3,
-    pointBackgroundColor: SIG_COLORS[sig],
+function buildRepDatasets(repKey, q) {
+  const {weeks,data}=getRepTrendData(repKey,q);
+  return SIG_NAMES.filter(s=>activeSigs.has(s)).map(sig=>({
+    label:sig, data:data[sig]||weeks.map(()=>0),
+    borderColor:SIG_COLORS[sig], backgroundColor:SIG_COLORS[sig]+'22',
+    fill:false, tension:0.3, pointRadius:3, pointBackgroundColor:SIG_COLORS[sig],
   }));
 }
 
-const repTrendChart = new Chart(document.getElementById('repTrendChart'), {
-  type: 'line',
-  data: { labels: WEEKS, datasets: buildDatasets('__all__') },
-  options: {
-    responsive: true,
-    interaction: { mode: 'index', intersect: false },
-    plugins: { legend: { position: 'top', labels: { boxWidth: 10, padding: 12, font: { size: 11 } } } },
-    scales: {
-      x: { grid: { display: false } },
-      y: { min: 0, grid: { color: '#E2E8F0' }, title: { display: true, text: 'Signal count' } },
-    }
-  }
+const repTrendChart=new Chart(document.getElementById('repTrendChart'),{
+  type:'line',
+  data:{labels:[],datasets:[]},
+  options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{boxWidth:10,padding:12,font:{size:11}}}},scales:{x:{grid:{display:false}},y:{min:0,grid:{color:'#E2E8F0'},title:{display:true,text:'Signal count'}}}}
 });
 
-function updateRepChart() {
-  repTrendChart.data.datasets = buildDatasets(repSelect.value);
+function updateRepChart(){
+  const {weeks}=getRepTrendData(repSelect.value,currentQuarter);
+  repTrendChart.data.labels=weeks;
+  repTrendChart.data.datasets=buildRepDatasets(repSelect.value,currentQuarter);
   repTrendChart.update();
 }
-repSelect.addEventListener('change', updateRepChart);
+repSelect.addEventListener('change',updateRepChart);
 
-// ── Chart 4: Overall weekly trend ─────────────────────────────────────────────
-new Chart(document.getElementById('trendChart'), {
-  type: 'line',
-  data: {
-    labels: WEEKLY.map(w => w.week),
-    datasets: [
-      { label: 'Discovery signals', data: WEEKLY.map(w => w.signals), borderColor: '#1C3FAA', backgroundColor: 'rgba(28,63,170,0.08)', fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#1C3FAA', yAxisID: 'y' },
-      { label: 'Active reps',       data: WEEKLY.map(w => w.reps),    borderColor: '#4F8EF7', backgroundColor: 'transparent', borderDash: [5,3], tension: 0.3, pointRadius: 3, pointBackgroundColor: '#4F8EF7', yAxisID: 'y2' },
-    ]
-  },
-  options: {
-    responsive: true,
-    interaction: { mode: 'index', intersect: false },
-    plugins: { legend: { position: 'top', labels: { boxWidth: 12, padding: 16 } } },
-    scales: {
-      x:  { grid: { display: false } },
-      y:  { position: 'left',  min: 0, title: { display: true, text: 'Signals' }, grid: { color: '#E2E8F0' } },
-      y2: { position: 'right', min: 0, max: 40, title: { display: true, text: 'Active reps' }, grid: { display: false } },
-    }
-  }
-});
+// ═══════════════════════════════════════════════════════════════════════════════
+// QUARTER SWITCHER
+// ═══════════════════════════════════════════════════════════════════════════════
+const QUARTER_LABELS = {Q1:'Q1 2026 (Jan–Mar)', Q2:'Q2 2026 (Apr–Jun)', ALL:'Full year 2026'};
+
+function setQuarter(q){
+  currentQuarter=q;
+  document.querySelectorAll('.qbtn').forEach(b=>b.classList.toggle('active',b.dataset.q===q));
+  document.getElementById('qPipelineLabel').textContent='— '+QUARTER_LABELS[q];
+  document.getElementById('qRepLabel').textContent='— '+QUARTER_LABELS[q];
+  renderDealTable(q);
+  renderRepTable(q);
+  updateRepChart();
+  updateTrendChart(q);
+}
+
+// ── Initial render ────────────────────────────────────────────────────────────
+setQuarter('Q2');
 </script>
 </body>
 </html>
