@@ -35,196 +35,149 @@
 
     /* ── Header ── */
     .page-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 8px;
-      padding-bottom: 20px;
-      border-bottom: 3px solid var(--brand);
+      display: flex; align-items: flex-start; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px; margin-bottom: 8px;
+      padding-bottom: 20px; border-bottom: 3px solid var(--brand);
     }
     .page-header h1 { font-size: 1.75rem; font-weight: 800; color: var(--brand); line-height: 1.2; }
-    .page-header p { font-size: 0.85rem; color: var(--muted); margin-top: 4px; max-width: 540px; }
+    .page-header p  { font-size: 0.85rem; color: var(--muted); margin-top: 4px; max-width: 540px; }
     .meta { font-size: 0.75rem; color: var(--muted); text-align: right; line-height: 1.8; }
     .meta strong { color: var(--text); }
 
     /* ── KPI chips ── */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin: 24px 0 36px;
-    }
-    @media(max-width:680px) { .kpi-grid { grid-template-columns: repeat(2,1fr); } }
-    .kpi-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      text-align: center;
-    }
+    .kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 24px 0 36px; }
+    @media(max-width:680px){ .kpi-grid { grid-template-columns: repeat(2,1fr); } }
+    .kpi-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; text-align: center; }
     .kpi-card .kpi-value { font-size: 2rem; font-weight: 800; color: var(--brand); line-height: 1; }
     .kpi-card .kpi-label { font-size: 0.75rem; color: var(--muted); margin-top: 6px; line-height: 1.4; }
 
-    /* ── Section headings ── */
+    /* ── Sections ── */
     .section { margin-bottom: 40px; }
     .section-heading {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--brand);
-      margin-bottom: 14px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: 1.05rem; font-weight: 700; color: var(--brand);
+      margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
     }
     .section-heading .n {
-      background: var(--brand);
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: 700;
-      width: 20px; height: 20px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      background: var(--brand); color: #fff; font-size: 0.7rem; font-weight: 700;
+      width: 20px; height: 20px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .section-sub {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 16px;
-      max-width: 780px;
-    }
+    .section-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 16px; max-width: 780px; }
 
-    /* ── Insight callout ── */
+    /* ── Insight ── */
     .insight {
-      background: #EFF6FF;
-      border-left: 4px solid var(--accent);
+      background: #EFF6FF; border-left: 4px solid var(--accent);
       border-radius: 0 var(--radius) var(--radius) 0;
-      padding: 12px 16px;
-      margin: 16px 0;
-      font-size: 0.84rem;
-      color: var(--text);
+      padding: 12px 16px; margin: 16px 0; font-size: 0.84rem;
     }
     .insight strong { color: var(--brand); }
 
     /* ── Panel / table ── */
-    .panel {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
+    .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
     table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
     thead th {
       font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
       letter-spacing: .06em; color: var(--muted);
-      padding: 11px 14px; text-align: left;
-      background: #F8FAFC;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
+      padding: 11px 14px; text-align: left; background: #F8FAFC;
+      border-bottom: 1px solid var(--border); white-space: nowrap;
     }
     th.r, td.r { text-align: right; }
     th.c, td.c { text-align: center; }
     tbody tr { border-top: 1px solid var(--border); transition: background .1s; }
     tbody tr:first-child { border-top: none; }
     tbody tr:hover { background: #F8FAFC; }
-    td { padding: 11px 14px; vertical-align: middle; }
+    td { padding: 10px 14px; vertical-align: middle; }
     td strong { color: var(--brand); }
 
-    /* ── Lift badges ── */
+    /* ── Badges ── */
     .lift { display: inline-block; padding: 2px 8px; border-radius: 99px; font-weight: 700; font-size: 0.78rem; white-space: nowrap; }
     .lift-pos { background: var(--green-bg); color: var(--green); }
     .lift-neg { background: var(--red-bg); color: var(--red); }
     .lift-neu { background: #F1F5F9; color: var(--muted); }
-
-    /* ── Speed badge ── */
     .speed { font-size: 0.78rem; font-weight: 600; white-space: nowrap; }
     .speed-fast { color: var(--green); }
     .speed-slow { color: var(--red); }
     .speed-neu  { color: var(--muted); }
+    .badge-key  { display: inline-block; background: #FEF3C7; color: #92400E; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 2px 7px; border-radius: 99px; }
+    .badge-complete { background: var(--green-bg); color: var(--green); font-size: 0.65rem; font-weight: 700; padding: 2px 7px; border-radius: 99px; }
 
-    /* ── Heat cells for rep table ── */
+    /* ── Health indicator ── */
+    .health { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .health-green  { background: var(--green); }
+    .health-amber  { background: var(--amber); }
+    .health-red    { background: var(--red); }
+
+    /* ── Deal coverage bar ── */
+    .cov-bar { display: flex; gap: 3px; align-items: center; }
+    .cov-pip { width: 8px; height: 8px; border-radius: 2px; }
+    .cov-pip.on-pain     { background: #1C3FAA; }
+    .cov-pip.on-timeline { background: #4F8EF7; }
+    .cov-pip.on-value    { background: #86EFAC; }
+    .cov-pip.off         { background: #E2E8F0; }
+
+    /* ── Heat cells ── */
     .heat-0 { color: var(--muted); }
     .heat-1 { color: var(--amber); font-weight: 600; }
     .heat-2 { color: var(--green); font-weight: 700; }
 
-    /* ── Chart container ── */
-    .chart-wrap {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 16px;
+    /* ── Chart ── */
+    .chart-wrap { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
+    .chart-title { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
+
+    /* ── Toggle controls ── */
+    .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; }
+    .controls label { font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-right: 4px; }
+    .toggle-btn {
+      padding: 4px 12px; border-radius: 99px; border: 1.5px solid var(--border);
+      font-size: 0.75rem; font-weight: 600; cursor: pointer;
+      background: var(--card-bg); color: var(--muted); transition: all .15s;
     }
-    .chart-wrap canvas { display: block; }
-    .chart-title {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      margin-bottom: 14px;
+    .toggle-btn.active { border-color: var(--brand); background: var(--brand); color: #fff; }
+    .toggle-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+    select.rep-select {
+      padding: 5px 10px; border-radius: var(--radius); border: 1.5px solid var(--border);
+      font-size: 0.8rem; font-family: inherit; background: var(--card-bg);
+      color: var(--text); cursor: pointer;
     }
 
-    /* ── Two-col layout ── */
+    /* ── Two-col ── */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    @media(max-width:680px) { .two-col { grid-template-columns: 1fr; } }
+    @media(max-width:680px){ .two-col { grid-template-columns: 1fr; } }
 
-    /* ── Methodology box ── */
+    /* ── Method box ── */
     .method-box {
-      background: #F8FAFC;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 20px;
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-bottom: 36px;
-      line-height: 1.7;
+      background: #F8FAFC; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px 20px; font-size: 0.8rem; color: var(--muted); margin-bottom: 36px; line-height: 1.7;
     }
     .method-box strong { color: var(--text); }
 
     /* ── Actions ── */
     .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-    @media(max-width:680px) { .action-grid { grid-template-columns: 1fr; } }
-    .action-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-    }
+    @media(max-width:680px){ .action-grid { grid-template-columns: 1fr; } }
+    .action-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; }
     .action-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--brand); margin-bottom: 10px; }
     .action-card ul { list-style: none; padding: 0; }
-    .action-card li { font-size: 0.82rem; color: var(--text); padding: 5px 0; border-top: 1px solid var(--border); }
+    .action-card li { font-size: 0.82rem; padding: 5px 0; border-top: 1px solid var(--border); }
     .action-card li:first-child { border-top: none; padding-top: 0; }
     .action-card li::before { content: "→ "; color: var(--accent); font-weight: 700; }
 
-    /* ── Caveats ── */
     .caveat-list { list-style: none; padding: 0; }
     .caveat-list li { font-size: 0.8rem; color: var(--muted); padding: 4px 0 4px 16px; position: relative; }
     .caveat-list li::before { content: "•"; position: absolute; left: 4px; color: var(--border); }
 
-    footer {
-      margin-top: 48px;
-      font-size: 0.73rem;
-      color: var(--muted);
-      text-align: center;
-    }
     .divider-row td { background: #F8FAFC; font-size: 0.7rem; color: var(--muted); font-style: italic; padding: 6px 14px; border-top: 2px dashed var(--border) !important; }
+
+    footer { margin-top: 48px; font-size: 0.73rem; color: var(--muted); text-align: center; }
   </style>
 </head>
 <body>
 <div class="container">
 
-  <!-- ── Header ── -->
   <header class="page-header">
     <div>
       <h1>Discovery Effectiveness Report</h1>
-      <p>How the quality of early-stage discovery relates to deal progression and velocity — evidence from recorded sales calls</p>
+      <p>How discovery quality in Qualify relates to deal progression rate and velocity — evidence from recorded sales calls</p>
     </div>
     <div class="meta">
       <strong>Ataccama Sales Enablement</strong><br/>
@@ -233,32 +186,18 @@
     </div>
   </header>
 
-  <!-- ── KPI chips ── -->
   <div class="kpi-grid">
-    <div class="kpi-card">
-      <div class="kpi-value">164</div>
-      <div class="kpi-label">Qualify-stage deals in core cohort</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-value">2.4×</div>
-      <div class="kpi-label">Progression rate: deep vs. shallow discovery</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-value">+14.4pp</div>
-      <div class="kpi-label">Pain — top discovery driver to Build Value</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-value">24 days</div>
-      <div class="kpi-label">Faster to Build Value when Pain is captured</div>
-    </div>
+    <div class="kpi-card"><div class="kpi-value">164</div><div class="kpi-label">Qualify-stage deals in core cohort</div></div>
+    <div class="kpi-card"><div class="kpi-value">2.4×</div><div class="kpi-label">Progression rate: deep vs. shallow discovery</div></div>
+    <div class="kpi-card"><div class="kpi-value">+14.4pp</div><div class="kpi-label">Pain — top discovery driver to Build Value</div></div>
+    <div class="kpi-card"><div class="kpi-value">24 days</div><div class="kpi-label">Faster to Build Value when Pain is captured</div></div>
   </div>
 
-  <!-- ── Methodology ── -->
   <div class="method-box">
-    <strong>How we measured.</strong> Every attended, recorded sales call of 10+ minutes tagged with at least one discovery moment in Chorus was included. Discovery depth is the count of distinct dimensions covered per call — Pain, Goals, Value/Metrics, Decision Criteria, Authority, Budget, Timeline, Next Steps. Progression is measured from Salesforce stage entry dates (Qualify → Build Value). Speed is median days between stage transitions. Win/loss is not yet measurable: the cohort is too young against a long sales cycle — <strong>Build Value progression is the working outcome metric</strong>.
+    <strong>How we measured.</strong> Every attended, recorded sales call of 10+ minutes tagged with at least one discovery moment in Chorus was included. Discovery depth is the count of distinct dimensions covered — Pain, Goals, Value/Metrics, Decision Criteria, Authority, Budget, Timeline, Next Steps. Progression is measured from Salesforce stage entry dates. Speed is median days between transitions. Win/loss is not yet measurable: the cohort is too young — <strong>Build Value progression is the working outcome metric</strong>.
   </div>
 
-  <!-- ── Section 1: Depth Distribution ── -->
+  <!-- ── Section 1 ── -->
   <div class="section">
     <h2 class="section-heading"><span class="n">1</span> Discovery is shallow — and evenly shallow — across the funnel</h2>
     <p class="section-sub">Scoring every substantive call by how many discovery dimensions it covers reveals a strikingly flat, shallow distribution at every stage. Discovery is not being front-loaded in Qualify where it would matter most.</p>
@@ -266,50 +205,21 @@
       <div class="chart-title">Share of calls by discovery depth band, per stage</div>
       <canvas id="depthDistChart" height="100"></canvas>
     </div>
-    <div class="insight">
-      <strong>Key finding:</strong> Roughly 60% of substantive calls at every stage touch only 0–1 discovery dimensions. Qualify calls are no deeper than late-stage Negotiate calls — the window for impactful discovery is being missed.
-    </div>
+    <div class="insight"><strong>Key finding:</strong> Roughly 60% of substantive calls at every stage touch only 0–1 discovery dimensions. Qualify calls are no deeper than late-stage Negotiate calls — the window for impactful discovery is being missed.</div>
   </div>
 
-  <!-- ── Section 2: Depth → Progression + Speed ── -->
+  <!-- ── Section 2 ── -->
   <div class="section">
     <h2 class="section-heading"><span class="n">2</span> Discovery depth in Qualify predicts both progression rate and speed</h2>
-    <p class="section-sub">Banding the 164-deal cohort by Qualify depth shows a clear gradient. Deep-discovery deals advance to Build Value at 2.4× the rate of shallow ones. The speed story is more nuanced: deals with broad discovery take slightly longer to reach BV but carry meaningfully further into the funnel.</p>
-
+    <p class="section-sub">Banding the 164-deal cohort by Qualify depth shows a clear gradient. Deep-discovery deals advance to Build Value at 2.4× the rate of shallow ones. The speed story is more nuanced.</p>
     <div class="two-col">
       <div class="panel">
         <table>
-          <thead>
-            <tr>
-              <th>Qualify depth</th>
-              <th class="r">Deals</th>
-              <th class="r">→ Build Value</th>
-              <th class="r">Median days Q→BV</th>
-              <th class="r">Median days Q→Close</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Qualify depth</th><th class="r">Deals</th><th class="r">→ Build Value</th><th class="r">Median days Q→BV</th><th class="r">Median days Q→Close</th></tr></thead>
           <tbody>
-            <tr>
-              <td><strong>High (4+ dims)</strong></td>
-              <td class="r">96</td>
-              <td class="r"><span class="lift lift-pos">18.8%</span></td>
-              <td class="r">68 days</td>
-              <td class="r">109 days</td>
-            </tr>
-            <tr>
-              <td>Mid (2–3 dims)</td>
-              <td class="r">55</td>
-              <td class="r"><span class="lift lift-neu">10.9%</span></td>
-              <td class="r">86 days</td>
-              <td class="r">133 days</td>
-            </tr>
-            <tr>
-              <td>Low (0–1 dims)</td>
-              <td class="r">13</td>
-              <td class="r"><span class="lift lift-neg">7.7%</span></td>
-              <td class="r">58 days</td>
-              <td class="r">86 days</td>
-            </tr>
+            <tr><td><strong>High (4+ dims)</strong></td><td class="r">96</td><td class="r"><span class="lift lift-pos">18.8%</span></td><td class="r">68 days</td><td class="r">109 days</td></tr>
+            <tr><td>Mid (2–3 dims)</td><td class="r">55</td><td class="r"><span class="lift lift-neu">10.9%</span></td><td class="r">86 days</td><td class="r">133 days</td></tr>
+            <tr><td>Low (0–1 dims)</td><td class="r">13</td><td class="r"><span class="lift lift-neg">7.7%</span></td><td class="r">58 days</td><td class="r">86 days</td></tr>
           </tbody>
         </table>
       </div>
@@ -318,163 +228,110 @@
         <canvas id="depthRateChart" height="160"></canvas>
       </div>
     </div>
-
-    <div class="insight">
-      <strong>Speed note:</strong> Low-depth deals that do advance reach BV fastest (58 days) — these are simpler, transactional engagements. High-depth deals take 68 days to BV but travel further (109 days to close vs. 86). Mid-depth is the slowest to BV at 86 days — consistent with deals that got partially worked but stalled.
-    </div>
+    <div class="insight"><strong>Speed note:</strong> Low-depth deals that do advance reach BV fastest (58 days) — simpler, transactional engagements. High-depth deals take 68 days to BV but travel further (109 days to close vs. 86). Mid-depth is the slowest at 86 days — consistent with partially-worked, stalled deals.</div>
   </div>
 
-  <!-- ── Section 3: Signal Analysis ── -->
+  <!-- ── Section 3 ── -->
   <div class="section">
     <h2 class="section-heading"><span class="n">3</span> Which discovery dimensions drive progression — and which slow it down</h2>
-    <p class="section-sub">Splitting the cohort by whether each dimension was covered in Qualify isolates what matters. Pain, Value, and Next Steps lift progression most. Budget and Authority show flat-to-negative association — and they also make deals measurably slower. Decision Criteria adds 21 days with no progression benefit.</p>
-
+    <p class="section-sub">Splitting the cohort by whether each dimension was covered in Qualify isolates what matters. Pain, Value, and Next Steps lift progression. Budget and Authority show flat-to-negative association — and they also make deals measurably slower.</p>
     <div class="panel">
       <table>
-        <thead>
-          <tr>
-            <th>Discovery dimension</th>
-            <th class="r">% of cohort</th>
-            <th class="r">→ BV if covered</th>
-            <th class="r">→ BV if not</th>
-            <th class="c">Lift</th>
-            <th class="r">Median days→BV <small>(covered)</small></th>
-            <th class="c">Speed delta</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Discovery dimension</th><th class="r">% of cohort</th><th class="r">→ BV if covered</th><th class="r">→ BV if not</th><th class="c">Lift</th><th class="r">Median days→BV <small>(covered)</small></th><th class="c">Speed delta</th></tr></thead>
         <tbody>
-          <tr>
-            <td><strong>Pain</strong></td>
-            <td class="r">56%</td>
-            <td class="r">21.1%</td>
-            <td class="r">6.7%</td>
-            <td class="c"><span class="lift lift-pos">+14.4pp</span></td>
-            <td class="r">68 days</td>
-            <td class="c"><span class="speed speed-fast">▲ 24 days faster</span></td>
-          </tr>
-          <tr>
-            <td><strong>Value / Metrics</strong></td>
-            <td class="r">61%</td>
-            <td class="r">18.3%</td>
-            <td class="r">9.1%</td>
-            <td class="c"><span class="lift lift-pos">+9.2pp</span></td>
-            <td class="r">70 days</td>
-            <td class="c"><span class="speed speed-neu">neutral</span></td>
-          </tr>
-          <tr>
-            <td><strong>Next Steps</strong></td>
-            <td class="r">84%</td>
-            <td class="r">16.1%</td>
-            <td class="r">7.4%</td>
-            <td class="c"><span class="lift lift-pos">+8.7pp</span></td>
-            <td class="r">70 days</td>
-            <td class="c"><span class="speed speed-slow">▼ 10 days slower</span></td>
-          </tr>
-          <tr>
-            <td><strong>Timeline</strong></td>
-            <td class="r">49%</td>
-            <td class="r">17.9%</td>
-            <td class="r">11.6%</td>
-            <td class="c"><span class="lift lift-pos">+6.3pp</span></td>
-            <td class="r">71 days</td>
-            <td class="c"><span class="speed speed-slow">▼ 7 days slower</span></td>
-          </tr>
-          <tr class="divider-row">
-            <td colspan="7">Dimensions below this line are flat-to-negative on progression</td>
-          </tr>
-          <tr>
-            <td>Decision Criteria</td>
-            <td class="r">25%</td>
-            <td class="r">14.3%</td>
-            <td class="r">14.8%</td>
-            <td class="c"><span class="lift lift-neu">−0.5pp</span></td>
-            <td class="r">91 days</td>
-            <td class="c"><span class="speed speed-slow">▼ 21 days slower</span></td>
-          </tr>
-          <tr>
-            <td>Goals</td>
-            <td class="r">61%</td>
-            <td class="r">13.6%</td>
-            <td class="r">16.4%</td>
-            <td class="c"><span class="lift lift-neg">−2.8pp</span></td>
-            <td class="r">71 days</td>
-            <td class="c"><span class="speed speed-slow">▼ 6 days slower</span></td>
-          </tr>
-          <tr>
-            <td>Budget</td>
-            <td class="r">31%</td>
-            <td class="r">11.5%</td>
-            <td class="r">16.1%</td>
-            <td class="c"><span class="lift lift-neg">−4.6pp</span></td>
-            <td class="r">79 days</td>
-            <td class="c"><span class="speed speed-slow">▼ 14 days slower</span></td>
-          </tr>
-          <tr>
-            <td>Authority</td>
-            <td class="r">17%</td>
-            <td class="r">6.9%</td>
-            <td class="r">16.3%</td>
-            <td class="c"><span class="lift lift-neg">−9.4pp</span></td>
-            <td class="r">81 days</td>
-            <td class="c"><span class="speed speed-slow">▼ 11 days slower</span></td>
-          </tr>
+          <tr><td><strong>Pain</strong></td><td class="r">56%</td><td class="r">21.1%</td><td class="r">6.7%</td><td class="c"><span class="lift lift-pos">+14.4pp</span></td><td class="r">68 days</td><td class="c"><span class="speed speed-fast">▲ 24 days faster</span></td></tr>
+          <tr><td><strong>Value / Metrics</strong></td><td class="r">61%</td><td class="r">18.3%</td><td class="r">9.1%</td><td class="c"><span class="lift lift-pos">+9.2pp</span></td><td class="r">70 days</td><td class="c"><span class="speed speed-neu">neutral</span></td></tr>
+          <tr><td><strong>Next Steps</strong></td><td class="r">84%</td><td class="r">16.1%</td><td class="r">7.4%</td><td class="c"><span class="lift lift-pos">+8.7pp</span></td><td class="r">70 days</td><td class="c"><span class="speed speed-slow">▼ 10 days slower</span></td></tr>
+          <tr><td><strong>Timeline</strong></td><td class="r">49%</td><td class="r">17.9%</td><td class="r">11.6%</td><td class="c"><span class="lift lift-pos">+6.3pp</span></td><td class="r">71 days</td><td class="c"><span class="speed speed-slow">▼ 7 days slower</span></td></tr>
+          <tr class="divider-row"><td colspan="7">Dimensions below this line are flat-to-negative on progression</td></tr>
+          <tr><td>Decision Criteria</td><td class="r">25%</td><td class="r">14.3%</td><td class="r">14.8%</td><td class="c"><span class="lift lift-neu">−0.5pp</span></td><td class="r">91 days</td><td class="c"><span class="speed speed-slow">▼ 21 days slower</span></td></tr>
+          <tr><td>Goals</td><td class="r">61%</td><td class="r">13.6%</td><td class="r">16.4%</td><td class="c"><span class="lift lift-neg">−2.8pp</span></td><td class="r">71 days</td><td class="c"><span class="speed speed-slow">▼ 6 days slower</span></td></tr>
+          <tr><td>Budget</td><td class="r">31%</td><td class="r">11.5%</td><td class="r">16.1%</td><td class="c"><span class="lift lift-neg">−4.6pp</span></td><td class="r">79 days</td><td class="c"><span class="speed speed-slow">▼ 14 days slower</span></td></tr>
+          <tr><td>Authority</td><td class="r">17%</td><td class="r">6.9%</td><td class="r">16.3%</td><td class="c"><span class="lift lift-neg">−9.4pp</span></td><td class="r">81 days</td><td class="c"><span class="speed speed-slow">▼ 11 days slower</span></td></tr>
         </tbody>
       </table>
     </div>
-
-    <div class="insight">
-      <strong>Pain is uniquely powerful:</strong> it is the only signal that simultaneously increases the likelihood of progression (+14.4pp) <em>and</em> makes deals move faster (24 days). Budget and Authority discussions are double negatives — lower progression rates AND slower velocity. Early box-checking on BANT does not mark a healthy deal.
-    </div>
-
+    <div class="insight"><strong>Pain is uniquely powerful:</strong> it is the only signal that simultaneously increases the likelihood of progression (+14.4pp) <em>and</em> makes deals move faster (24 days). Budget and Authority are double negatives — lower progression rates AND slower velocity.</div>
     <div class="chart-wrap">
       <div class="chart-title">Build Value rate: signal present vs. absent</div>
       <canvas id="signalLiftChart" height="120"></canvas>
     </div>
   </div>
 
-  <!-- ── Section 4: Rep Leaderboard ── -->
+  <!-- ── Section 4: Q2 Pipeline ── -->
   <div class="section">
-    <h2 class="section-heading"><span class="n">4</span> Rep signal coverage — last 90 days</h2>
-    <p class="section-sub">Calls where at least one discovery signal was captured, broken out by dimension. Columns show calls with that signal in the period — not total signal count. Pain and Timeline are the highest-leverage signals to coach.</p>
+    <h2 class="section-heading"><span class="n">4</span> Q2 2026 pipeline — discovery coverage by deal</h2>
+    <p class="section-sub">All open opportunities closing in Q2 2026, joined to Chorus call data. Key deals flagged in Salesforce shown first. Deals with zero Chorus coverage are blind spots — calls may be unrecorded or happening off-platform.</p>
+
+    <div class="insight" style="margin-bottom:16px">
+      <strong>Blind spot alert:</strong> AXA Italy ($485K, Negotiate), Canada Post ($285K, Proposal Sent), Bank of Indonesia ($193K), African Bank ($176K closing May 28), and IATA ($134K) have <strong>zero recorded Chorus calls</strong>. These are high-ARR deals with no discovery signal visibility.
+    </div>
 
     <div class="panel">
       <table>
         <thead>
           <tr>
-            <th>Rep</th>
-            <th class="r">Calls</th>
-            <th class="r">Signals</th>
-            <th class="r">Avg / call</th>
-            <th class="c" title="Uncovering Pain / Problems & Concerns">Pain</th>
-            <th class="c" title="Timeline (discovery) / urgency risk">Timeline</th>
-            <th class="c" title="Customer Priorities / Value Taxonomy">Value</th>
-            <th class="c" title="Decision Criteria">Dec. Crit.</th>
-            <th class="c" title="Budget / Budget risk">Budget</th>
-            <th class="c" title="Authority">Auth.</th>
+            <th></th>
+            <th>Deal / Account</th>
+            <th>AE</th>
+            <th>Stage</th>
+            <th class="r">ARR</th>
+            <th class="c">Calls</th>
+            <th class="c">w/ Discovery</th>
+            <th class="c">Pain</th>
+            <th class="c">Timeline</th>
+            <th class="c">Value</th>
+            <th>Close</th>
+            <th>SFDC</th>
           </tr>
         </thead>
-        <tbody id="repTable"></tbody>
+        <tbody id="dealTable"></tbody>
       </table>
     </div>
   </div>
 
-  <!-- ── Section 5: Signal Trend ── -->
+  <!-- ── Section 5: Rep Coverage + Trend ── -->
   <div class="section">
-    <h2 class="section-heading"><span class="n">5</span> Discovery signal volume — weekly trend</h2>
-    <p class="section-sub">Total discovery signals captured per week since trackers were established in February 2026. Active rep count per week shown on the right axis.</p>
+    <h2 class="section-heading"><span class="n">5</span> Rep signal coverage — last 90 days + weekly trend</h2>
+    <p class="section-sub">Leaderboard for the last 90 days (above), then a week-by-week trend by rep and signal type. Use the rep selector and signal toggles to explore individual coaching conversations.</p>
 
+    <div class="panel" style="margin-bottom:24px">
+      <table>
+        <thead>
+          <tr><th>Rep</th><th class="r">Calls</th><th class="r">Signals</th><th class="r">Avg/call</th><th class="c">Pain</th><th class="c">Timeline</th><th class="c">Value</th><th class="c">Dec. Crit.</th><th class="c">Budget</th><th class="c">Auth.</th></tr>
+        </thead>
+        <tbody id="repTable"></tbody>
+      </table>
+    </div>
+
+    <!-- Rep trend chart with toggles -->
+    <div class="chart-wrap">
+      <div class="chart-title">Weekly discovery signals by rep and signal type</div>
+      <div class="controls" style="margin-bottom:12px">
+        <label>Rep:</label>
+        <select class="rep-select" id="repSelect"><option value="__all__">All reps (combined)</option></select>
+        <span style="flex:1"></span>
+        <label>Signals:</label>
+        <div id="sigToggles" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+      </div>
+      <canvas id="repTrendChart" height="110"></canvas>
+    </div>
+  </div>
+
+  <!-- ── Section 6: Overall Trend ── -->
+  <div class="section">
+    <h2 class="section-heading"><span class="n">6</span> Discovery signal volume — overall weekly trend</h2>
+    <p class="section-sub">Total discovery signals captured per week since trackers were established in February 2026.</p>
     <div class="chart-wrap">
       <div class="chart-title">Weekly discovery signals captured (Feb–May 2026)</div>
       <canvas id="trendChart" height="100"></canvas>
     </div>
-    <div class="insight">
-      <strong>Adoption is holding:</strong> After an initial ramp from 43 signals in the first week to 170–276/week through March–May, 28–33 reps are actively tagging discovery signals each week. The Apr 6 dip (92 signals) aligns with a holiday/lighter call week.
-    </div>
+    <div class="insight"><strong>Adoption is holding:</strong> After an initial ramp to 170–276/week by March–May, 28–33 reps are actively tagging discovery signals each week. The Apr 6 dip aligns with a lighter call week.</div>
   </div>
 
-  <!-- ── Recommended Actions ── -->
+  <!-- ── Section 7: Actions ── -->
   <div class="section">
-    <h2 class="section-heading"><span class="n">6</span> Recommended actions</h2>
+    <h2 class="section-heading"><span class="n">7</span> Recommended actions</h2>
     <div class="action-grid">
       <div class="action-card">
         <h4>For sales</h4>
@@ -489,8 +346,8 @@
         <h4>For enablement</h4>
         <ul>
           <li>Adopt <strong>Pain coverage rate</strong> as the primary coachable KPI on Qualify calls</li>
-          <li>Target ≥4 discovery dimensions covered per Qualify call as the "High" quality bar</li>
-          <li>Coach reps who have high call volume but low Pain coverage (see Rep table above)</li>
+          <li>Target ≥4 discovery dimensions covered per Qualify call as the quality bar</li>
+          <li>Investigate the 5 high-ARR Q2 deals with zero Chorus coverage — confirm calls are being recorded</li>
           <li>Re-run this analysis in Q3 2026 as the cohort matures — win/loss will become measurable</li>
         </ul>
       </div>
@@ -503,8 +360,9 @@
     <ul class="caveat-list">
       <li><strong>Association, not causation.</strong> Engaged prospects naturally surface more discovery and progress further; depth is partly a marker, not purely a cause.</li>
       <li><strong>Short, censored window.</strong> Tracker history begins Feb 2025; win/loss is not yet measurable and deeper-stage hops are directional only.</li>
-      <li><strong>Cohort is Qualify-filtered.</strong> Every deal in the cohort already reached Qualify with a substantive call — this measures progression from Qualify, not whole-pipeline risk.</li>
-      <li><strong>Speaker attribution.</strong> Moment-name signals are not speaker-scoped in this view; the PDF's more granular analysis separated rep technique from buyer signals using Chorus speaker data.</li>
+      <li><strong>Cohort is Qualify-filtered.</strong> Every deal already reached Qualify — this measures progression from Qualify, not whole-pipeline risk.</li>
+      <li><strong>Speaker attribution.</strong> Moment signals are not speaker-scoped in this view — the PDF's analysis separated rep technique from buyer signals.</li>
+      <li><strong>Chorus coverage gaps.</strong> Deals with zero calls may have unrecorded or external calls; absence of Chorus data ≠ absence of activity.</li>
     </ul>
   </div>
 
@@ -513,17 +371,17 @@
 <footer>Ataccama Sales Enablement · Discovery Effectiveness Report · May 29, 2026 · Source: Chorus + Salesforce</footer>
 
 <script>
-// ── Data ──────────────────────────────────────────────────────────────────────
+// ── Static data ───────────────────────────────────────────────────────────────
 
 const STAGE_DEPTH = [
-  { stage: 'Qualify',          calls: 771,  high: 11.0, mid: 31.5, low: 57.5 },
-  { stage: 'Build Value',      calls: 522,  high: 12.1, mid: 26.8, low: 61.1 },
-  { stage: 'Develop Solution', calls: 1092, high: 9.2,  mid: 30.5, low: 60.3 },
-  { stage: 'Proposal Sent',    calls: 358,  high: 8.7,  mid: 26.8, low: 64.5 },
-  { stage: 'Negotiate',        calls: 389,  high: 13.1, mid: 22.9, low: 64.0 },
+  { stage: 'Qualify',          high: 11.0, mid: 31.5, low: 57.5 },
+  { stage: 'Build Value',      high: 12.1, mid: 26.8, low: 61.1 },
+  { stage: 'Develop Solution', high: 9.2,  mid: 30.5, low: 60.3 },
+  { stage: 'Proposal Sent',    high: 8.7,  mid: 26.8, low: 64.5 },
+  { stage: 'Negotiate',        high: 13.1, mid: 22.9, low: 64.0 },
 ];
 
-const SIGNALS = [
+const SIGNALS_CHART = [
   { name: 'Pain',             bv_present: 21.1, bv_absent: 6.7  },
   { name: 'Value/Metrics',    bv_present: 18.3, bv_absent: 9.1  },
   { name: 'Timeline',         bv_present: 17.9, bv_absent: 11.6 },
@@ -535,212 +393,261 @@ const SIGNALS = [
 ];
 
 const REPS = [
-  { name: 'Kevin Duffey',       calls: 77, signals: 185, avg: 2.4, pain: 10, timeline: 8,  value: 0,  dc: 12, budget: 8,  auth: 7  },
-  { name: 'Jon Lewis',          calls: 66, signals: 184, avg: 2.8, pain: 7,  timeline: 15, value: 0,  dc: 1,  budget: 2,  auth: 1  },
-  { name: 'Ilayda Esin',        calls: 41, signals: 144, avg: 3.5, pain: 6,  timeline: 7,  value: 0,  dc: 6,  budget: 9,  auth: 6  },
-  { name: 'Joshua Eidell',      calls: 55, signals: 136, avg: 2.5, pain: 7,  timeline: 10, value: 0,  dc: 6,  budget: 13, auth: 1  },
-  { name: 'Nickolas Thibault',  calls: 38, signals: 119, avg: 3.1, pain: 3,  timeline: 5,  value: 0,  dc: 3,  budget: 4,  auth: 0  },
-  { name: 'Della Zhuang',       calls: 41, signals: 112, avg: 2.7, pain: 7,  timeline: 9,  value: 0,  dc: 7,  budget: 5,  auth: 0  },
-  { name: 'Shannon Rutz',       calls: 44, signals: 106, avg: 2.4, pain: 5,  timeline: 10, value: 0,  dc: 1,  budget: 1,  auth: 1  },
-  { name: 'Alexander Sweetser', calls: 38, signals: 103, avg: 2.7, pain: 4,  timeline: 1,  value: 0,  dc: 2,  budget: 5,  auth: 5  },
-  { name: 'Edris Ibrahim',      calls: 34, signals: 100, avg: 2.9, pain: 3,  timeline: 3,  value: 0,  dc: 3,  budget: 0,  auth: 6  },
-  { name: 'Brody Rodriguez',    calls: 36, signals: 95,  avg: 2.6, pain: 6,  timeline: 11, value: 0,  dc: 5,  budget: 3,  auth: 0  },
-  { name: 'Kirby Hisler',       calls: 36, signals: 88,  avg: 2.4, pain: 0,  timeline: 5,  value: 0,  dc: 0,  budget: 0,  auth: 1  },
-  { name: 'Cassi Cregar',       calls: 30, signals: 75,  avg: 2.5, pain: 0,  timeline: 5,  value: 0,  dc: 1,  budget: 1,  auth: 0  },
-  { name: 'Steven Emmel',       calls: 24, signals: 72,  avg: 3.0, pain: 12, timeline: 5,  value: 0,  dc: 3,  budget: 0,  auth: 3  },
+  { name: 'Kevin Duffey',       calls: 77, signals: 185, avg: 2.4, pain: 10, timeline: 8,  dc: 12, budget: 8,  auth: 7  },
+  { name: 'Jon Lewis',          calls: 66, signals: 184, avg: 2.8, pain: 7,  timeline: 15, dc: 1,  budget: 2,  auth: 1  },
+  { name: 'Ilayda Esin',        calls: 41, signals: 144, avg: 3.5, pain: 6,  timeline: 7,  dc: 6,  budget: 9,  auth: 6  },
+  { name: 'Joshua Eidell',      calls: 55, signals: 136, avg: 2.5, pain: 7,  timeline: 10, dc: 6,  budget: 13, auth: 1  },
+  { name: 'Nickolas Thibault',  calls: 38, signals: 119, avg: 3.1, pain: 3,  timeline: 5,  dc: 3,  budget: 4,  auth: 0  },
+  { name: 'Della Zhuang',       calls: 41, signals: 112, avg: 2.7, pain: 7,  timeline: 9,  dc: 7,  budget: 5,  auth: 0  },
+  { name: 'Shannon Rutz',       calls: 44, signals: 106, avg: 2.4, pain: 5,  timeline: 10, dc: 1,  budget: 1,  auth: 1  },
+  { name: 'Alexander Sweetser', calls: 38, signals: 103, avg: 2.7, pain: 4,  timeline: 1,  dc: 2,  budget: 5,  auth: 5  },
+  { name: 'Edris Ibrahim',      calls: 34, signals: 100, avg: 2.9, pain: 3,  timeline: 3,  dc: 3,  budget: 0,  auth: 6  },
+  { name: 'Brody Rodriguez',    calls: 36, signals: 95,  avg: 2.6, pain: 6,  timeline: 11, dc: 5,  budget: 3,  auth: 0  },
+  { name: 'Kirby Hisler',       calls: 36, signals: 88,  avg: 2.4, pain: 0,  timeline: 5,  dc: 0,  budget: 0,  auth: 1  },
+  { name: 'Cassi Cregar',       calls: 30, signals: 75,  avg: 2.5, pain: 0,  timeline: 5,  dc: 1,  budget: 1,  auth: 0  },
+  { name: 'Steven Emmel',       calls: 24, signals: 72,  avg: 3.0, pain: 12, timeline: 5,  dc: 3,  budget: 0,  auth: 3  },
 ];
 
 const WEEKLY = [
-  { week: 'Feb 23', signals: 43,  reps: 9  },
-  { week: 'Mar 2',  signals: 186, reps: 30 },
-  { week: 'Mar 9',  signals: 166, reps: 31 },
-  { week: 'Mar 16', signals: 215, reps: 33 },
-  { week: 'Mar 23', signals: 181, reps: 29 },
-  { week: 'Mar 30', signals: 170, reps: 28 },
-  { week: 'Apr 6',  signals: 92,  reps: 24 },
-  { week: 'Apr 13', signals: 215, reps: 31 },
-  { week: 'Apr 20', signals: 276, reps: 26 },
-  { week: 'Apr 27', signals: 174, reps: 25 },
-  { week: 'May 4',  signals: 171, reps: 31 },
-  { week: 'May 11', signals: 199, reps: 33 },
-  { week: 'May 18', signals: 222, reps: 32 },
-  { week: 'May 25', signals: 174, reps: 28 },
+  { week: 'Feb 23', signals: 43,  reps: 9  }, { week: 'Mar 2',  signals: 186, reps: 30 },
+  { week: 'Mar 9',  signals: 166, reps: 31 }, { week: 'Mar 16', signals: 215, reps: 33 },
+  { week: 'Mar 23', signals: 181, reps: 29 }, { week: 'Mar 30', signals: 170, reps: 28 },
+  { week: 'Apr 6',  signals: 92,  reps: 24 }, { week: 'Apr 13', signals: 215, reps: 31 },
+  { week: 'Apr 20', signals: 276, reps: 26 }, { week: 'Apr 27', signals: 174, reps: 25 },
+  { week: 'May 4',  signals: 171, reps: 31 }, { week: 'May 11', signals: 199, reps: 33 },
+  { week: 'May 18', signals: 222, reps: 32 }, { week: 'May 25', signals: 174, reps: 28 },
 ];
 
+// Q2 2026 deals (key deals first, then by ARR desc)
+const Q2_DEALS = [
+  { opp: 'Blackstone — MDM',                 ae: 'J. Eidell',    stage: 'Negotiate',        arr: 837097,  calls: 6,  disc: 3,  pain: 2,  timeline: 1,  value: 0,  key: true,  disc_done: true,  close: 'Jun 30' },
+  { opp: 'PG&E — Data Catalog + Agentic',    ae: 'K. Duffey',    stage: 'Develop Solution', arr: 820250,  calls: 89, disc: 87, pain: 47, timeline: 31, value: 45, key: true,  disc_done: false, close: 'Jun 30' },
+  { opp: 'AXA Italy — DQG',                  ae: 'N. Stammers',  stage: 'Negotiate',        arr: 485013,  calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: true,  disc_done: false, close: 'Jun 30' },
+  { opp: 'USAble Life — DQ',                 ae: 'B. Rodriguez', stage: 'Negotiate',        arr: 204120,  calls: 9,  disc: 9,  pain: 4,  timeline: 3,  value: 6,  key: true,  disc_done: true,  close: 'Jun 30' },
+  { opp: 'Canada Post — DG/DQ RFP',          ae: 'K. Sharma',    stage: 'Proposal Sent',    arr: 285420,  calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: true,  close: 'Jun 30' },
+  { opp: 'Grange Insurance — DQC',           ae: 'J. Eidell',    stage: 'Negotiate',        arr: 270000,  calls: 7,  disc: 6,  pain: 0,  timeline: 1,  value: 4,  key: false, disc_done: false, close: 'Jun 30' },
+  { opp: 'Bank of Indonesia — DQC',          ae: 'D. Zhuang',    stage: 'Proposal Sent',    arr: 192754,  calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: false, close: 'Jun 30' },
+  { opp: 'African Bank — DQ',                ae: 'N. Stammers',  stage: 'Negotiate',        arr: 175680,  calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: false, close: 'May 28' },
+  { opp: 'IATA — DQC',                       ae: 'T. Miebach',   stage: 'Develop Solution', arr: 133629,  calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: true,  close: 'Jun 19' },
+  { opp: 'Optus — RDM',                      ae: 'D. Zhuang',    stage: 'Negotiate',        arr: 108857,  calls: 10, disc: 10, pain: 7,  timeline: 4,  value: 4,  key: false, disc_done: false, close: 'Jun 30' },
+  { opp: 'Optus — MDM add-on',               ae: 'D. Zhuang',    stage: 'Negotiate',        arr: 102015,  calls: 1,  disc: 1,  pain: 0,  timeline: 1,  value: 0,  key: false, disc_done: false, close: 'Jun 30' },
+  { opp: 'Truist — Additional 50 Users',     ae: 'K. Duffey',    stage: 'Negotiate',        arr: 57500,   calls: 15, disc: 15, pain: 4,  timeline: 8,  value: 5,  key: false, disc_done: false, close: 'Jun 19' },
+  { opp: 'Rocket Lineage scanners — Ahold',  ae: 'F. Cibulec',   stage: 'Negotiate',        arr: 55000,   calls: 7,  disc: 7,  pain: 5,  timeline: 4,  value: 4,  key: false, disc_done: false, close: 'Jun 30' },
+  { opp: 'SSEN — Additional Power Users',    ae: 'O. Bates',     stage: 'Proposal Sent',    arr: 54000,   calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: false, close: 'Jun 30' },
+  { opp: 'Harley-Davidson — DQ add-on',      ae: 'B. Rodriguez', stage: 'Proposal Sent',    arr: 45500,   calls: 4,  disc: 4,  pain: 2,  timeline: 2,  value: 2,  key: false, disc_done: true,  close: 'Jun 30' },
+  { opp: 'Optus — Loqate',                   ae: 'D. Zhuang',    stage: 'Negotiate',        arr: 26812,   calls: 0,  disc: 0,  pain: 0,  timeline: 0,  value: 0,  key: false, disc_done: false, close: 'Jun 30' },
+  { opp: 'Mondelez — Lineage',               ae: 'J. Cass',      stage: 'Negotiate',        arr: 0,       calls: 32, disc: 21, pain: 13, timeline: 9,  value: 9,  key: false, disc_done: false, close: 'May 22' },
+  { opp: 'Cognizant — Partner Deal',         ae: 'J. Goulart',   stage: 'Qualify',          arr: 0,       calls: 19, disc: 19, pain: 5,  timeline: 8,  value: 3,  key: false, disc_done: false, close: 'May 13' },
+];
+
+// Rep weekly trends by signal group (top 12 reps, 14 weeks)
+const WEEKS = ["Feb 23","Mar 2","Mar 9","Mar 16","Mar 23","Mar 30","Apr 6","Apr 13","Apr 20","Apr 27","May 4","May 11","May 18","May 25"];
+
+const REP_TRENDS = {"Jon Lewis":{"Pain":[0,2,1,1,0,1,0,0,0,1,1,1,0,0],"Timeline":[0,6,3,14,0,7,0,3,2,8,3,1,0,3],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,10,3,14,1,9,7,11,9,7,6,19,3,7],"Decision Criteria":[0,0,0,0,0,0,0,0,0,0,0,1,0,0],"Goals":[0,0,3,3,0,1,2,1,4,3,3,2,1,2],"Budget":[0,0,0,0,0,2,0,0,0,0,0,1,0,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,1],"Commit":[0,0,0,0,0,0,0,0,1,1,1,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Kevin Duffey":{"Pain":[0,5,1,1,0,0,0,1,0,0,0,0,3,1],"Timeline":[0,6,0,0,3,0,0,3,0,9,3,1,3,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,9,1,5,7,2,2,7,5,5,6,6,7,9],"Decision Criteria":[0,2,2,0,1,3,1,3,2,2,0,0,0,0],"Goals":[0,5,0,1,2,3,0,2,3,2,3,1,2,0],"Budget":[0,1,0,1,2,0,0,1,3,0,0,0,0,1],"Authority":[0,0,0,1,0,0,0,1,4,0,0,0,0,1],"Commit":[0,2,1,0,0,1,1,6,2,1,2,2,1,1],"Decision risk":[0,0,0,1,0,0,0,1,4,0,0,0,0,1]},"Ilayda Esin":{"Pain":[0,1,0,0,0,5,0,0,0,0,0,2,1,0],"Timeline":[0,3,0,3,0,3,0,3,0,0,0,0,0,8],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,4,0,4,1,11,0,4,0,13,3,1,9,4],"Decision Criteria":[0,0,0,0,2,1,1,0,0,0,0,0,2,1],"Goals":[0,1,0,0,3,6,3,1,0,4,1,0,6,1],"Budget":[0,4,0,0,1,0,0,0,0,0,0,1,4,4],"Authority":[0,0,0,0,2,2,0,0,0,1,0,0,1,1],"Commit":[0,2,1,0,2,1,1,0,0,0,0,0,1,0],"Decision risk":[0,0,0,0,1,2,0,0,0,0,0,0,1,0]},"Joshua Eidell":{"Pain":[0,0,1,2,0,0,0,0,0,2,0,0,3,0],"Timeline":[0,1,11,0,0,8,0,8,0,0,0,3,3,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,2,3,3,3,5,0,1,3,5,1,3,8,1],"Decision Criteria":[0,0,1,0,0,2,0,0,1,2,0,0,1,0],"Goals":[0,4,1,4,0,1,0,5,2,3,1,1,3,0],"Budget":[0,0,4,5,1,2,1,2,1,1,0,0,0,0],"Authority":[0,1,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,1,0,3,0,3,0,3,2,2,0,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Della Zhuang":{"Pain":[2,1,2,0,0,0,0,2,0,0,3,0,0,1],"Timeline":[0,4,2,0,2,0,6,4,0,3,0,0,2,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[6,6,5,2,0,3,2,11,0,4,3,1,1,3],"Decision Criteria":[1,4,1,1,0,0,2,0,0,0,2,0,0,1],"Goals":[5,2,1,5,1,2,2,3,0,1,0,0,0,3],"Budget":[0,1,0,0,0,1,0,5,0,0,0,0,0,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[2,0,0,0,0,0,0,0,0,0,0,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Nickolas Thibault":{"Pain":[0,0,0,0,0,1,0,1,1,0,0,0,0,0],"Timeline":[0,0,0,0,0,8,0,0,5,3,0,0,0,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,9,1,7,17,3,1,4,15,5,2,2,2,9],"Decision Criteria":[0,0,0,0,0,0,1,0,2,0,0,0,0,0],"Goals":[0,1,1,5,0,1,0,0,0,2,1,2,1,2],"Budget":[0,1,0,0,0,1,0,0,0,1,0,0,0,1],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,3,0,0,1,0,0,0,0,0,0,0,0,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Shannon Rutz":{"Pain":[0,0,3,1,0,0,0,0,2,0,1,0,0,0],"Timeline":[0,3,0,0,0,2,3,0,8,2,4,0,1,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,3,6,2,6,0,5,3,8,0,5,2,0,2],"Decision Criteria":[0,0,0,1,0,0,0,0,0,0,0,0,0,0],"Goals":[0,2,7,5,2,1,3,0,5,0,1,0,1,0],"Budget":[0,0,0,0,0,1,0,0,0,0,0,0,0,0],"Authority":[0,0,1,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,0,0,0,1,0,2,0,1,0,2,0,0,1],"Decision risk":[0,0,1,0,0,0,0,0,0,0,0,0,0,0]},"Alexander Sweetser":{"Pain":[0,0,1,1,0,0,0,0,0,0,0,1,1,0],"Timeline":[0,0,3,0,0,0,0,0,0,0,0,0,0,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[1,2,3,8,5,0,0,1,9,0,5,10,7,2],"Decision Criteria":[0,0,0,0,1,1,0,0,0,0,0,0,0,0],"Goals":[0,0,0,0,2,0,0,1,2,0,2,0,1,1],"Budget":[0,0,0,1,1,0,0,0,1,0,1,1,0,0],"Authority":[0,0,0,0,1,0,0,1,0,0,1,3,0,0],"Commit":[0,0,2,0,1,0,0,0,11,0,1,1,0,1],"Decision risk":[0,0,0,0,1,0,0,1,0,0,1,3,0,0]},"Edris Ibrahim":{"Pain":[0,0,0,1,0,0,0,1,0,0,0,0,1,0],"Timeline":[0,0,0,3,0,0,0,0,4,0,0,0,3,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,2,0,8,2,0,0,4,6,0,5,5,10,5],"Decision Criteria":[0,0,0,0,0,0,0,1,0,0,0,0,2,0],"Goals":[0,1,0,3,1,0,1,0,3,0,1,3,1,3],"Budget":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Authority":[0,1,0,0,1,1,0,2,1,0,1,0,0,0],"Commit":[0,0,0,1,1,0,1,1,4,0,1,0,1,0],"Decision risk":[0,1,0,0,1,1,0,1,0,0,1,0,0,0]},"Brody Rodriguez":{"Pain":[1,0,0,0,2,3,0,0,2,1,0,0,0,0],"Timeline":[0,0,0,0,7,2,2,5,3,4,0,2,2,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,0,0,1,2,0,1,1,3,1,6,5,8,3],"Decision Criteria":[0,0,0,0,1,0,0,1,2,0,0,0,0,1],"Goals":[1,1,1,0,1,2,0,0,2,3,0,0,0,0],"Budget":[0,0,0,0,0,0,0,1,0,0,0,1,1,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,0,0,0,0,1,0,1,3,0,2,5,2,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]},"Kirby Hisler":{"Pain":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Timeline":[0,0,3,0,2,0,0,0,7,0,2,0,0,0],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[0,5,5,7,5,1,1,5,11,4,5,2,8,0],"Decision Criteria":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Goals":[0,1,4,1,0,0,0,0,1,0,0,0,1,0],"Budget":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Authority":[0,0,0,0,0,0,0,0,0,0,0,2,0,0],"Commit":[0,1,0,0,0,0,0,0,1,1,0,1,1,0],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,2,0,0]},"Cassi Cregar":{"Pain":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Timeline":[0,1,3,1,3,0,0,0,0,0,0,0,0,1],"Value/Metrics":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Next Steps":[4,7,2,8,3,0,1,11,6,4,1,0,2,6],"Decision Criteria":[0,0,1,0,0,0,0,0,0,0,0,0,0,0],"Goals":[1,1,0,2,0,0,0,1,3,0,0,0,0,0],"Budget":[0,0,0,0,0,0,0,0,0,0,0,0,0,2],"Authority":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"Commit":[0,0,0,1,2,0,0,1,1,1,0,0,0,1],"Decision risk":[0,0,0,0,0,0,0,0,0,0,0,0,0,0]}};
+
+// ── Signal colours ────────────────────────────────────────────────────────────
+const SIG_COLORS = {
+  'Pain':             '#1C3FAA',
+  'Timeline':         '#4F8EF7',
+  'Value/Metrics':    '#16A34A',
+  'Next Steps':       '#64748B',
+  'Decision Criteria':'#D97706',
+  'Goals':            '#7C3AED',
+  'Budget':           '#DC2626',
+  'Authority':        '#0891B2',
+  'Commit':           '#059669',
+  'Decision risk':    '#9F1239',
+};
+const SIG_NAMES = Object.keys(SIG_COLORS);
+
 // ── Chart defaults ────────────────────────────────────────────────────────────
-Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif';
+Chart.defaults.font.family = '-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
 Chart.defaults.font.size = 12;
 Chart.defaults.color = '#64748B';
 
-// ── Chart 1: Depth distribution stacked bar ───────────────────────────────────
+// ── Chart 1: Depth distribution ───────────────────────────────────────────────
 new Chart(document.getElementById('depthDistChart'), {
   type: 'bar',
   data: {
     labels: STAGE_DEPTH.map(d => d.stage),
     datasets: [
-      {
-        label: 'Low (0–1 dims)',
-        data: STAGE_DEPTH.map(d => d.low),
-        backgroundColor: '#FECACA',
-        borderRadius: 0,
-      },
-      {
-        label: 'Mid (2–3 dims)',
-        data: STAGE_DEPTH.map(d => d.mid),
-        backgroundColor: '#FED7AA',
-        borderRadius: 0,
-      },
-      {
-        label: 'High (4+ dims)',
-        data: STAGE_DEPTH.map(d => d.high),
-        backgroundColor: '#86EFAC',
-        borderRadius: { topLeft: 4, topRight: 4 },
-      },
+      { label: 'Low (0–1)', data: STAGE_DEPTH.map(d => d.low), backgroundColor: '#FECACA', borderRadius: 0 },
+      { label: 'Mid (2–3)', data: STAGE_DEPTH.map(d => d.mid), backgroundColor: '#FED7AA', borderRadius: 0 },
+      { label: 'High (4+)', data: STAGE_DEPTH.map(d => d.high), backgroundColor: '#86EFAC', borderRadius: { topLeft: 4, topRight: 4 } },
     ],
   },
   options: {
     responsive: true,
-    plugins: {
-      legend: { position: 'top', labels: { boxWidth: 12, padding: 16 } },
-      tooltip: {
-        callbacks: {
-          label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}%`
-        }
-      }
-    },
-    scales: {
-      x: { stacked: true, grid: { display: false } },
-      y: { stacked: true, max: 100, ticks: { callback: v => v + '%' }, grid: { color: '#E2E8F0' } },
-    },
+    plugins: { legend: { position: 'top', labels: { boxWidth: 12, padding: 16 } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } } },
+    scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, max: 100, ticks: { callback: v => v+'%' }, grid: { color: '#E2E8F0' } } },
   }
 });
 
-// ── Chart 2: Depth rate bar ────────────────────────────────────────────────────
+// ── Chart 2: Depth rate bar ───────────────────────────────────────────────────
 new Chart(document.getElementById('depthRateChart'), {
   type: 'bar',
-  data: {
-    labels: ['High (4+)', 'Mid (2–3)', 'Low (0–1)'],
-    datasets: [{
-      label: '→ Build Value rate',
-      data: [18.8, 10.9, 7.7],
-      backgroundColor: ['#86EFAC', '#FED7AA', '#FECACA'],
-      borderRadius: 6,
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: ctx => ` ${ctx.raw}%` } }
-    },
-    scales: {
-      x: { max: 25, ticks: { callback: v => v + '%' }, grid: { color: '#E2E8F0' } },
-      y: { grid: { display: false } },
-    }
-  }
+  data: { labels: ['High (4+)','Mid (2–3)','Low (0–1)'], datasets: [{ label: '→ BV rate', data: [18.8,10.9,7.7], backgroundColor: ['#86EFAC','#FED7AA','#FECACA'], borderRadius: 6 }] },
+  options: { indexAxis:'y', responsive: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.raw}%` } } }, scales: { x: { max: 25, ticks: { callback: v => v+'%' }, grid: { color: '#E2E8F0' } }, y: { grid: { display: false } } } }
 });
 
-// ── Chart 3: Signal lift grouped bar ─────────────────────────────────────────
+// ── Chart 3: Signal lift ──────────────────────────────────────────────────────
 new Chart(document.getElementById('signalLiftChart'), {
   type: 'bar',
   data: {
-    labels: SIGNALS.map(s => s.name),
+    labels: SIGNALS_CHART.map(s => s.name),
     datasets: [
-      {
-        label: 'BV rate — signal present',
-        data: SIGNALS.map(s => s.bv_present),
-        backgroundColor: '#4F8EF7',
-        borderRadius: { topLeft: 4, topRight: 4 },
-      },
-      {
-        label: 'BV rate — signal absent',
-        data: SIGNALS.map(s => s.bv_absent),
-        backgroundColor: '#E2E8F0',
-        borderRadius: { topLeft: 4, topRight: 4 },
-      },
+      { label: 'BV rate — present', data: SIGNALS_CHART.map(s => s.bv_present), backgroundColor: '#4F8EF7', borderRadius: { topLeft: 4, topRight: 4 } },
+      { label: 'BV rate — absent',  data: SIGNALS_CHART.map(s => s.bv_absent),  backgroundColor: '#E2E8F0', borderRadius: { topLeft: 4, topRight: 4 } },
     ]
   },
   options: {
     responsive: true,
-    plugins: {
-      legend: { position: 'top', labels: { boxWidth: 12, padding: 16 } },
-      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}%` } }
-    },
+    plugins: { legend: { position: 'top', labels: { boxWidth: 12, padding: 16 } }, tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw}%` } } },
+    scales: { x: { grid: { display: false } }, y: { max: 28, ticks: { callback: v => v+'%' }, grid: { color: '#E2E8F0' } } }
+  }
+});
+
+// ── Deal table ────────────────────────────────────────────────────────────────
+function dealHealth(d) {
+  if (d.calls === 0) return 'red';
+  if (d.pain === 0)  return 'amber';
+  return 'green';
+}
+function fmtArr(v) { if (!v) return '<span style="color:var(--muted)">—</span>'; return '$' + (v >= 1000000 ? (v/1000000).toFixed(2)+'M' : Math.round(v/1000)+'K'); }
+function covDot(v, cls) { return `<span class="cov-pip ${v > 0 ? cls : 'off'}" title="${v}"></span>`; }
+
+const dtbody = document.getElementById('dealTable');
+Q2_DEALS.forEach(d => {
+  const h = dealHealth(d);
+  const divider = d.opp === Q2_DEALS.find(x => !x.key).opp ? '<tr style="height:4px;background:#F8FAFC"><td colspan="12" style="border-top:2px dashed var(--border);padding:0"></td></tr>' : '';
+  dtbody.innerHTML += divider + `
+  <tr>
+    <td><span class="health health-${h}" title="${h === 'red' ? 'No Chorus coverage' : h === 'amber' ? 'No pain captured' : 'Good coverage'}"></span></td>
+    <td>
+      ${d.key ? '<span class="badge-key">Key Deal</span> ' : ''}
+      <strong style="font-size:0.82rem">${d.opp}</strong>
+    </td>
+    <td style="font-size:0.78rem;color:var(--muted)">${d.ae}</td>
+    <td style="font-size:0.78rem">${d.stage}</td>
+    <td class="r" style="font-weight:700">${fmtArr(d.arr)}</td>
+    <td class="c">${d.calls || '—'}</td>
+    <td class="c">${d.disc || (d.calls ? '0' : '—')}</td>
+    <td class="c">${covDot(d.pain, 'on-pain')}</td>
+    <td class="c">${covDot(d.timeline, 'on-timeline')}</td>
+    <td class="c">${covDot(d.value, 'on-value')}</td>
+    <td style="font-size:0.78rem;color:var(--muted)">${d.close}</td>
+    <td>${d.disc_done ? '<span class="badge-complete">Disc. ✓</span>' : ''}</td>
+  </tr>`;
+});
+
+// ── Rep leaderboard table ─────────────────────────────────────────────────────
+function heatCls(v, t) { return v === 0 ? 'heat-0' : v >= t ? 'heat-2' : 'heat-1'; }
+const tbody = document.getElementById('repTable');
+REPS.forEach(r => {
+  const avgCls = r.avg >= 3 ? 'lift-pos' : r.avg >= 2.5 ? 'lift-neu' : '';
+  tbody.innerHTML += `<tr>
+    <td><strong>${r.name}</strong></td>
+    <td class="r">${r.calls}</td>
+    <td class="r">${r.signals}</td>
+    <td class="r"><span class="lift ${avgCls}">${r.avg}</span></td>
+    <td class="c ${heatCls(r.pain, 6)}">${r.pain || '—'}</td>
+    <td class="c ${heatCls(r.timeline, 8)}">${r.timeline || '—'}</td>
+    <td class="c heat-0">—</td>
+    <td class="c ${heatCls(r.dc, 5)}">${r.dc || '—'}</td>
+    <td class="c ${heatCls(r.budget, 6)}">${r.budget || '—'}</td>
+    <td class="c ${heatCls(r.auth, 5)}">${r.auth || '—'}</td>
+  </tr>`;
+});
+
+// ── Rep trend chart + toggles ─────────────────────────────────────────────────
+const repNames = Object.keys(REP_TRENDS);
+const repSelect = document.getElementById('repSelect');
+repNames.forEach(r => { const o = document.createElement('option'); o.value = r; o.textContent = r; repSelect.appendChild(o); });
+
+// Active signal set (all on by default)
+const activeSigs = new Set(SIG_NAMES);
+
+// Build toggle buttons
+const togglesEl = document.getElementById('sigToggles');
+SIG_NAMES.forEach(sig => {
+  const btn = document.createElement('button');
+  btn.className = 'toggle-btn active';
+  btn.textContent = sig;
+  btn.dataset.sig = sig;
+  btn.style.borderColor = SIG_COLORS[sig];
+  btn.addEventListener('click', () => {
+    if (activeSigs.has(sig)) { activeSigs.delete(sig); btn.className = 'toggle-btn'; btn.style.background = ''; btn.style.color = ''; }
+    else { activeSigs.add(sig); btn.className = 'toggle-btn active'; btn.style.background = SIG_COLORS[sig]; btn.style.color = '#fff'; }
+    updateRepChart();
+  });
+  btn.style.background = SIG_COLORS[sig];
+  btn.style.color = '#fff';
+  togglesEl.appendChild(btn);
+});
+
+function getRepData(repKey) {
+  if (repKey === '__all__') {
+    const combined = {};
+    SIG_NAMES.forEach(sig => { combined[sig] = WEEKS.map((_, i) => Object.values(REP_TRENDS).reduce((s, r) => s + (r[sig]?.[i] || 0), 0)); });
+    return combined;
+  }
+  return REP_TRENDS[repKey] || {};
+}
+
+function buildDatasets(repKey) {
+  const data = getRepData(repKey);
+  return SIG_NAMES.filter(s => activeSigs.has(s)).map(sig => ({
+    label: sig,
+    data: data[sig] || WEEKS.map(() => 0),
+    borderColor: SIG_COLORS[sig],
+    backgroundColor: SIG_COLORS[sig] + '22',
+    fill: false,
+    tension: 0.3,
+    pointRadius: 3,
+    pointBackgroundColor: SIG_COLORS[sig],
+  }));
+}
+
+const repTrendChart = new Chart(document.getElementById('repTrendChart'), {
+  type: 'line',
+  data: { labels: WEEKS, datasets: buildDatasets('__all__') },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    plugins: { legend: { position: 'top', labels: { boxWidth: 10, padding: 12, font: { size: 11 } } } },
     scales: {
       x: { grid: { display: false } },
-      y: { max: 28, ticks: { callback: v => v + '%' }, grid: { color: '#E2E8F0' } },
+      y: { min: 0, grid: { color: '#E2E8F0' }, title: { display: true, text: 'Signal count' } },
     }
   }
 });
 
-// ── Chart 4: Weekly trend ─────────────────────────────────────────────────────
+function updateRepChart() {
+  repTrendChart.data.datasets = buildDatasets(repSelect.value);
+  repTrendChart.update();
+}
+repSelect.addEventListener('change', updateRepChart);
+
+// ── Chart 4: Overall weekly trend ─────────────────────────────────────────────
 new Chart(document.getElementById('trendChart'), {
   type: 'line',
   data: {
     labels: WEEKLY.map(w => w.week),
     datasets: [
-      {
-        label: 'Discovery signals',
-        data: WEEKLY.map(w => w.signals),
-        borderColor: '#1C3FAA',
-        backgroundColor: 'rgba(28,63,170,0.08)',
-        fill: true,
-        tension: 0.3,
-        pointRadius: 4,
-        pointBackgroundColor: '#1C3FAA',
-        yAxisID: 'y',
-      },
-      {
-        label: 'Active reps',
-        data: WEEKLY.map(w => w.reps),
-        borderColor: '#4F8EF7',
-        backgroundColor: 'transparent',
-        borderDash: [5, 3],
-        tension: 0.3,
-        pointRadius: 3,
-        pointBackgroundColor: '#4F8EF7',
-        yAxisID: 'y2',
-      },
+      { label: 'Discovery signals', data: WEEKLY.map(w => w.signals), borderColor: '#1C3FAA', backgroundColor: 'rgba(28,63,170,0.08)', fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#1C3FAA', yAxisID: 'y' },
+      { label: 'Active reps',       data: WEEKLY.map(w => w.reps),    borderColor: '#4F8EF7', backgroundColor: 'transparent', borderDash: [5,3], tension: 0.3, pointRadius: 3, pointBackgroundColor: '#4F8EF7', yAxisID: 'y2' },
     ]
   },
   options: {
     responsive: true,
     interaction: { mode: 'index', intersect: false },
-    plugins: {
-      legend: { position: 'top', labels: { boxWidth: 12, padding: 16 } },
-    },
+    plugins: { legend: { position: 'top', labels: { boxWidth: 12, padding: 16 } } },
     scales: {
-      x: { grid: { display: false } },
-      y:  { position: 'left',  min: 0, title: { display: true, text: 'Signals' },    grid: { color: '#E2E8F0' } },
+      x:  { grid: { display: false } },
+      y:  { position: 'left',  min: 0, title: { display: true, text: 'Signals' }, grid: { color: '#E2E8F0' } },
       y2: { position: 'right', min: 0, max: 40, title: { display: true, text: 'Active reps' }, grid: { display: false } },
     }
   }
-});
-
-// ── Rep table ─────────────────────────────────────────────────────────────────
-function heatClass(v, thresholds) {
-  if (v === 0) return 'heat-0';
-  if (v >= thresholds[1]) return 'heat-2';
-  return 'heat-1';
-}
-
-const tbody = document.getElementById('repTable');
-REPS.forEach(r => {
-  const avgClass = r.avg >= 3 ? 'lift-pos' : r.avg >= 2.5 ? 'lift-neu' : '';
-  tbody.innerHTML += `
-    <tr>
-      <td><strong>${r.name}</strong></td>
-      <td class="r">${r.calls}</td>
-      <td class="r">${r.signals}</td>
-      <td class="r"><span class="lift ${avgClass}">${r.avg}</span></td>
-      <td class="c ${heatClass(r.pain, [1,6])}">${r.pain || '—'}</td>
-      <td class="c ${heatClass(r.timeline, [1,8])}">${r.timeline || '—'}</td>
-      <td class="c heat-0">—</td>
-      <td class="c ${heatClass(r.dc, [1,5])}">${r.dc || '—'}</td>
-      <td class="c ${heatClass(r.budget, [1,6])}">${r.budget || '—'}</td>
-      <td class="c ${heatClass(r.auth, [1,5])}">${r.auth || '—'}</td>
-    </tr>`;
 });
 </script>
 </body>
